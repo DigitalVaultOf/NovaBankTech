@@ -8,9 +8,6 @@ namespace User.Api.DTOS
         public string Cpf { get; set; }
         public string Email { get; set; }
 
-        public AccountTypeEnum AccountType { get; set; }
-        public decimal InitialBalance { get; set; }
-
         public string Password { get; set; }
     }
 }

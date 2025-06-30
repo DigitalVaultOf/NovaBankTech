@@ -27,5 +27,12 @@ namespace User.Api.Repositories.Implementations
 
             return accountNumber;
         }
+
+        public async Task<Account> GetByAccountNumberWithUserAsync(string accountNumber)
+        {
+            return await _context.Accounts
+                .Include(a => a.User)
+                .FirstOrDefaultAsync(a => a.AccountNumber == accountNumber);
+        }
     }
 }

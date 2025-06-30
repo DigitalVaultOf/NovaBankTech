@@ -20,7 +20,7 @@ namespace User.Api.Model
 
         [Required(ErrorMessage = "Saldo é obrigatório")]
         [Column(TypeName = "decimal(18,2)")]
-        public decimal Balance { get; set; }
+        public decimal Balance { get; set; } = 0;
 
         [Required(ErrorMessage = "Data de criação é obrigatória")]
         public DateTime CreatedAt { get; set; } = DateTime.Now;

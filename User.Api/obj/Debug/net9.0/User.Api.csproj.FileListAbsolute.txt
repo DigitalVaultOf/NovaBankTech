@@ -164,3 +164,8 @@ C:\Users\Eduardo\OneDrive\Área de Trabalho\Tcs\Projeto-Banco\ProjetoBanco\User.
 C:\Users\Eduardo\OneDrive\Área de Trabalho\Tcs\Projeto-Banco\ProjetoBanco\User.Api\obj\Debug\net9.0\User.Api.pdb
 C:\Users\Eduardo\OneDrive\Área de Trabalho\Tcs\Projeto-Banco\ProjetoBanco\User.Api\obj\Debug\net9.0\User.Api.genruntimeconfig.cache
 C:\Users\Eduardo\OneDrive\Área de Trabalho\Tcs\Projeto-Banco\ProjetoBanco\User.Api\obj\Debug\net9.0\ref\User.Api.dll
+C:\Users\Eduardo\OneDrive\Área de Trabalho\Tcs\Projeto-Banco\ProjetoBanco\User.Api\bin\Debug\net9.0\BCrypt.Net-Next.dll
+C:\Users\Eduardo\OneDrive\Área de Trabalho\Tcs\Projeto-Banco\ProjetoBanco\User.Api\obj\Debug\net9.0\User.Api.sourcelink.json
+C:\Users\Eduardo\OneDrive\Área de Trabalho\Tcs\Projeto-Banco\ProjetoBanco\User.Api\bin\Debug\net9.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\Eduardo\OneDrive\Área de Trabalho\Tcs\Projeto-Banco\ProjetoBanco\User.Api\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\Eduardo\OneDrive\Área de Trabalho\Tcs\Projeto-Banco\ProjetoBanco\User.Api\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerUI.dll

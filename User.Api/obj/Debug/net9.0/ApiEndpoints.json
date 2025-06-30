@@ -1,0 +1,34 @@
+[
+  {
+    "ContainingType": "User.Api.Controllers.UserController",
+    "Method": "CreateUserAccount",
+    "RelativePath": "api/User/create",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userAccountDto",
+        "Type": "User.Api.DTOS.CreateAccountUserDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "User.Api.Controllers.UserController",
+    "Method": "GetAccountByNumber",
+    "RelativePath": "api/User/GetAccountByNumber/{accountNumber}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "accountNumber",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  }
+]

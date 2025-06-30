@@ -36,6 +36,7 @@ namespace User.Api.Services
 
             var user = new Users
             {
+                Id = Guid.NewGuid(),
                 Name = dto.Name,
                 Cpf = dto.Cpf,
                 Email = dto.Email,
@@ -43,23 +44,22 @@ namespace User.Api.Services
 
 
             var senhaHash = BCrypt.Net.BCrypt.HashPassword(dto.Password);
-            var accountNumber = await _accountRepository.GenerateAccountNumberAsync();
+            var accountNumberCheckingAccount = await _accountRepository.GenerateAccountNumberAsync();
+            var accountNumberSavingsAccount = await _accountRepository.GenerateAccountNumberAsync();
 
             //Conta Corrente
             var checkingAccount = new Account
             {
-                AccountNumber = accountNumber,
+                AccountNumber = accountNumberCheckingAccount,
                 AccountType = AccountTypeEnum.CheckingAccount,
-                Balance = dto.InitialBalance,
                 SenhaHash = senhaHash,
             };
 
             //Conta Poupança
             var savingsAccount = new Account
             {
-                AccountNumber = accountNumber,
+                AccountNumber = accountNumberSavingsAccount,
                 AccountType = AccountTypeEnum.SavingsAccount,
-                Balance = dto.InitialBalance,
                 SenhaHash = senhaHash,
             };
 
@@ -76,9 +76,28 @@ namespace User.Api.Services
             catch (Exception ex)
             {
                 await transaction.RollbackAsync();
-                throw new Exception($"Erro ao criar usuário e contas: {ex.Message}");
+                throw new Exception($"Erro ao criar usuário e contas: {ex.Message} | Inner: {ex.InnerException?.Message}");
             }
 
+        }
+
+        public async Task<AccountResponseDto> GetUserByAccountAsync(string accountNumber)
+        {
+            var account = await _accountRepository.GetByAccountNumberWithUserAsync(accountNumber);
+            if (account == null)
+            {
+                throw new Exception("Conta não encontrada.");
+            }
+
+            var response = new AccountResponseDto
+            {
+                AccountNumber = account.AccountNumber,
+                AccountType = account.AccountType.ToString(),
+                Name = account.User.Name,
+                Balance = account.Balance
+            };
+
+            return response;
         }
     }
 }
