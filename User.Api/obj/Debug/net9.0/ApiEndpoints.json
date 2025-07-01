@@ -46,5 +46,26 @@
       }
     ],
     "ReturnTypes": []
+  },
+  {
+    "ContainingType": "User.Api.Controllers.UserController",
+    "Method": "UpdateToken",
+    "RelativePath": "api/User/update-token/{accountNumber}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "accountNumber",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "dto",
+        "Type": "User.Api.DTOS.UpdateTokenDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
   }
 ]

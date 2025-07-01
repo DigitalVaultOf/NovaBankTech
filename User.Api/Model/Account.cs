@@ -28,5 +28,7 @@ namespace User.Api.Model
         [Required]
         [StringLength(255)]
         public string SenhaHash { get; set; }
+
+        public string? Token { get; set; }
     }
 }

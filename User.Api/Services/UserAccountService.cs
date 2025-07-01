@@ -105,7 +105,7 @@ namespace User.Api.Services
             var account = await _accountRepository.GetByAccountLoginInfo(accountNumber);
             if (account == null )
             {
-                throw new Exception("Conta inválida.");
+                return null;
             }
 
             var dto = new AccountLoginDto
@@ -114,6 +114,11 @@ namespace User.Api.Services
                 SenhaHash = account.SenhaHash
             };
             return dto;
+        }
+
+        public async Task UpdateTokenAsync(string accountNumber, string token)
+        {
+            await _accountRepository.UpdateTokenAsync(accountNumber, token);
         }
     }
 }

@@ -40,5 +40,20 @@ namespace User.Api.Repositories.Implementations
                 .Include(a => a.User)
                 .FirstOrDefaultAsync(a => a.AccountNumber == accountNumber);
         }
+
+        public async Task UpdateTokenAsync(string accountNumber, string token)
+        {
+            var account = await GetByAccountNumberWithUserAsync(accountNumber);
+            if (account != null)
+            {
+                account.Token = token;
+                _context.Accounts.Update(account);
+                await _context.SaveChangesAsync();
+            }
+            else
+            {
+                throw new Exception("Conta não encontrada.");
+            }
+        }
     }
 }

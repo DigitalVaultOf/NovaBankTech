@@ -24,6 +24,13 @@ namespace User.Api.Controllers
             return Ok(account);
         }
 
+        [HttpPut("update-token/{accountNumber}")]
+        public async Task<IActionResult> UpdateToken(string accountNumber, [FromBody] UpdateTokenDto dto)
+        {
+            await _userAccountService.UpdateTokenAsync(accountNumber, dto.Token);
+            return NoContent();
+        }
+
         [Authorize]
         [HttpPost("create")]
         public async Task<IActionResult> CreateUserAccount(CreateAccountUserDto userAccountDto)

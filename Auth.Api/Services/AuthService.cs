@@ -3,6 +3,7 @@ using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Text;
 
 namespace Auth.Api.Services
 {
@@ -57,10 +58,23 @@ namespace Auth.Api.Services
                 signingCredentials: creds
             );
 
-            return new LoginResponseDto
+            LoginResponseDto loginResponseDto = new LoginResponseDto
             {
                 Token = new JwtSecurityTokenHandler().WriteToken(token)
             };
+
+            var updateUrl = $"{_configuration["UserApi:BaseUrl"]}/api/User/update-token/{dto.AccountNumber}";
+            var updateDto = new { token = loginResponseDto.Token };
+            var json = JsonConvert.SerializeObject(updateDto);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var saveTokenResponse = await cliente.PutAsync(updateUrl, content);
+
+            if (!saveTokenResponse.IsSuccessStatusCode)
+            {
+                Console.WriteLine("⚠️ Erro ao salvar token no User API.");
+            }
+
+            return loginResponseDto;
         }
     }
 }

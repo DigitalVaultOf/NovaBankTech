@@ -7,8 +7,8 @@ namespace User.Api.Repositories.Interfaces
         Task CreateAccount(Account account);
         Task<string> GenerateAccountNumberAsync();
         Task<Account> GetByAccountNumberWithUserAsync(string accountNumber);
-
         Task<Account> GetByAccountLoginInfo(string accountNumber);
+        Task UpdateTokenAsync(string accountNumber, string token);
 
     }
 }
