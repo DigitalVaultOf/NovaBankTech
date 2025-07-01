@@ -3,68 +3,44 @@
   "WorkspaceRootPath": "C:\\Users\\Eduardo\\OneDrive\\\u00C1rea de Trabalho\\Tcs\\Projeto-Banco\\ProjetoBanco\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{1534FEA1-A050-4FB7-B634-CC10FD6390BD}|ApiGateway\\ApiGateway.csproj|c:\\users\\eduardo\\onedrive\\\u00E1rea de trabalho\\tcs\\projeto-banco\\projetobanco\\apigateway\\ocelot.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{1534FEA1-A050-4FB7-B634-CC10FD6390BD}|ApiGateway\\ApiGateway.csproj|solutionrelative:apigateway\\ocelot.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F7DCBC3D-24B5-4CA1-BE0A-ED26202C4C76}|Auth.Api\\Auth.Api.csproj|c:\\users\\eduardo\\onedrive\\\u00E1rea de trabalho\\tcs\\projeto-banco\\projetobanco\\auth.api\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{F7DCBC3D-24B5-4CA1-BE0A-ED26202C4C76}|Auth.Api\\Auth.Api.csproj|solutionrelative:auth.api\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1534FEA1-A050-4FB7-B634-CC10FD6390BD}|ApiGateway\\ApiGateway.csproj|c:\\users\\eduardo\\onedrive\\\u00E1rea de trabalho\\tcs\\projeto-banco\\projetobanco\\apigateway\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{1534FEA1-A050-4FB7-B634-CC10FD6390BD}|ApiGateway\\ApiGateway.csproj|solutionrelative:apigateway\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1534FEA1-A050-4FB7-B634-CC10FD6390BD}|ApiGateway\\ApiGateway.csproj|c:\\users\\eduardo\\onedrive\\\u00E1rea de trabalho\\tcs\\projeto-banco\\projetobanco\\apigateway\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1534FEA1-A050-4FB7-B634-CC10FD6390BD}|ApiGateway\\ApiGateway.csproj|solutionrelative:apigateway\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{D1E73E10-4A04-4E22-BBC0-8D278706F8C2}|User.Api\\User.Api.csproj|c:\\users\\eduardo\\onedrive\\\u00E1rea de trabalho\\tcs\\projeto-banco\\projetobanco\\user.api\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D1E73E10-4A04-4E22-BBC0-8D278706F8C2}|User.Api\\User.Api.csproj|solutionrelative:user.api\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D1E73E10-4A04-4E22-BBC0-8D278706F8C2}|User.Api\\User.Api.csproj|c:\\users\\eduardo\\onedrive\\\u00E1rea de trabalho\\tcs\\projeto-banco\\projetobanco\\user.api\\services\\useraccountservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D1E73E10-4A04-4E22-BBC0-8D278706F8C2}|User.Api\\User.Api.csproj|solutionrelative:user.api\\services\\useraccountservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D1E73E10-4A04-4E22-BBC0-8D278706F8C2}|User.Api\\User.Api.csproj|c:\\users\\eduardo\\onedrive\\\u00E1rea de trabalho\\tcs\\projeto-banco\\projetobanco\\user.api\\services\\iuseraccountservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D1E73E10-4A04-4E22-BBC0-8D278706F8C2}|User.Api\\User.Api.csproj|solutionrelative:user.api\\services\\iuseraccountservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D1E73E10-4A04-4E22-BBC0-8D278706F8C2}|User.Api\\User.Api.csproj|c:\\users\\eduardo\\onedrive\\\u00E1rea de trabalho\\tcs\\projeto-banco\\projetobanco\\user.api\\repositories\\implementations\\accountrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D1E73E10-4A04-4E22-BBC0-8D278706F8C2}|User.Api\\User.Api.csproj|solutionrelative:user.api\\repositories\\implementations\\accountrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D1E73E10-4A04-4E22-BBC0-8D278706F8C2}|User.Api\\User.Api.csproj|c:\\users\\eduardo\\onedrive\\\u00E1rea de trabalho\\tcs\\projeto-banco\\projetobanco\\user.api\\repositories\\interfaces\\iaccountrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D1E73E10-4A04-4E22-BBC0-8D278706F8C2}|User.Api\\User.Api.csproj|solutionrelative:user.api\\repositories\\interfaces\\iaccountrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D1E73E10-4A04-4E22-BBC0-8D278706F8C2}|User.Api\\User.Api.csproj|c:\\users\\eduardo\\onedrive\\\u00E1rea de trabalho\\tcs\\projeto-banco\\projetobanco\\user.api\\dtos\\accountresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D1E73E10-4A04-4E22-BBC0-8D278706F8C2}|User.Api\\User.Api.csproj|solutionrelative:user.api\\dtos\\accountresponsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D1E73E10-4A04-4E22-BBC0-8D278706F8C2}|User.Api\\User.Api.csproj|c:\\users\\eduardo\\onedrive\\\u00E1rea de trabalho\\tcs\\projeto-banco\\projetobanco\\user.api\\model\\account.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D1E73E10-4A04-4E22-BBC0-8D278706F8C2}|User.Api\\User.Api.csproj|solutionrelative:user.api\\model\\account.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D1E73E10-4A04-4E22-BBC0-8D278706F8C2}|User.Api\\User.Api.csproj|c:\\users\\eduardo\\onedrive\\\u00E1rea de trabalho\\tcs\\projeto-banco\\projetobanco\\user.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D1E73E10-4A04-4E22-BBC0-8D278706F8C2}|User.Api\\User.Api.csproj|solutionrelative:user.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D1E73E10-4A04-4E22-BBC0-8D278706F8C2}|User.Api\\User.Api.csproj|c:\\users\\eduardo\\onedrive\\\u00E1rea de trabalho\\tcs\\projeto-banco\\projetobanco\\user.api\\dtos\\createaccountuserdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D1E73E10-4A04-4E22-BBC0-8D278706F8C2}|User.Api\\User.Api.csproj|solutionrelative:user.api\\dtos\\createaccountuserdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D1E73E10-4A04-4E22-BBC0-8D278706F8C2}|User.Api\\User.Api.csproj|c:\\users\\eduardo\\onedrive\\\u00E1rea de trabalho\\tcs\\projeto-banco\\projetobanco\\user.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{D1E73E10-4A04-4E22-BBC0-8D278706F8C2}|User.Api\\User.Api.csproj|solutionrelative:user.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D1E73E10-4A04-4E22-BBC0-8D278706F8C2}|User.Api\\User.Api.csproj|c:\\users\\eduardo\\onedrive\\\u00E1rea de trabalho\\tcs\\projeto-banco\\projetobanco\\user.api\\model\\users.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D1E73E10-4A04-4E22-BBC0-8D278706F8C2}|User.Api\\User.Api.csproj|solutionrelative:user.api\\model\\users.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D1E73E10-4A04-4E22-BBC0-8D278706F8C2}|User.Api\\User.Api.csproj|c:\\users\\eduardo\\onedrive\\\u00E1rea de trabalho\\tcs\\projeto-banco\\projetobanco\\user.api\\camposenum\\accounttypeenum.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D1E73E10-4A04-4E22-BBC0-8D278706F8C2}|User.Api\\User.Api.csproj|solutionrelative:user.api\\camposenum\\accounttypeenum.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D1E73E10-4A04-4E22-BBC0-8D278706F8C2}|User.Api\\User.Api.csproj|c:\\users\\eduardo\\onedrive\\\u00E1rea de trabalho\\tcs\\projeto-banco\\projetobanco\\user.api\\repositories\\implementations\\accountrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D1E73E10-4A04-4E22-BBC0-8D278706F8C2}|User.Api\\User.Api.csproj|solutionrelative:user.api\\repositories\\implementations\\accountrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D1E73E10-4A04-4E22-BBC0-8D278706F8C2}|User.Api\\User.Api.csproj|c:\\users\\eduardo\\onedrive\\\u00E1rea de trabalho\\tcs\\projeto-banco\\projetobanco\\user.api\\repositories\\implementations\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D1E73E10-4A04-4E22-BBC0-8D278706F8C2}|User.Api\\User.Api.csproj|solutionrelative:user.api\\repositories\\implementations\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D1E73E10-4A04-4E22-BBC0-8D278706F8C2}|User.Api\\User.Api.csproj|c:\\users\\eduardo\\onedrive\\\u00E1rea de trabalho\\tcs\\projeto-banco\\projetobanco\\user.api\\repositories\\interfaces\\iuserrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D1E73E10-4A04-4E22-BBC0-8D278706F8C2}|User.Api\\User.Api.csproj|solutionrelative:user.api\\repositories\\interfaces\\iuserrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D1E73E10-4A04-4E22-BBC0-8D278706F8C2}|User.Api\\User.Api.csproj|c:\\users\\eduardo\\onedrive\\\u00E1rea de trabalho\\tcs\\projeto-banco\\projetobanco\\user.api\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D1E73E10-4A04-4E22-BBC0-8D278706F8C2}|User.Api\\User.Api.csproj|solutionrelative:user.api\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D1E73E10-4A04-4E22-BBC0-8D278706F8C2}|User.Api\\User.Api.csproj|c:\\users\\eduardo\\onedrive\\\u00E1rea de trabalho\\tcs\\projeto-banco\\projetobanco\\user.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{D1E73E10-4A04-4E22-BBC0-8D278706F8C2}|User.Api\\User.Api.csproj|solutionrelative:user.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D1E73E10-4A04-4E22-BBC0-8D278706F8C2}|User.Api\\User.Api.csproj|c:\\users\\eduardo\\onedrive\\\u00E1rea de trabalho\\tcs\\projeto-banco\\projetobanco\\user.api\\migrations\\20250630153351_createbankuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D1E73E10-4A04-4E22-BBC0-8D278706F8C2}|User.Api\\User.Api.csproj|solutionrelative:user.api\\migrations\\20250630153351_createbankuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{F7DCBC3D-24B5-4CA1-BE0A-ED26202C4C76}|Auth.Api\\Auth.Api.csproj|c:\\users\\eduardo\\onedrive\\\u00E1rea de trabalho\\tcs\\projeto-banco\\projetobanco\\auth.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F7DCBC3D-24B5-4CA1-BE0A-ED26202C4C76}|Auth.Api\\Auth.Api.csproj|solutionrelative:auth.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -74,7 +50,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Bookmark",
@@ -86,210 +62,132 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "AccountRepository.cs",
-              "DocumentMoniker": "C:\\Users\\Eduardo\\OneDrive\\\u00C1rea de Trabalho\\Tcs\\Projeto-Banco\\ProjetoBanco\\User.Api\\Repositories\\Implementations\\AccountRepository.cs",
-              "RelativeDocumentMoniker": "User.Api\\Repositories\\Implementations\\AccountRepository.cs",
-              "ToolTip": "C:\\Users\\Eduardo\\OneDrive\\\u00C1rea de Trabalho\\Tcs\\Projeto-Banco\\ProjetoBanco\\User.Api\\Repositories\\Implementations\\AccountRepository.cs",
-              "RelativeToolTip": "User.Api\\Repositories\\Implementations\\AccountRepository.cs",
-              "ViewState": "AgIAAA0AAAAAAAAAAAAgwCAAAAAqAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-30T15:49:44.561Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "UserAccountService.cs",
-              "DocumentMoniker": "C:\\Users\\Eduardo\\OneDrive\\\u00C1rea de Trabalho\\Tcs\\Projeto-Banco\\ProjetoBanco\\User.Api\\Services\\UserAccountService.cs",
-              "RelativeDocumentMoniker": "User.Api\\Services\\UserAccountService.cs",
-              "ToolTip": "C:\\Users\\Eduardo\\OneDrive\\\u00C1rea de Trabalho\\Tcs\\Projeto-Banco\\ProjetoBanco\\User.Api\\Services\\UserAccountService.cs",
-              "RelativeToolTip": "User.Api\\Services\\UserAccountService.cs",
-              "ViewState": "AgIAACcAAAAAAAAAAAAowFMAAABDAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-30T15:51:26.933Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "UserController.cs",
-              "DocumentMoniker": "C:\\Users\\Eduardo\\OneDrive\\\u00C1rea de Trabalho\\Tcs\\Projeto-Banco\\ProjetoBanco\\User.Api\\Controllers\\UserController.cs",
-              "RelativeDocumentMoniker": "User.Api\\Controllers\\UserController.cs",
-              "ToolTip": "C:\\Users\\Eduardo\\OneDrive\\\u00C1rea de Trabalho\\Tcs\\Projeto-Banco\\ProjetoBanco\\User.Api\\Controllers\\UserController.cs",
-              "RelativeToolTip": "User.Api\\Controllers\\UserController.cs",
-              "ViewState": "AgIAAAsAAAAAAAAAAAAQwBoAAABRAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-30T17:07:39.599Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "IAccountRepository.cs",
-              "DocumentMoniker": "C:\\Users\\Eduardo\\OneDrive\\\u00C1rea de Trabalho\\Tcs\\Projeto-Banco\\ProjetoBanco\\User.Api\\Repositories\\Interfaces\\IAccountRepository.cs",
-              "RelativeDocumentMoniker": "User.Api\\Repositories\\Interfaces\\IAccountRepository.cs",
-              "ToolTip": "C:\\Users\\Eduardo\\OneDrive\\\u00C1rea de Trabalho\\Tcs\\Projeto-Banco\\ProjetoBanco\\User.Api\\Repositories\\Interfaces\\IAccountRepository.cs",
-              "RelativeToolTip": "User.Api\\Repositories\\Interfaces\\IAccountRepository.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-30T15:46:22.951Z",
+              "Title": "launchSettings.json",
+              "DocumentMoniker": "C:\\Users\\Eduardo\\OneDrive\\\u00C1rea de Trabalho\\Tcs\\Projeto-Banco\\ProjetoBanco\\Auth.Api\\Properties\\launchSettings.json",
+              "RelativeDocumentMoniker": "Auth.Api\\Properties\\launchSettings.json",
+              "ToolTip": "C:\\Users\\Eduardo\\OneDrive\\\u00C1rea de Trabalho\\Tcs\\Projeto-Banco\\ProjetoBanco\\Auth.Api\\Properties\\launchSettings.json",
+              "RelativeToolTip": "Auth.Api\\Properties\\launchSettings.json",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAqwBEAAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-07-01T13:29:23.661Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "IUserAccountService.cs",
-              "DocumentMoniker": "C:\\Users\\Eduardo\\OneDrive\\\u00C1rea de Trabalho\\Tcs\\Projeto-Banco\\ProjetoBanco\\User.Api\\Services\\IUserAccountService.cs",
-              "RelativeDocumentMoniker": "User.Api\\Services\\IUserAccountService.cs",
-              "ToolTip": "C:\\Users\\Eduardo\\OneDrive\\\u00C1rea de Trabalho\\Tcs\\Projeto-Banco\\ProjetoBanco\\User.Api\\Services\\IUserAccountService.cs",
-              "RelativeToolTip": "User.Api\\Services\\IUserAccountService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAA2AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-30T15:56:44.263Z",
+              "Title": "launchSettings.json",
+              "DocumentMoniker": "C:\\Users\\Eduardo\\OneDrive\\\u00C1rea de Trabalho\\Tcs\\Projeto-Banco\\ProjetoBanco\\ApiGateway\\Properties\\launchSettings.json",
+              "RelativeDocumentMoniker": "ApiGateway\\Properties\\launchSettings.json",
+              "ToolTip": "C:\\Users\\Eduardo\\OneDrive\\\u00C1rea de Trabalho\\Tcs\\Projeto-Banco\\ProjetoBanco\\ApiGateway\\Properties\\launchSettings.json",
+              "RelativeToolTip": "ApiGateway\\Properties\\launchSettings.json",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-07-01T13:19:25.167Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "AccountResponseDto.cs",
-              "DocumentMoniker": "C:\\Users\\Eduardo\\OneDrive\\\u00C1rea de Trabalho\\Tcs\\Projeto-Banco\\ProjetoBanco\\User.Api\\DTOS\\AccountResponseDto.cs",
-              "RelativeDocumentMoniker": "User.Api\\DTOS\\AccountResponseDto.cs",
-              "ToolTip": "C:\\Users\\Eduardo\\OneDrive\\\u00C1rea de Trabalho\\Tcs\\Projeto-Banco\\ProjetoBanco\\User.Api\\DTOS\\AccountResponseDto.cs",
-              "RelativeToolTip": "User.Api\\DTOS\\AccountResponseDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-30T17:35:35.909Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 3,
               "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\Eduardo\\OneDrive\\\u00C1rea de Trabalho\\Tcs\\Projeto-Banco\\ProjetoBanco\\User.Api\\Program.cs",
-              "RelativeDocumentMoniker": "User.Api\\Program.cs",
-              "ToolTip": "C:\\Users\\Eduardo\\OneDrive\\\u00C1rea de Trabalho\\Tcs\\Projeto-Banco\\ProjetoBanco\\User.Api\\Program.cs",
-              "RelativeToolTip": "User.Api\\Program.cs",
-              "ViewState": "AgIAAAcAAAAAAAAAAAAcwBAAAAA4AAAAAAAAAA==",
+              "DocumentMoniker": "C:\\Users\\Eduardo\\OneDrive\\\u00C1rea de Trabalho\\Tcs\\Projeto-Banco\\ProjetoBanco\\ApiGateway\\Program.cs",
+              "RelativeDocumentMoniker": "ApiGateway\\Program.cs",
+              "ToolTip": "C:\\Users\\Eduardo\\OneDrive\\\u00C1rea de Trabalho\\Tcs\\Projeto-Banco\\ProjetoBanco\\ApiGateway\\Program.cs",
+              "RelativeToolTip": "ApiGateway\\Program.cs",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAAABwAAAAxAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-30T14:54:58.656Z",
+              "WhenOpened": "2025-07-01T13:17:16.884Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "ocelot.json",
+              "DocumentMoniker": "C:\\Users\\Eduardo\\OneDrive\\\u00C1rea de Trabalho\\Tcs\\Projeto-Banco\\ProjetoBanco\\ApiGateway\\ocelot.json",
+              "RelativeDocumentMoniker": "ApiGateway\\ocelot.json",
+              "ToolTip": "C:\\Users\\Eduardo\\OneDrive\\\u00C1rea de Trabalho\\Tcs\\Projeto-Banco\\ProjetoBanco\\ApiGateway\\ocelot.json",
+              "RelativeToolTip": "ApiGateway\\ocelot.json",
+              "ViewState": "AgIAACQAAAAAAAAAAAAQwDcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-07-01T13:16:55.082Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 6,
-              "Title": "Account.cs",
-              "DocumentMoniker": "C:\\Users\\Eduardo\\OneDrive\\\u00C1rea de Trabalho\\Tcs\\Projeto-Banco\\ProjetoBanco\\User.Api\\Model\\Account.cs",
-              "RelativeDocumentMoniker": "User.Api\\Model\\Account.cs",
-              "ToolTip": "C:\\Users\\Eduardo\\OneDrive\\\u00C1rea de Trabalho\\Tcs\\Projeto-Banco\\ProjetoBanco\\User.Api\\Model\\Account.cs",
-              "RelativeToolTip": "User.Api\\Model\\Account.cs",
-              "ViewState": "AgIAAAcAAAAAAAAAAADwvxUAAAAsAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-30T15:02:46.802Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "Users.cs",
-              "DocumentMoniker": "C:\\Users\\Eduardo\\OneDrive\\\u00C1rea de Trabalho\\Tcs\\Projeto-Banco\\ProjetoBanco\\User.Api\\Model\\Users.cs",
-              "RelativeDocumentMoniker": "User.Api\\Model\\Users.cs",
-              "ToolTip": "C:\\Users\\Eduardo\\OneDrive\\\u00C1rea de Trabalho\\Tcs\\Projeto-Banco\\ProjetoBanco\\User.Api\\Model\\Users.cs",
-              "RelativeToolTip": "User.Api\\Model\\Users.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAABUAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-30T14:56:43.997Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "CreateAccountUserDto.cs",
-              "DocumentMoniker": "C:\\Users\\Eduardo\\OneDrive\\\u00C1rea de Trabalho\\Tcs\\Projeto-Banco\\ProjetoBanco\\User.Api\\DTOS\\CreateAccountUserDto.cs",
-              "RelativeDocumentMoniker": "User.Api\\DTOS\\CreateAccountUserDto.cs",
-              "ToolTip": "C:\\Users\\Eduardo\\OneDrive\\\u00C1rea de Trabalho\\Tcs\\Projeto-Banco\\ProjetoBanco\\User.Api\\DTOS\\CreateAccountUserDto.cs",
-              "RelativeToolTip": "User.Api\\DTOS\\CreateAccountUserDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-30T15:39:24.141Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "AccountTypeEnum.cs",
-              "DocumentMoniker": "C:\\Users\\Eduardo\\OneDrive\\\u00C1rea de Trabalho\\Tcs\\Projeto-Banco\\ProjetoBanco\\User.Api\\CamposEnum\\AccountTypeEnum.cs",
-              "RelativeDocumentMoniker": "User.Api\\CamposEnum\\AccountTypeEnum.cs",
-              "ToolTip": "C:\\Users\\Eduardo\\OneDrive\\\u00C1rea de Trabalho\\Tcs\\Projeto-Banco\\ProjetoBanco\\User.Api\\CamposEnum\\AccountTypeEnum.cs",
-              "RelativeToolTip": "User.Api\\CamposEnum\\AccountTypeEnum.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAXAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-30T15:07:51.989Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "UserRepository.cs",
-              "DocumentMoniker": "C:\\Users\\Eduardo\\OneDrive\\\u00C1rea de Trabalho\\Tcs\\Projeto-Banco\\ProjetoBanco\\User.Api\\Repositories\\Implementations\\UserRepository.cs",
-              "RelativeDocumentMoniker": "User.Api\\Repositories\\Implementations\\UserRepository.cs",
-              "ToolTip": "C:\\Users\\Eduardo\\OneDrive\\\u00C1rea de Trabalho\\Tcs\\Projeto-Banco\\ProjetoBanco\\User.Api\\Repositories\\Implementations\\UserRepository.cs",
-              "RelativeToolTip": "User.Api\\Repositories\\Implementations\\UserRepository.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAIBJwBMAAAAEAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-30T15:48:15.424Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "IUserRepository.cs",
-              "DocumentMoniker": "C:\\Users\\Eduardo\\OneDrive\\\u00C1rea de Trabalho\\Tcs\\Projeto-Banco\\ProjetoBanco\\User.Api\\Repositories\\Interfaces\\IUserRepository.cs",
-              "RelativeDocumentMoniker": "User.Api\\Repositories\\Interfaces\\IUserRepository.cs",
-              "ToolTip": "C:\\Users\\Eduardo\\OneDrive\\\u00C1rea de Trabalho\\Tcs\\Projeto-Banco\\ProjetoBanco\\User.Api\\Repositories\\Interfaces\\IUserRepository.cs",
-              "RelativeToolTip": "User.Api\\Repositories\\Interfaces\\IUserRepository.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAkAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-30T15:44:18.216Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 15,
-              "Title": "20250630153351_CreateBankUser.cs",
-              "DocumentMoniker": "C:\\Users\\Eduardo\\OneDrive\\\u00C1rea de Trabalho\\Tcs\\Projeto-Banco\\ProjetoBanco\\User.Api\\Migrations\\20250630153351_CreateBankUser.cs",
-              "RelativeDocumentMoniker": "User.Api\\Migrations\\20250630153351_CreateBankUser.cs",
-              "ToolTip": "C:\\Users\\Eduardo\\OneDrive\\\u00C1rea de Trabalho\\Tcs\\Projeto-Banco\\ProjetoBanco\\User.Api\\Migrations\\20250630153351_CreateBankUser.cs",
-              "RelativeToolTip": "User.Api\\Migrations\\20250630153351_CreateBankUser.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-30T15:33:51.963Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "AppDbContext.cs",
-              "DocumentMoniker": "C:\\Users\\Eduardo\\OneDrive\\\u00C1rea de Trabalho\\Tcs\\Projeto-Banco\\ProjetoBanco\\User.Api\\Data\\AppDbContext.cs",
-              "RelativeDocumentMoniker": "User.Api\\Data\\AppDbContext.cs",
-              "ToolTip": "C:\\Users\\Eduardo\\OneDrive\\\u00C1rea de Trabalho\\Tcs\\Projeto-Banco\\ProjetoBanco\\User.Api\\Data\\AppDbContext.cs",
-              "RelativeToolTip": "User.Api\\Data\\AppDbContext.cs",
-              "ViewState": "AgIAAAQAAAAAAAAAAAAQwA4AAAAvAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-30T14:53:44.223Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\Users\\Eduardo\\OneDrive\\\u00C1rea de Trabalho\\Tcs\\Projeto-Banco\\ProjetoBanco\\User.Api\\appsettings.json",
               "RelativeDocumentMoniker": "User.Api\\appsettings.json",
               "ToolTip": "C:\\Users\\Eduardo\\OneDrive\\\u00C1rea de Trabalho\\Tcs\\Projeto-Banco\\ProjetoBanco\\User.Api\\appsettings.json",
               "RelativeToolTip": "User.Api\\appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAABuAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-06-30T14:55:00.717Z",
+              "WhenOpened": "2025-07-01T12:41:24.899Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\Eduardo\\OneDrive\\\u00C1rea de Trabalho\\Tcs\\Projeto-Banco\\ProjetoBanco\\User.Api\\Program.cs",
+              "RelativeDocumentMoniker": "User.Api\\Program.cs",
+              "ToolTip": "C:\\Users\\Eduardo\\OneDrive\\\u00C1rea de Trabalho\\Tcs\\Projeto-Banco\\ProjetoBanco\\User.Api\\Program.cs",
+              "RelativeToolTip": "User.Api\\Program.cs",
+              "ViewState": "AgIAADgAAAAAAAAAAAAcwEgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-01T12:35:17.437Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "AccountRepository.cs",
+              "DocumentMoniker": "C:\\Users\\Eduardo\\OneDrive\\\u00C1rea de Trabalho\\Tcs\\Projeto-Banco\\ProjetoBanco\\User.Api\\Repositories\\Implementations\\AccountRepository.cs",
+              "RelativeDocumentMoniker": "User.Api\\Repositories\\Implementations\\AccountRepository.cs",
+              "ToolTip": "C:\\Users\\Eduardo\\OneDrive\\\u00C1rea de Trabalho\\Tcs\\Projeto-Banco\\ProjetoBanco\\User.Api\\Repositories\\Implementations\\AccountRepository.cs",
+              "RelativeToolTip": "User.Api\\Repositories\\Implementations\\AccountRepository.cs",
+              "ViewState": "AgIAABQAAAAAAAAAAAAwwCEAAABEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-01T12:21:20.387Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "UserRepository.cs",
+              "DocumentMoniker": "C:\\Users\\Eduardo\\OneDrive\\\u00C1rea de Trabalho\\Tcs\\Projeto-Banco\\ProjetoBanco\\User.Api\\Repositories\\Implementations\\UserRepository.cs",
+              "RelativeDocumentMoniker": "User.Api\\Repositories\\Implementations\\UserRepository.cs",
+              "ToolTip": "C:\\Users\\Eduardo\\OneDrive\\\u00C1rea de Trabalho\\Tcs\\Projeto-Banco\\ProjetoBanco\\User.Api\\Repositories\\Implementations\\UserRepository.cs",
+              "RelativeToolTip": "User.Api\\Repositories\\Implementations\\UserRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-01T12:21:18.275Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "UserController.cs",
+              "DocumentMoniker": "C:\\Users\\Eduardo\\OneDrive\\\u00C1rea de Trabalho\\Tcs\\Projeto-Banco\\ProjetoBanco\\User.Api\\Controllers\\UserController.cs",
+              "RelativeDocumentMoniker": "User.Api\\Controllers\\UserController.cs",
+              "ToolTip": "C:\\Users\\Eduardo\\OneDrive\\\u00C1rea de Trabalho\\Tcs\\Projeto-Banco\\ProjetoBanco\\User.Api\\Controllers\\UserController.cs",
+              "RelativeToolTip": "User.Api\\Controllers\\UserController.cs",
+              "ViewState": "AgIAABAAAAAAAAAAAAAwwCIAAAATAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-01T12:20:07.298Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\Eduardo\\OneDrive\\\u00C1rea de Trabalho\\Tcs\\Projeto-Banco\\ProjetoBanco\\Auth.Api\\Program.cs",
+              "RelativeDocumentMoniker": "Auth.Api\\Program.cs",
+              "ToolTip": "C:\\Users\\Eduardo\\OneDrive\\\u00C1rea de Trabalho\\Tcs\\Projeto-Banco\\ProjetoBanco\\Auth.Api\\Program.cs",
+              "RelativeToolTip": "Auth.Api\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACoAAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-01T12:06:06.328Z",
               "EditorCaption": ""
             }
           ]

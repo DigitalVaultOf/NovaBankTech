@@ -8,6 +8,7 @@ namespace User.Api.Repositories.Interfaces
         Task<string> GenerateAccountNumberAsync();
         Task<Account> GetByAccountNumberWithUserAsync(string accountNumber);
 
+        Task<Account> GetByAccountLoginInfo(string accountNumber);
 
     }
 }

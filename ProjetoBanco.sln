@@ -1,13 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35527.113 d17.12
+VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{91FABCD2-5F9D-4754-85A8-C87F1F0E50A8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "User.Api", "User.Api\User.Api.csproj", "{D1E73E10-4A04-4E22-BBC0-8D278706F8C2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Auth.Api", "Auth.Api\Auth.Api.csproj", "{F7DCBC3D-24B5-4CA1-BE0A-ED26202C4C76}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiGateway", "ApiGateway\ApiGateway.csproj", "{1534FEA1-A050-4FB7-B634-CC10FD6390BD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,6 +25,10 @@ Global
 		{F7DCBC3D-24B5-4CA1-BE0A-ED26202C4C76}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F7DCBC3D-24B5-4CA1-BE0A-ED26202C4C76}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F7DCBC3D-24B5-4CA1-BE0A-ED26202C4C76}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1534FEA1-A050-4FB7-B634-CC10FD6390BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1534FEA1-A050-4FB7-B634-CC10FD6390BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1534FEA1-A050-4FB7-B634-CC10FD6390BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1534FEA1-A050-4FB7-B634-CC10FD6390BD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -30,5 +36,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{D1E73E10-4A04-4E22-BBC0-8D278706F8C2} = {91FABCD2-5F9D-4754-85A8-C87F1F0E50A8}
 		{F7DCBC3D-24B5-4CA1-BE0A-ED26202C4C76} = {91FABCD2-5F9D-4754-85A8-C87F1F0E50A8}
+		{1534FEA1-A050-4FB7-B634-CC10FD6390BD} = {91FABCD2-5F9D-4754-85A8-C87F1F0E50A8}
 	EndGlobalSection
 EndGlobal

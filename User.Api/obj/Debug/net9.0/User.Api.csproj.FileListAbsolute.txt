@@ -169,3 +169,4 @@ C:\Users\Eduardo\OneDrive\Área de Trabalho\Tcs\Projeto-Banco\ProjetoBanco\User.
 C:\Users\Eduardo\OneDrive\Área de Trabalho\Tcs\Projeto-Banco\ProjetoBanco\User.Api\bin\Debug\net9.0\Swashbuckle.AspNetCore.Swagger.dll
 C:\Users\Eduardo\OneDrive\Área de Trabalho\Tcs\Projeto-Banco\ProjetoBanco\User.Api\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Users\Eduardo\OneDrive\Área de Trabalho\Tcs\Projeto-Banco\ProjetoBanco\User.Api\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\Eduardo\OneDrive\Área de Trabalho\Tcs\Projeto-Banco\ProjetoBanco\User.Api\bin\Debug\net9.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll

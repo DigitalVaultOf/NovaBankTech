@@ -99,5 +99,21 @@ namespace User.Api.Services
 
             return response;
         }
+
+        public async Task<AccountLoginDto> GetAccountByLoginAsync(string accountNumber)
+        {
+            var account = await _accountRepository.GetByAccountLoginInfo(accountNumber);
+            if (account == null )
+            {
+                throw new Exception("Conta inválida.");
+            }
+
+            var dto = new AccountLoginDto
+            {
+                AccountNumber = account.AccountNumber,
+                SenhaHash = account.SenhaHash
+            };
+            return dto;
+        }
     }
 }

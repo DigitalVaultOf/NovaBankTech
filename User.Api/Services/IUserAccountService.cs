@@ -6,5 +6,6 @@ namespace User.Api.Services
     {
         Task CreateUserWithAccountAsync(CreateAccountUserDto dto);
         Task<AccountResponseDto> GetUserByAccountAsync(string accountNumber);
+        Task<AccountLoginDto> GetAccountByLoginAsync(string accountNumber);
     }
 }

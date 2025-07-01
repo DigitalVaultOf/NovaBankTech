@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using User.Api.DTOS;
 using User.Api.Services;
@@ -16,6 +17,14 @@ namespace User.Api.Controllers
             _userAccountService = userAccountService;
         }
 
+        [HttpGet("GetAccountByLogin/{accountNumber}")]
+        public async Task<IActionResult> GetAccountByLogin(string accountNumber)
+        {
+            var account = await _userAccountService.GetAccountByLoginAsync(accountNumber);
+            return Ok(account);
+        }
+
+        [Authorize]
         [HttpPost("create")]
         public async Task<IActionResult> CreateUserAccount(CreateAccountUserDto userAccountDto)
         {
@@ -23,6 +32,7 @@ namespace User.Api.Controllers
             return Ok("Conta Criada com Sucesso!");
         }
 
+        [Authorize]
         [HttpGet("GetAccountByNumber/{accountNumber}")]
         public async Task<IActionResult> GetAccountByNumber(string accountNumber)
         {
@@ -30,5 +40,7 @@ namespace User.Api.Controllers
 
             return Ok(account);
         }
+
+        
     }
 }
