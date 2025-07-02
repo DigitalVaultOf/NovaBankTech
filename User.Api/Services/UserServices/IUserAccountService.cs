@@ -1,7 +1,7 @@
 ﻿using User.Api.DTOS;
 using User.Api.Model;
 
-namespace User.Api.Services
+namespace Bank.Api.Services.UserServices
 {
     public interface IUserAccountService
     {

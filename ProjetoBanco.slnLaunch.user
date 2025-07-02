@@ -3,7 +3,7 @@
     "Name": "Novo Perfil",
     "Projects": [
       {
-        "Path": "User.Api\\User.Api.csproj",
+        "Path": "User.Api\\Bank.Api.csproj",
         "Action": "Start"
       },
       {

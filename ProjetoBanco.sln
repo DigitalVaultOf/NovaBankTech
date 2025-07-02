@@ -5,7 +5,7 @@ VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{91FABCD2-5F9D-4754-85A8-C87F1F0E50A8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "User.Api", "User.Api\User.Api.csproj", "{D1E73E10-4A04-4E22-BBC0-8D278706F8C2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bank.Api", "User.Api\Bank.Api.csproj", "{D1E73E10-4A04-4E22-BBC0-8D278706F8C2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Auth.Api", "Auth.Api\Auth.Api.csproj", "{F7DCBC3D-24B5-4CA1-BE0A-ED26202C4C76}"
 EndProject

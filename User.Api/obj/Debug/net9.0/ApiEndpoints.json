@@ -1,5 +1,21 @@
 [
   {
+    "ContainingType": "Bank.Api.Controllers.TransferController",
+    "Method": "Transfer",
+    "RelativePath": "api/Transfer/Transfer",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "transferRequest",
+        "Type": "Bank.Api.DTOS.TransferRequestDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "User.Api.Controllers.UserController",
     "Method": "CreateUserAccount",
     "RelativePath": "api/User/create",

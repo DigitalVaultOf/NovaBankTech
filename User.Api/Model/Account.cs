@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Bank.Api.Model;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using User.Api.CamposEnum;
 
@@ -30,5 +31,8 @@ namespace User.Api.Model
         public string SenhaHash { get; set; }
 
         public string? Token { get; set; }
+
+        public ICollection<Transfer> TransfersSent { get; set; }
+        public ICollection<Transfer> TransfersReceived { get; set; }
     }
 }

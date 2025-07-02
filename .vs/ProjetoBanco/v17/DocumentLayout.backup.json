@@ -3,12 +3,28 @@
   "WorkspaceRootPath": "C:\\Users\\Eduardo\\OneDrive\\\u00C1rea de Trabalho\\Tcs\\Projeto-Banco\\ProjetoBanco\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{F7DCBC3D-24B5-4CA1-BE0A-ED26202C4C76}|Auth.Api\\Auth.Api.csproj|c:\\users\\eduardo\\onedrive\\\u00E1rea de trabalho\\tcs\\projeto-banco\\projetobanco\\auth.api\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F7DCBC3D-24B5-4CA1-BE0A-ED26202C4C76}|Auth.Api\\Auth.Api.csproj|solutionrelative:auth.api\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D1E73E10-4A04-4E22-BBC0-8D278706F8C2}|User.Api\\Bank.Api.csproj|c:\\users\\eduardo\\onedrive\\\u00E1rea de trabalho\\tcs\\projeto-banco\\projetobanco\\user.api\\dtos\\transferrequestdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D1E73E10-4A04-4E22-BBC0-8D278706F8C2}|User.Api\\Bank.Api.csproj|solutionrelative:user.api\\dtos\\transferrequestdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D1E73E10-4A04-4E22-BBC0-8D278706F8C2}|User.Api\\User.Api.csproj|c:\\users\\eduardo\\onedrive\\\u00E1rea de trabalho\\tcs\\projeto-banco\\projetobanco\\user.api\\services\\useraccountservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D1E73E10-4A04-4E22-BBC0-8D278706F8C2}|User.Api\\User.Api.csproj|solutionrelative:user.api\\services\\useraccountservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D1E73E10-4A04-4E22-BBC0-8D278706F8C2}|User.Api\\Bank.Api.csproj|c:\\users\\eduardo\\onedrive\\\u00E1rea de trabalho\\tcs\\projeto-banco\\projetobanco\\user.api\\services\\transferservices\\transferservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D1E73E10-4A04-4E22-BBC0-8D278706F8C2}|User.Api\\Bank.Api.csproj|solutionrelative:user.api\\services\\transferservices\\transferservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D1E73E10-4A04-4E22-BBC0-8D278706F8C2}|User.Api\\Bank.Api.csproj|c:\\users\\eduardo\\onedrive\\\u00E1rea de trabalho\\tcs\\projeto-banco\\projetobanco\\user.api\\services\\transferservices\\itransferservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D1E73E10-4A04-4E22-BBC0-8D278706F8C2}|User.Api\\Bank.Api.csproj|solutionrelative:user.api\\services\\transferservices\\itransferservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D1E73E10-4A04-4E22-BBC0-8D278706F8C2}|User.Api\\Bank.Api.csproj|c:\\users\\eduardo\\onedrive\\\u00E1rea de trabalho\\tcs\\projeto-banco\\projetobanco\\user.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D1E73E10-4A04-4E22-BBC0-8D278706F8C2}|User.Api\\Bank.Api.csproj|solutionrelative:user.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D1E73E10-4A04-4E22-BBC0-8D278706F8C2}|User.Api\\Bank.Api.csproj|c:\\users\\eduardo\\onedrive\\\u00E1rea de trabalho\\tcs\\projeto-banco\\projetobanco\\user.api\\controllers\\transfercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D1E73E10-4A04-4E22-BBC0-8D278706F8C2}|User.Api\\Bank.Api.csproj|solutionrelative:user.api\\controllers\\transfercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Eduardo\\OneDrive\\\u00C1rea de Trabalho\\Tcs\\Projeto-Banco\\ProjetoBanco\\User.Api\\Migrations\\20250702134714_Teste.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:User.Api\\Migrations\\20250702134714_Teste.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -18,7 +34,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 6,
           "Children": [
             {
               "$type": "Bookmark",
@@ -30,28 +46,80 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "AuthService.cs",
-              "DocumentMoniker": "C:\\Users\\Eduardo\\OneDrive\\\u00C1rea de Trabalho\\Tcs\\Projeto-Banco\\ProjetoBanco\\Auth.Api\\Services\\AuthService.cs",
-              "RelativeDocumentMoniker": "Auth.Api\\Services\\AuthService.cs",
-              "ToolTip": "C:\\Users\\Eduardo\\OneDrive\\\u00C1rea de Trabalho\\Tcs\\Projeto-Banco\\ProjetoBanco\\Auth.Api\\Services\\AuthService.cs",
-              "RelativeToolTip": "Auth.Api\\Services\\AuthService.cs",
-              "ViewState": "AgIAABgAAAAAAAAAAAAowCcAAAA5AAAAAAAAAA==",
+              "DocumentIndex": 3,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\Eduardo\\OneDrive\\\u00C1rea de Trabalho\\Tcs\\Projeto-Banco\\ProjetoBanco\\User.Api\\Program.cs",
+              "RelativeDocumentMoniker": "User.Api\\Program.cs",
+              "ToolTip": "C:\\Users\\Eduardo\\OneDrive\\\u00C1rea de Trabalho\\Tcs\\Projeto-Banco\\ProjetoBanco\\User.Api\\Program.cs",
+              "RelativeToolTip": "User.Api\\Program.cs",
+              "ViewState": "AgIAAAIAAAAAAAAAAAAwwBMAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-02T12:36:45.244Z",
+              "WhenOpened": "2025-07-02T14:05:59.584Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "TransferController.cs",
+              "DocumentMoniker": "C:\\Users\\Eduardo\\OneDrive\\\u00C1rea de Trabalho\\Tcs\\Projeto-Banco\\ProjetoBanco\\User.Api\\Controllers\\TransferController.cs",
+              "RelativeDocumentMoniker": "User.Api\\Controllers\\TransferController.cs",
+              "ToolTip": "C:\\Users\\Eduardo\\OneDrive\\\u00C1rea de Trabalho\\Tcs\\Projeto-Banco\\ProjetoBanco\\User.Api\\Controllers\\TransferController.cs",
+              "RelativeToolTip": "User.Api\\Controllers\\TransferController.cs",
+              "ViewState": "AgIAAAoAAAAAAAAAAAAgwBgAAAAgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-02T14:05:45.617Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "ITransferService.cs",
+              "DocumentMoniker": "C:\\Users\\Eduardo\\OneDrive\\\u00C1rea de Trabalho\\Tcs\\Projeto-Banco\\ProjetoBanco\\User.Api\\Services\\TransferServices\\ITransferService.cs",
+              "RelativeDocumentMoniker": "User.Api\\Services\\TransferServices\\ITransferService.cs",
+              "ToolTip": "C:\\Users\\Eduardo\\OneDrive\\\u00C1rea de Trabalho\\Tcs\\Projeto-Banco\\ProjetoBanco\\User.Api\\Services\\TransferServices\\ITransferService.cs",
+              "RelativeToolTip": "User.Api\\Services\\TransferServices\\ITransferService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-02T14:03:33.32Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "UserAccountService.cs",
-              "DocumentMoniker": "C:\\Users\\Eduardo\\OneDrive\\\u00C1rea de Trabalho\\Tcs\\Projeto-Banco\\ProjetoBanco\\User.Api\\Services\\UserAccountService.cs",
-              "RelativeDocumentMoniker": "User.Api\\Services\\UserAccountService.cs",
-              "ToolTip": "C:\\Users\\Eduardo\\OneDrive\\\u00C1rea de Trabalho\\Tcs\\Projeto-Banco\\ProjetoBanco\\User.Api\\Services\\UserAccountService.cs",
-              "RelativeToolTip": "User.Api\\Services\\UserAccountService.cs",
-              "ViewState": "AgIAADwAAAAAAAAAAAAowEsAAAAwAAAAAAAAAA==",
+              "Title": "TransferService.cs",
+              "DocumentMoniker": "C:\\Users\\Eduardo\\OneDrive\\\u00C1rea de Trabalho\\Tcs\\Projeto-Banco\\ProjetoBanco\\User.Api\\Services\\TransferServices\\TransferService.cs",
+              "RelativeDocumentMoniker": "User.Api\\Services\\TransferServices\\TransferService.cs",
+              "ToolTip": "C:\\Users\\Eduardo\\OneDrive\\\u00C1rea de Trabalho\\Tcs\\Projeto-Banco\\ProjetoBanco\\User.Api\\Services\\TransferServices\\TransferService.cs",
+              "RelativeToolTip": "User.Api\\Services\\TransferServices\\TransferService.cs",
+              "ViewState": "AgIAABkAAAAAAAAAAAAwwB8AAAAfAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-02T12:28:40.849Z",
+              "WhenOpened": "2025-07-02T13:57:35.782Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "TransferRequestDTO.cs",
+              "DocumentMoniker": "C:\\Users\\Eduardo\\OneDrive\\\u00C1rea de Trabalho\\Tcs\\Projeto-Banco\\ProjetoBanco\\User.Api\\DTOS\\TransferRequestDTO.cs",
+              "RelativeDocumentMoniker": "User.Api\\DTOS\\TransferRequestDTO.cs",
+              "ToolTip": "C:\\Users\\Eduardo\\OneDrive\\\u00C1rea de Trabalho\\Tcs\\Projeto-Banco\\ProjetoBanco\\User.Api\\DTOS\\TransferRequestDTO.cs",
+              "RelativeToolTip": "User.Api\\DTOS\\TransferRequestDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-02T13:56:13.867Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "20250702134714_Teste.cs",
+              "DocumentMoniker": "C:\\Users\\Eduardo\\OneDrive\\\u00C1rea de Trabalho\\Tcs\\Projeto-Banco\\ProjetoBanco\\User.Api\\Migrations\\20250702134714_Teste.cs",
+              "RelativeDocumentMoniker": "User.Api\\Migrations\\20250702134714_Teste.cs",
+              "ToolTip": "C:\\Users\\Eduardo\\OneDrive\\\u00C1rea de Trabalho\\Tcs\\Projeto-Banco\\ProjetoBanco\\User.Api\\Migrations\\20250702134714_Teste.cs",
+              "RelativeToolTip": "User.Api\\Migrations\\20250702134714_Teste.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAQwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-02T13:47:15.143Z",
               "EditorCaption": ""
             }
           ]

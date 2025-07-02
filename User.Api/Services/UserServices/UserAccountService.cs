@@ -5,7 +5,7 @@ using User.Api.DTOS;
 using User.Api.Model;
 using User.Api.Repositories.Interfaces;
 
-namespace User.Api.Services
+namespace Bank.Api.Services.UserServices
 {
     public class UserAccountService : IUserAccountService
     {
@@ -81,7 +81,7 @@ namespace User.Api.Services
             catch (Exception ex)
             {
                 await transaction.RollbackAsync();
-                response.Message = ($"Erro ao criar usuário e contas: {ex.Message} | Inner: {ex.InnerException?.Message}");
+                response.Message = $"Erro ao criar usuário e contas: {ex.Message} | Inner: {ex.InnerException?.Message}";
                 return response;
             }
 
@@ -118,7 +118,7 @@ namespace User.Api.Services
                 response.Message = $"Erro ao buscar usuário pela conta: {ex.Message} | Inner: {ex.InnerException?.Message}";
                 return response;
             }
-            
+
         }
 
         public async Task<ResponseModel<AccountLoginDto>> GetAccountByLoginAsync(string accountNumber)

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "jySo4eqTqK0=",
+  "dgSpecHash": "ZLitJzZJC80=",
   "success": true,
-  "projectFilePath": "C:\\Users\\Eduardo\\OneDrive\\Área de Trabalho\\Tcs\\Projeto-Banco\\ProjetoBanco\\User.Api\\User.Api.csproj",
+  "projectFilePath": "C:\\Users\\Eduardo\\OneDrive\\Área de Trabalho\\Tcs\\Projeto-Banco\\ProjetoBanco\\User.Api\\Bank.Api.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Eduardo\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",
     "C:\\Users\\Eduardo\\.nuget\\packages\\azure.identity\\1.11.4\\azure.identity.1.11.4.nupkg.sha512",

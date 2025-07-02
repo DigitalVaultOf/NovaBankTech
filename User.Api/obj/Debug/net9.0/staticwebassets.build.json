@@ -1,8 +1,8 @@
 {
   "Version": 1,
-  "Hash": "6n+thRds/5b4FMse1WuU8xFpW58Go0z23Jxymz1gHdE=",
-  "Source": "User.Api",
-  "BasePath": "_content/User.Api",
+  "Hash": "CkUASMi7wkRrmeVslb1mgpc0W1DTsJdIuweBXgtIcwc=",
+  "Source": "Bank.Api",
+  "BasePath": "_content/Bank.Api",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],

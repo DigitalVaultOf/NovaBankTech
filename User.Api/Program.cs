@@ -1,10 +1,11 @@
+using Bank.Api.Services.TransferServices;
+using Bank.Api.Services.UserServices;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using User.Api.Data;
 using User.Api.Repositories.Implementations;
 using User.Api.Repositories.Interfaces;
-using User.Api.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,10 +16,14 @@ builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddHttpContextAccessor();
+
+
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 builder.Services.AddScoped<IUserAccountService, UserAccountService>();
+builder.Services.AddScoped<ITransferService, TransferService>();
 
 builder.Services.AddAuthentication("Bearer")
     .AddJwtBearer("Bearer", options =>

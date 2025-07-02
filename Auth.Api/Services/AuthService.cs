@@ -75,7 +75,7 @@ namespace Auth.Api.Services
 
                 if (!saveTokenResponse.IsSuccessStatusCode)
                 {
-                    Console.WriteLine("⚠️ Erro ao salvar token no User API.");
+                    Console.WriteLine("Erro ao salvar token no User API.");
                 }
 
                 response.Data = loginResponseDto;

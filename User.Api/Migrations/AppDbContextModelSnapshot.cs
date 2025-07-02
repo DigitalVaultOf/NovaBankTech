@@ -22,6 +22,40 @@ namespace User.Api.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("Bank.Api.Model.Transfer", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("AccountNumberFrom")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("AccountNumberTo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("TransferDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AccountNumberFrom");
+
+                    b.HasIndex("AccountNumberTo");
+
+                    b.ToTable("Transfers");
+                });
+
             modelBuilder.Entity("User.Api.Model.Account", b =>
                 {
                     b.Property<string>("AccountNumber")
@@ -80,6 +114,25 @@ namespace User.Api.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("Bank.Api.Model.Transfer", b =>
+                {
+                    b.HasOne("User.Api.Model.Account", "AccountFrom")
+                        .WithMany("TransfersSent")
+                        .HasForeignKey("AccountNumberFrom")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("User.Api.Model.Account", "AccountTo")
+                        .WithMany("TransfersReceived")
+                        .HasForeignKey("AccountNumberTo")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("AccountFrom");
+
+                    b.Navigation("AccountTo");
+                });
+
             modelBuilder.Entity("User.Api.Model.Account", b =>
                 {
                     b.HasOne("User.Api.Model.Users", "User")
@@ -89,6 +142,13 @@ namespace User.Api.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("User.Api.Model.Account", b =>
+                {
+                    b.Navigation("TransfersReceived");
+
+                    b.Navigation("TransfersSent");
                 });
 
             modelBuilder.Entity("User.Api.Model.Users", b =>

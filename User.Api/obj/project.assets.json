@@ -4755,9 +4755,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Eduardo\\OneDrive\\Área de Trabalho\\Tcs\\Projeto-Banco\\ProjetoBanco\\User.Api\\User.Api.csproj",
-      "projectName": "User.Api",
-      "projectPath": "C:\\Users\\Eduardo\\OneDrive\\Área de Trabalho\\Tcs\\Projeto-Banco\\ProjetoBanco\\User.Api\\User.Api.csproj",
+      "projectUniqueName": "C:\\Users\\Eduardo\\OneDrive\\Área de Trabalho\\Tcs\\Projeto-Banco\\ProjetoBanco\\User.Api\\Bank.Api.csproj",
+      "projectName": "Bank.Api",
+      "projectPath": "C:\\Users\\Eduardo\\OneDrive\\Área de Trabalho\\Tcs\\Projeto-Banco\\ProjetoBanco\\User.Api\\Bank.Api.csproj",
       "packagesPath": "C:\\Users\\Eduardo\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\Eduardo\\OneDrive\\Área de Trabalho\\Tcs\\Projeto-Banco\\ProjetoBanco\\User.Api\\obj\\",
       "projectStyle": "PackageReference",
