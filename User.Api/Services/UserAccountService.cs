@@ -20,8 +20,10 @@ namespace User.Api.Services
             _accountRepository = accountRepository;
         }
 
-        public async Task CreateUserWithAccountAsync(CreateAccountUserDto dto)
+        public async Task<ResponseModel<string>> CreateUserWithAccountAsync(CreateAccountUserDto dto)
         {
+            ResponseModel<string> response = new ResponseModel<string>();
+
             var cpfExiste = await _context.Users.AnyAsync(u => u.Cpf == dto.Cpf);
             if (cpfExiste)
             {
@@ -72,48 +74,82 @@ namespace User.Api.Services
                 await _accountRepository.CreateAccount(checkingAccount);
                 await _accountRepository.CreateAccount(savingsAccount);
                 await transaction.CommitAsync();
+
+                response.Message = "Usuário e contas criados com sucesso!";
+                return response;
             }
             catch (Exception ex)
             {
                 await transaction.RollbackAsync();
-                throw new Exception($"Erro ao criar usuário e contas: {ex.Message} | Inner: {ex.InnerException?.Message}");
+                response.Message = ($"Erro ao criar usuário e contas: {ex.Message} | Inner: {ex.InnerException?.Message}");
+                return response;
             }
 
         }
 
-        public async Task<AccountResponseDto> GetUserByAccountAsync(string accountNumber)
+        public async Task<ResponseModel<AccountResponseDto>> GetUserByAccountAsync(string accountNumber)
         {
-            var account = await _accountRepository.GetByAccountNumberWithUserAsync(accountNumber);
-            if (account == null)
+            ResponseModel<AccountResponseDto> response = new ResponseModel<AccountResponseDto>();
+
+            try
             {
-                throw new Exception("Conta não encontrada.");
+
+                var account = await _accountRepository.GetByAccountNumberWithUserAsync(accountNumber);
+                if (account == null)
+                {
+                    throw new Exception("Conta não encontrada.");
+                }
+
+                var responseDto = new AccountResponseDto
+                {
+                    AccountNumber = account.AccountNumber,
+                    AccountType = account.AccountType.ToString(),
+                    Name = account.User.Name,
+                    Balance = account.Balance
+                };
+
+                response.Data = responseDto;
+                response.Message = "Usuário encontrado com sucesso!";
+
+                return response;
             }
-
-            var response = new AccountResponseDto
+            catch (Exception ex)
             {
-                AccountNumber = account.AccountNumber,
-                AccountType = account.AccountType.ToString(),
-                Name = account.User.Name,
-                Balance = account.Balance
-            };
-
-            return response;
+                response.Message = $"Erro ao buscar usuário pela conta: {ex.Message} | Inner: {ex.InnerException?.Message}";
+                return response;
+            }
+            
         }
 
-        public async Task<AccountLoginDto> GetAccountByLoginAsync(string accountNumber)
+        public async Task<ResponseModel<AccountLoginDto>> GetAccountByLoginAsync(string accountNumber)
         {
-            var account = await _accountRepository.GetByAccountLoginInfo(accountNumber);
-            if (account == null )
-            {
-                return null;
-            }
+            ResponseModel<AccountLoginDto> response = new ResponseModel<AccountLoginDto>();
 
-            var dto = new AccountLoginDto
+            try
             {
-                AccountNumber = account.AccountNumber,
-                SenhaHash = account.SenhaHash
-            };
-            return dto;
+                var account = await _accountRepository.GetByAccountLoginInfo(accountNumber);
+                if (account == null)
+                {
+                    return null;
+                }
+
+                var dto = new AccountLoginDto
+                {
+                    AccountNumber = account.AccountNumber,
+                    SenhaHash = account.SenhaHash
+                };
+
+                response.Data = dto;
+                response.Message = "Conta encontrada com sucesso!";
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+
+                response.Message = $"Erro ao buscar conta por login: {ex.Message} | Inner: {ex.InnerException?.Message}";
+                return response;
+            }
         }
 
         public async Task UpdateTokenAsync(string accountNumber, string token)
