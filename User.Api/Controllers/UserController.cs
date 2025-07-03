@@ -31,6 +31,10 @@ namespace User.Api.Controllers
             return NoContent();
         }
 
+<<<<<<< HEAD
+=======
+        
+>>>>>>> b2a104b2f45721cda06055fdaafab355d42de848
         [HttpPost("create")]
         public async Task<IActionResult> CreateUserAccount(CreateAccountUserDto userAccountDto)
         {
@@ -47,6 +51,17 @@ namespace User.Api.Controllers
             return Ok(account);
         }
 
+<<<<<<< HEAD
+=======
+        //[Authorize]
+        [HttpDelete("delete/{accountNumber}")]
+        public async Task<IActionResult> DeleteUserAsync(string accountNumber)
+        {
+            var response = await _userAccountService.DeleteUserAsync(accountNumber);
+
+            return Ok(response);
+        }
+>>>>>>> b2a104b2f45721cda06055fdaafab355d42de848
 
     }
 }

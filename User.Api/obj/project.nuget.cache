@@ -1,8 +1,14 @@
 {
   "version": 2,
+<<<<<<< HEAD
   "dgSpecHash": "RTloUpf/QCI=",
   "success": true,
   "projectFilePath": "C:\\Users\\Aluno\\Desktop\\Banco\\NovaBankTech\\User.Api\\Bank.Api.csproj",
+=======
+  "dgSpecHash": "cO1/AAVYhps=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Aluno\\Source\\Repos\\NovaBankTech\\User.Api\\Bank.Api.csproj",
+>>>>>>> b2a104b2f45721cda06055fdaafab355d42de848
   "expectedPackageFiles": [
     "C:\\Users\\Aluno\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",
     "C:\\Users\\Aluno\\.nuget\\packages\\azure.identity\\1.11.4\\azure.identity.1.11.4.nupkg.sha512",
