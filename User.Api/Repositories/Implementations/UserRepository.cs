@@ -1,4 +1,5 @@
-﻿using User.Api.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using User.Api.Data;
 using User.Api.Model;
 using User.Api.Repositories.Interfaces;
 
@@ -15,6 +16,11 @@ namespace User.Api.Repositories.Implementations
         {
             await _context.Users.AddAsync(user);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<Users> GetByIdAsync(Guid id)
+        {
+            return await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
         }
     }
     

@@ -33,6 +33,22 @@
   },
   {
     "ContainingType": "User.Api.Controllers.UserController",
+    "Method": "DeleteUserAsync",
+    "RelativePath": "api/User/delete/{accountNumber}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "accountNumber",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "User.Api.Controllers.UserController",
     "Method": "GetAccountByLogin",
     "RelativePath": "api/User/GetAccountByLogin/{accountNumber}",
     "HttpMethod": "GET",

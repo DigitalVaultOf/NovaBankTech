@@ -31,7 +31,7 @@ namespace User.Api.Controllers
             return NoContent();
         }
 
-        [Authorize]
+        
         [HttpPost("create")]
         public async Task<IActionResult> CreateUserAccount(CreateAccountUserDto userAccountDto)
         {
@@ -48,6 +48,14 @@ namespace User.Api.Controllers
             return Ok(account);
         }
 
-        
+        //[Authorize]
+        [HttpDelete("delete/{accountNumber}")]
+        public async Task<IActionResult> DeleteUserAsync(string accountNumber)
+        {
+            var response = await _userAccountService.DeleteUserAsync(accountNumber);
+
+            return Ok(response);
+        }
+
     }
 }
