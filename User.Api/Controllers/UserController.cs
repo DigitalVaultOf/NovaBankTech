@@ -31,7 +31,6 @@ namespace User.Api.Controllers
             return NoContent();
         }
 
-        [Authorize]
         [HttpPost("create")]
         public async Task<IActionResult> CreateUserAccount(CreateAccountUserDto userAccountDto)
         {
@@ -48,6 +47,6 @@ namespace User.Api.Controllers
             return Ok(account);
         }
 
-        
+
     }
 }
