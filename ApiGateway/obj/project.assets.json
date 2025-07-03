@@ -3027,23 +3027,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Eduardo\\.nuget\\packages\\": {},
+    "C:\\Users\\MoisesCaris\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Eduardo\\OneDrive\\Área de Trabalho\\Tcs\\Projeto-Banco\\ProjetoBanco\\ApiGateway\\ApiGateway.csproj",
+      "projectUniqueName": "C:\\Users\\MoisesCaris\\Documents\\NovaBankTech\\ApiGateway\\ApiGateway.csproj",
       "projectName": "ApiGateway",
-      "projectPath": "C:\\Users\\Eduardo\\OneDrive\\Área de Trabalho\\Tcs\\Projeto-Banco\\ProjetoBanco\\ApiGateway\\ApiGateway.csproj",
-      "packagesPath": "C:\\Users\\Eduardo\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Eduardo\\OneDrive\\Área de Trabalho\\Tcs\\Projeto-Banco\\ProjetoBanco\\ApiGateway\\obj\\",
+      "projectPath": "C:\\Users\\MoisesCaris\\Documents\\NovaBankTech\\ApiGateway\\ApiGateway.csproj",
+      "packagesPath": "C:\\Users\\MoisesCaris\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\MoisesCaris\\Documents\\NovaBankTech\\ApiGateway\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\Eduardo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\MoisesCaris\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -3070,7 +3070,7 @@
         "auditLevel": "low",
         "auditMode": "direct"
       },
-      "SdkAnalysisLevel": "9.0.100"
+      "SdkAnalysisLevel": "9.0.300"
     },
     "frameworks": {
       "net9.0": {
@@ -3104,7 +3104,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.101/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.301/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

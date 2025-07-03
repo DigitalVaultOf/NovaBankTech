@@ -1,5 +1,37 @@
 [
   {
+    "ContainingType": "Bank.Api.Controllers.MovimentationController",
+    "Method": "Deposit",
+    "RelativePath": "api/Movimentation/deposit",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "data",
+        "Type": "Bank.Api.DTOS.MovimentationDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Bank.Api.Controllers.MovimentationController",
+    "Method": "Whitdrawn",
+    "RelativePath": "api/Movimentation/whitdraw",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "data",
+        "Type": "Bank.Api.DTOS.MovimentationDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "Bank.Api.Controllers.TransferController",
     "Method": "Transfer",
     "RelativePath": "api/Transfer/Transfer",

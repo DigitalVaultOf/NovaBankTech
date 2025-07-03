@@ -1,30 +1,38 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\Eduardo\\OneDrive\\\u00C1rea de Trabalho\\Tcs\\Projeto-Banco\\ProjetoBanco\\",
+  "WorkspaceRootPath": "C:\\Users\\MoisesCaris\\Documents\\NovaBankTech\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{D1E73E10-4A04-4E22-BBC0-8D278706F8C2}|User.Api\\Bank.Api.csproj|c:\\users\\eduardo\\onedrive\\\u00E1rea de trabalho\\tcs\\projeto-banco\\projetobanco\\user.api\\dtos\\transferrequestdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D1E73E10-4A04-4E22-BBC0-8D278706F8C2}|User.Api\\Bank.Api.csproj|solutionrelative:user.api\\dtos\\transferrequestdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D1E73E10-4A04-4E22-BBC0-8D278706F8C2}|User.Api\\Bank.Api.csproj|c:\\users\\moisescaris\\documents\\novabanktech\\user.api\\services\\movimentations\\movimentationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D1E73E10-4A04-4E22-BBC0-8D278706F8C2}|User.Api\\Bank.Api.csproj|solutionrelative:user.api\\services\\movimentations\\movimentationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D1E73E10-4A04-4E22-BBC0-8D278706F8C2}|User.Api\\Bank.Api.csproj|c:\\users\\eduardo\\onedrive\\\u00E1rea de trabalho\\tcs\\projeto-banco\\projetobanco\\user.api\\services\\transferservices\\transferservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{D1E73E10-4A04-4E22-BBC0-8D278706F8C2}|User.Api\\Bank.Api.csproj|c:\\users\\moisescaris\\documents\\novabanktech\\user.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{D1E73E10-4A04-4E22-BBC0-8D278706F8C2}|User.Api\\Bank.Api.csproj|solutionrelative:user.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D1E73E10-4A04-4E22-BBC0-8D278706F8C2}|User.Api\\Bank.Api.csproj|c:\\users\\moisescaris\\documents\\novabanktech\\user.api\\model\\movimentations.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D1E73E10-4A04-4E22-BBC0-8D278706F8C2}|User.Api\\Bank.Api.csproj|solutionrelative:user.api\\model\\movimentations.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D1E73E10-4A04-4E22-BBC0-8D278706F8C2}|User.Api\\Bank.Api.csproj|c:\\users\\moisescaris\\documents\\novabanktech\\user.api\\services\\transferservices\\transferservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D1E73E10-4A04-4E22-BBC0-8D278706F8C2}|User.Api\\Bank.Api.csproj|solutionrelative:user.api\\services\\transferservices\\transferservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D1E73E10-4A04-4E22-BBC0-8D278706F8C2}|User.Api\\Bank.Api.csproj|c:\\users\\eduardo\\onedrive\\\u00E1rea de trabalho\\tcs\\projeto-banco\\projetobanco\\user.api\\services\\transferservices\\itransferservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D1E73E10-4A04-4E22-BBC0-8D278706F8C2}|User.Api\\Bank.Api.csproj|solutionrelative:user.api\\services\\transferservices\\itransferservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D1E73E10-4A04-4E22-BBC0-8D278706F8C2}|User.Api\\Bank.Api.csproj|c:\\users\\moisescaris\\documents\\novabanktech\\user.api\\controllers\\movimentationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D1E73E10-4A04-4E22-BBC0-8D278706F8C2}|User.Api\\Bank.Api.csproj|solutionrelative:user.api\\controllers\\movimentationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D1E73E10-4A04-4E22-BBC0-8D278706F8C2}|User.Api\\Bank.Api.csproj|c:\\users\\eduardo\\onedrive\\\u00E1rea de trabalho\\tcs\\projeto-banco\\projetobanco\\user.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{D1E73E10-4A04-4E22-BBC0-8D278706F8C2}|User.Api\\Bank.Api.csproj|c:\\users\\moisescaris\\documents\\novabanktech\\user.api\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D1E73E10-4A04-4E22-BBC0-8D278706F8C2}|User.Api\\Bank.Api.csproj|solutionrelative:user.api\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D1E73E10-4A04-4E22-BBC0-8D278706F8C2}|User.Api\\Bank.Api.csproj|c:\\users\\moisescaris\\documents\\novabanktech\\user.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D1E73E10-4A04-4E22-BBC0-8D278706F8C2}|User.Api\\Bank.Api.csproj|solutionrelative:user.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D1E73E10-4A04-4E22-BBC0-8D278706F8C2}|User.Api\\Bank.Api.csproj|c:\\users\\eduardo\\onedrive\\\u00E1rea de trabalho\\tcs\\projeto-banco\\projetobanco\\user.api\\controllers\\transfercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{D1E73E10-4A04-4E22-BBC0-8D278706F8C2}|User.Api\\Bank.Api.csproj|c:\\users\\moisescaris\\documents\\novabanktech\\user.api\\controllers\\transfercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D1E73E10-4A04-4E22-BBC0-8D278706F8C2}|User.Api\\Bank.Api.csproj|solutionrelative:user.api\\controllers\\transfercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Eduardo\\OneDrive\\\u00C1rea de Trabalho\\Tcs\\Projeto-Banco\\ProjetoBanco\\User.Api\\Migrations\\20250702134714_Teste.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:User.Api\\Migrations\\20250702134714_Teste.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -34,93 +42,106 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": 3,
           "Children": [
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{0ad07096-bba9-4900-a651-0598d26f6d24}"
-            },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\Eduardo\\OneDrive\\\u00C1rea de Trabalho\\Tcs\\Projeto-Banco\\ProjetoBanco\\User.Api\\Program.cs",
-              "RelativeDocumentMoniker": "User.Api\\Program.cs",
-              "ToolTip": "C:\\Users\\Eduardo\\OneDrive\\\u00C1rea de Trabalho\\Tcs\\Projeto-Banco\\ProjetoBanco\\User.Api\\Program.cs",
-              "RelativeToolTip": "User.Api\\Program.cs",
-              "ViewState": "AgIAAAIAAAAAAAAAAAAwwBMAAAAAAAAAAAAAAA==",
+              "Title": "TransferService.cs",
+              "DocumentMoniker": "C:\\Users\\MoisesCaris\\Documents\\NovaBankTech\\User.Api\\Services\\TransferServices\\TransferService.cs",
+              "RelativeDocumentMoniker": "User.Api\\Services\\TransferServices\\TransferService.cs",
+              "ToolTip": "C:\\Users\\MoisesCaris\\Documents\\NovaBankTech\\User.Api\\Services\\TransferServices\\TransferService.cs",
+              "RelativeToolTip": "User.Api\\Services\\TransferServices\\TransferService.cs",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAAwAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-02T14:05:59.584Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "TransferController.cs",
-              "DocumentMoniker": "C:\\Users\\Eduardo\\OneDrive\\\u00C1rea de Trabalho\\Tcs\\Projeto-Banco\\ProjetoBanco\\User.Api\\Controllers\\TransferController.cs",
-              "RelativeDocumentMoniker": "User.Api\\Controllers\\TransferController.cs",
-              "ToolTip": "C:\\Users\\Eduardo\\OneDrive\\\u00C1rea de Trabalho\\Tcs\\Projeto-Banco\\ProjetoBanco\\User.Api\\Controllers\\TransferController.cs",
-              "RelativeToolTip": "User.Api\\Controllers\\TransferController.cs",
-              "ViewState": "AgIAAAoAAAAAAAAAAAAgwBgAAAAgAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-02T14:05:45.617Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-03T18:16:01.87Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "ITransferService.cs",
-              "DocumentMoniker": "C:\\Users\\Eduardo\\OneDrive\\\u00C1rea de Trabalho\\Tcs\\Projeto-Banco\\ProjetoBanco\\User.Api\\Services\\TransferServices\\ITransferService.cs",
-              "RelativeDocumentMoniker": "User.Api\\Services\\TransferServices\\ITransferService.cs",
-              "ToolTip": "C:\\Users\\Eduardo\\OneDrive\\\u00C1rea de Trabalho\\Tcs\\Projeto-Banco\\ProjetoBanco\\User.Api\\Services\\TransferServices\\ITransferService.cs",
-              "RelativeToolTip": "User.Api\\Services\\TransferServices\\ITransferService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAABAAAAAAAAAA==",
+              "Title": "Movimentations.cs",
+              "DocumentMoniker": "C:\\Users\\MoisesCaris\\Documents\\NovaBankTech\\User.Api\\Model\\Movimentations.cs",
+              "RelativeDocumentMoniker": "User.Api\\Model\\Movimentations.cs",
+              "ToolTip": "C:\\Users\\MoisesCaris\\Documents\\NovaBankTech\\User.Api\\Model\\Movimentations.cs",
+              "RelativeToolTip": "User.Api\\Model\\Movimentations.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-02T14:03:33.32Z",
+              "WhenOpened": "2025-07-03T18:15:50.141Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "TransferService.cs",
-              "DocumentMoniker": "C:\\Users\\Eduardo\\OneDrive\\\u00C1rea de Trabalho\\Tcs\\Projeto-Banco\\ProjetoBanco\\User.Api\\Services\\TransferServices\\TransferService.cs",
-              "RelativeDocumentMoniker": "User.Api\\Services\\TransferServices\\TransferService.cs",
-              "ToolTip": "C:\\Users\\Eduardo\\OneDrive\\\u00C1rea de Trabalho\\Tcs\\Projeto-Banco\\ProjetoBanco\\User.Api\\Services\\TransferServices\\TransferService.cs",
-              "RelativeToolTip": "User.Api\\Services\\TransferServices\\TransferService.cs",
-              "ViewState": "AgIAABkAAAAAAAAAAAAwwB8AAAAfAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-02T13:57:35.782Z",
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\MoisesCaris\\Documents\\NovaBankTech\\User.Api\\appsettings.json",
+              "RelativeDocumentMoniker": "User.Api\\appsettings.json",
+              "ToolTip": "C:\\Users\\MoisesCaris\\Documents\\NovaBankTech\\User.Api\\appsettings.json",
+              "RelativeToolTip": "User.Api\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAABLAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-07-03T18:12:45.719Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "TransferRequestDTO.cs",
-              "DocumentMoniker": "C:\\Users\\Eduardo\\OneDrive\\\u00C1rea de Trabalho\\Tcs\\Projeto-Banco\\ProjetoBanco\\User.Api\\DTOS\\TransferRequestDTO.cs",
-              "RelativeDocumentMoniker": "User.Api\\DTOS\\TransferRequestDTO.cs",
-              "ToolTip": "C:\\Users\\Eduardo\\OneDrive\\\u00C1rea de Trabalho\\Tcs\\Projeto-Banco\\ProjetoBanco\\User.Api\\DTOS\\TransferRequestDTO.cs",
-              "RelativeToolTip": "User.Api\\DTOS\\TransferRequestDTO.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAWAAAAAAAAAA==",
+              "Title": "MovimentationService.cs",
+              "DocumentMoniker": "C:\\Users\\MoisesCaris\\Documents\\NovaBankTech\\User.Api\\Services\\Movimentations\\MovimentationService.cs",
+              "RelativeDocumentMoniker": "User.Api\\Services\\Movimentations\\MovimentationService.cs",
+              "ToolTip": "C:\\Users\\MoisesCaris\\Documents\\NovaBankTech\\User.Api\\Services\\Movimentations\\MovimentationService.cs",
+              "RelativeToolTip": "User.Api\\Services\\Movimentations\\MovimentationService.cs",
+              "ViewState": "AgIAABIAAAAAAAAAAAAYwCEAAAAfAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-02T13:56:13.867Z",
+              "WhenOpened": "2025-07-03T18:07:07.834Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "20250702134714_Teste.cs",
-              "DocumentMoniker": "C:\\Users\\Eduardo\\OneDrive\\\u00C1rea de Trabalho\\Tcs\\Projeto-Banco\\ProjetoBanco\\User.Api\\Migrations\\20250702134714_Teste.cs",
-              "RelativeDocumentMoniker": "User.Api\\Migrations\\20250702134714_Teste.cs",
-              "ToolTip": "C:\\Users\\Eduardo\\OneDrive\\\u00C1rea de Trabalho\\Tcs\\Projeto-Banco\\ProjetoBanco\\User.Api\\Migrations\\20250702134714_Teste.cs",
-              "RelativeToolTip": "User.Api\\Migrations\\20250702134714_Teste.cs",
-              "ViewState": "AgIAAAgAAAAAAAAAAAAQwAAAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 6,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\MoisesCaris\\Documents\\NovaBankTech\\User.Api\\Program.cs",
+              "RelativeDocumentMoniker": "User.Api\\Program.cs",
+              "ToolTip": "C:\\Users\\MoisesCaris\\Documents\\NovaBankTech\\User.Api\\Program.cs",
+              "RelativeToolTip": "User.Api\\Program.cs",
+              "ViewState": "AgIAAAcAAAAAAAAAAAAAABMAAAAqAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-02T13:47:15.143Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-03T18:03:12.589Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "UserController.cs",
+              "DocumentMoniker": "C:\\Users\\MoisesCaris\\Documents\\NovaBankTech\\User.Api\\Controllers\\UserController.cs",
+              "RelativeDocumentMoniker": "User.Api\\Controllers\\UserController.cs",
+              "ToolTip": "C:\\Users\\MoisesCaris\\Documents\\NovaBankTech\\User.Api\\Controllers\\UserController.cs",
+              "RelativeToolTip": "User.Api\\Controllers\\UserController.cs",
+              "ViewState": "AgIAAA4AAAAAAAAAAAAAwCAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-03T17:11:59.782Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "MovimentationController.cs",
+              "DocumentMoniker": "C:\\Users\\MoisesCaris\\Documents\\NovaBankTech\\User.Api\\Controllers\\MovimentationController.cs",
+              "RelativeDocumentMoniker": "User.Api\\Controllers\\MovimentationController.cs",
+              "ToolTip": "C:\\Users\\MoisesCaris\\Documents\\NovaBankTech\\User.Api\\Controllers\\MovimentationController.cs",
+              "RelativeToolTip": "User.Api\\Controllers\\MovimentationController.cs",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAxwCIAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-03T17:12:16.911Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "TransferController.cs",
+              "DocumentMoniker": "C:\\Users\\MoisesCaris\\Documents\\NovaBankTech\\User.Api\\Controllers\\TransferController.cs",
+              "RelativeDocumentMoniker": "User.Api\\Controllers\\TransferController.cs",
+              "ToolTip": "C:\\Users\\MoisesCaris\\Documents\\NovaBankTech\\User.Api\\Controllers\\TransferController.cs",
+              "RelativeToolTip": "User.Api\\Controllers\\TransferController.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAABEAAAAvAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-03T17:11:25.936Z"
             }
           ]
         }

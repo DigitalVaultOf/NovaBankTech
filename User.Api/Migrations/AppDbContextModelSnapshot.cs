@@ -22,6 +22,32 @@ namespace User.Api.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("Bank.Api.Model.Movimentations", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("DateTimeMoviment")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("MovimentTypeEnum")
+                        .HasColumnType("int");
+
+                    b.Property<string>("accountNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Moviments");
+                });
+
             modelBuilder.Entity("Bank.Api.Model.Transfer", b =>
                 {
                     b.Property<int>("Id")

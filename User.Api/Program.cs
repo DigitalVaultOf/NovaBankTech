@@ -1,3 +1,4 @@
+using Bank.Api.Services.Movimentations;
 using Bank.Api.Services.TransferServices;
 using Bank.Api.Services.UserServices;
 using Microsoft.EntityFrameworkCore;
@@ -24,6 +25,7 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 builder.Services.AddScoped<IUserAccountService, UserAccountService>();
 builder.Services.AddScoped<ITransferService, TransferService>();
+builder.Services.AddScoped<IMovimentationService, MovimentationService>();
 
 builder.Services.AddAuthentication("Bearer")
     .AddJwtBearer("Bearer", options =>

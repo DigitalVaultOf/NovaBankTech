@@ -16,6 +16,8 @@ namespace User.Api.Data
         public DbSet<Users> Users { get; set; }
         public DbSet<Transfer> Transfers { get; set; }
 
+        public DbSet<Movimentations> Moviments { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
