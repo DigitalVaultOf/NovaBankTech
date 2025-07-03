@@ -20,6 +20,9 @@ namespace User.Api.Model
         [StringLength(100, ErrorMessage = "Email deve ter no máximo 100 caracteres")]
         public string Email { get; set; }
 
+        [Required]
+        public bool Status { get; set; } = true;
+
         public ICollection<Account> Accounts { get; set; }
     }
 }

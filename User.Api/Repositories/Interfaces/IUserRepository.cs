@@ -5,5 +5,7 @@ namespace User.Api.Repositories.Interfaces
     public interface IUserRepository
     {
         Task CreateUser(Users user);
+
+        Task<Users> GetByIdAsync(Guid id);
     }
 }
