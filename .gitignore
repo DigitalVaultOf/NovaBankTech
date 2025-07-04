@@ -1,13 +1,12 @@
 # Ignore pastas de build
-ApiGateway/
-	bin/
-    obj/
-Auth.Api/
-    bin/
-    obj/
-User.Api/
-    bin/
-    obj/
+ApiGateway/bin/
+ApiGateway/obj/
+
+Auth.Api/bin/
+Auth.Api/obj/
+
+User.Api/bin/
+User.Api/obj/
 
 # Ignore arquivos do Visual Studio
 .vs/
@@ -15,6 +14,8 @@ User.Api/
 *.suo
 *.userosscache
 *.sln.docstates
+
+.idea
 
 # Ignore arquivos de pacotes/nuget
 packages/

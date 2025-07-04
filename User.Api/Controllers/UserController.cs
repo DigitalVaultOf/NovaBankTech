@@ -1,4 +1,5 @@
-﻿using Bank.Api.Services.UserServices;
+﻿using Bank.Api.DTOS;
+using Bank.Api.Services.UserServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -56,6 +57,21 @@ namespace User.Api.Controllers
 
             return Ok(response);
         }
+        
+        //[Authorize]
+        [HttpPut("update-user/{id:guid}")]
+        public async Task<IActionResult> UpdateUser(Guid id, [FromBody] UpdateUserDto updateUserDto)
+        {
+            var response = await _userAccountService.UpdateUserAsync(id, updateUserDto);
+            
+            if (!string.IsNullOrEmpty(response.Message) && (response.Message.Contains("Error") || response.Message.Contains("Erro")))
+            {
+                return BadRequest(response.Message);
+            }
+            
+            return Ok(response.Message);
+        }
+        
 
     }
 }

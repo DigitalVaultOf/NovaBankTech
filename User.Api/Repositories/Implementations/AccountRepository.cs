@@ -55,5 +55,11 @@ namespace User.Api.Repositories.Implementations
                 throw new Exception("Conta não encontrada.");
             }
         }
+
+        public async Task UpdateAccount(Account account)
+        {
+            _context.Accounts.Update(account);
+            await _context.SaveChangesAsync();
+        }
     }
 }
