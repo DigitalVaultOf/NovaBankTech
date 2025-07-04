@@ -9,6 +9,6 @@ namespace User.Api.Repositories.Interfaces
         Task<Account> GetByAccountNumberWithUserAsync(string accountNumber);
         Task<Account> GetByAccountLoginInfo(string accountNumber);
         Task UpdateTokenAsync(string accountNumber, string token);
-
+        Task UpdateAccount(Account account);
     }
 }

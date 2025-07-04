@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Bank.Api.DTOS;
+using Microsoft.EntityFrameworkCore;
 using User.Api.CamposEnum;
 using User.Api.Data;
 using User.Api.DTOS;
@@ -192,6 +193,48 @@ namespace Bank.Api.Services.UserServices
         public async Task UpdateTokenAsync(string accountNumber, string token)
         {
             await _accountRepository.UpdateTokenAsync(accountNumber, token);
+        }
+
+        public async Task<ResponseModel<string>> UpdateUserAsync(Guid userId, UpdateUserDto dto)
+        {
+            var response = new ResponseModel<string>();
+            await using var transaction = await _context.Database.BeginTransactionAsync();
+
+            try
+            {
+                var user = await _userRepository.GetUserByIdWithAccountsAsync(userId);
+
+                if (user == null)
+                {
+                    throw new Exception("Usuário não encontrado.");
+                }
+                
+                var emailExists = await _context.Users.AnyAsync(u => u.Email == dto.Email && u.Id != userId);
+
+                if (emailExists)
+                {
+                    throw new Exception("O e-mail informado já está em uso.");
+
+                }
+                
+                user.Name = dto.Name;
+                user.Email = dto.Email;
+                
+                
+                await _context.SaveChangesAsync();
+                await transaction.CommitAsync();
+
+                response.Message = "Usuário atualizado com sucesso!";
+                return response;
+                
+                
+            }
+            catch (Exception ex)
+            {
+                await transaction.RollbackAsync();
+                response.Message = $"Erro ao atualizar usuário: {ex.Message}";
+                return response;
+            }
         }
     }
 }

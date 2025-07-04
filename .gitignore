@@ -16,6 +16,8 @@ User.Api/
 *.userosscache
 *.sln.docstates
 
+.idea
+
 # Ignore arquivos de pacotes/nuget
 packages/
 *.nupkg
