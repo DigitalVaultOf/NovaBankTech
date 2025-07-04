@@ -152,6 +152,43 @@ namespace Bank.Api.Services.UserServices
             }
         }
 
+        public async Task<ResponseModel<bool>> DeleteUserAsync(string accountNumber)
+        {
+            ResponseModel<bool> response = new ResponseModel<bool>();
+
+            try
+            {
+                var account = await _accountRepository.GetByAccountNumberWithUserAsync(accountNumber);
+                if (account == null)
+                {
+                    response.Message = "Conta não encontrada.";
+                    response.Data = false;
+                    return response;
+                }
+
+                var user = await _userRepository.GetByIdAsync(account.UserId);
+                if (user == null)
+                {
+                    response.Message = "Usuário não encontrado.";
+                    response.Data = false;
+                    return response;
+                }
+                user.Status = false;
+
+                await _context.SaveChangesAsync();
+
+                response.Message = "Usuário desativado com sucesso!";
+                response.Data = true;
+            }
+            catch (Exception ex)
+            {
+                response.Message = $"Erro ao desativar o usuário: {ex.Message} | Inner: {ex.InnerException?.Message}";
+                response.Data = false;
+            }
+
+            return response;
+        }
+
         public async Task UpdateTokenAsync(string accountNumber, string token)
         {
             await _accountRepository.UpdateTokenAsync(accountNumber, token);

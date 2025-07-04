@@ -47,6 +47,15 @@ namespace User.Api.Controllers
             return Ok(account);
         }
 
-        
+
+        //[Authorize]
+        [HttpDelete("delete/{accountNumber}")]
+        public async Task<IActionResult> DeleteUserAsync(string accountNumber)
+        {
+            var response = await _userAccountService.DeleteUserAsync(accountNumber);
+
+            return Ok(response);
+        }
+
     }
 }

@@ -9,7 +9,6 @@ obj/
 *.userosscache
 *.sln.docstates
 
-
 # Ignore arquivos de pacotes/nuget
 packages/
 *.nupkg
@@ -20,3 +19,5 @@ project.fragment.lock.json
 *.log.vs/
 bin/
 obj/
+
+*.log

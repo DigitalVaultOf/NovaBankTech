@@ -6,7 +6,7 @@ namespace Bank.Api.DTOS
     {
         [JsonIgnore]
         public string? AccountNumberFrom { get; set; }
-        public string AccountNumberTo { get; set; }
+        public  string AccountNumberTo { get; set; }
         public decimal Amount { get; set; }
         public string? Description { get; set; }
     }
