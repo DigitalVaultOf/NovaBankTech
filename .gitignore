@@ -1,0 +1,19 @@
+# Ignore pastas de build
+bin/
+obj/
+
+# Ignore arquivos do Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Ignore arquivos de pacotes/nuget
+packages/
+*.nupkg
+project.lock.json
+project.fragment.lock.json
+
+# Outras opções úteis
+*.log
