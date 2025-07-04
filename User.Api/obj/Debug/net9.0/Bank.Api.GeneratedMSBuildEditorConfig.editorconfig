@@ -17,21 +17,13 @@ build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = Bank.Api
 build_property.RootNamespace = Bank.Api
-<<<<<<< HEAD
 build_property.ProjectDir = C:\Users\Aluno\Desktop\Banco\NovaBankTech\User.Api\
-=======
-build_property.ProjectDir = C:\Users\Aluno\Source\Repos\NovaBankTech\User.Api\
->>>>>>> b2a104b2f45721cda06055fdaafab355d42de848
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 9.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-<<<<<<< HEAD
 build_property.MSBuildProjectDirectory = C:\Users\Aluno\Desktop\Banco\NovaBankTech\User.Api
-=======
-build_property.MSBuildProjectDirectory = C:\Users\Aluno\Source\Repos\NovaBankTech\User.Api
->>>>>>> b2a104b2f45721cda06055fdaafab355d42de848
 build_property._RazorSourceGeneratorDebug = 
 build_property.EffectiveAnalysisLevelStyle = 9.0
 build_property.EnableCodeStyleSeverity = 

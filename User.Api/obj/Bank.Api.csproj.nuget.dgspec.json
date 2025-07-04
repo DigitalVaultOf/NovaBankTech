@@ -1,7 +1,6 @@
 {
   "format": 1,
   "restore": {
-<<<<<<< HEAD
     "C:\\Users\\Aluno\\Desktop\\Banco\\NovaBankTech\\User.Api\\Bank.Api.csproj": {}
   },
   "projects": {
@@ -13,19 +12,6 @@
         "projectPath": "C:\\Users\\Aluno\\Desktop\\Banco\\NovaBankTech\\User.Api\\Bank.Api.csproj",
         "packagesPath": "C:\\Users\\Aluno\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\Aluno\\Desktop\\Banco\\NovaBankTech\\User.Api\\obj\\",
-=======
-    "C:\\Users\\Aluno\\Source\\Repos\\NovaBankTech\\User.Api\\Bank.Api.csproj": {}
-  },
-  "projects": {
-    "C:\\Users\\Aluno\\Source\\Repos\\NovaBankTech\\User.Api\\Bank.Api.csproj": {
-      "version": "1.0.0",
-      "restore": {
-        "projectUniqueName": "C:\\Users\\Aluno\\Source\\Repos\\NovaBankTech\\User.Api\\Bank.Api.csproj",
-        "projectName": "Bank.Api",
-        "projectPath": "C:\\Users\\Aluno\\Source\\Repos\\NovaBankTech\\User.Api\\Bank.Api.csproj",
-        "packagesPath": "C:\\Users\\Aluno\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Aluno\\Source\\Repos\\NovaBankTech\\User.Api\\obj\\",
->>>>>>> b2a104b2f45721cda06055fdaafab355d42de848
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

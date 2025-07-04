@@ -4755,19 +4755,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-<<<<<<< HEAD
       "projectUniqueName": "C:\\Users\\Aluno\\Desktop\\Banco\\NovaBankTech\\User.Api\\Bank.Api.csproj",
       "projectName": "Bank.Api",
       "projectPath": "C:\\Users\\Aluno\\Desktop\\Banco\\NovaBankTech\\User.Api\\Bank.Api.csproj",
       "packagesPath": "C:\\Users\\Aluno\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\Aluno\\Desktop\\Banco\\NovaBankTech\\User.Api\\obj\\",
-=======
-      "projectUniqueName": "C:\\Users\\Aluno\\Source\\Repos\\NovaBankTech\\User.Api\\Bank.Api.csproj",
-      "projectName": "Bank.Api",
-      "projectPath": "C:\\Users\\Aluno\\Source\\Repos\\NovaBankTech\\User.Api\\Bank.Api.csproj",
-      "packagesPath": "C:\\Users\\Aluno\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Aluno\\Source\\Repos\\NovaBankTech\\User.Api\\obj\\",
->>>>>>> b2a104b2f45721cda06055fdaafab355d42de848
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -4865,5 +4857,13 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.203/PortableRuntimeIdentifierGraph.json"
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Problema ao ler o arquivo de cache C:\\Users\\Aluno\\Desktop\\Banco\\NovaBankTech\\User.Api\\obj\\project.nuget.cache: Invalid property identifier character: <. Path 'version', line 3, position 0."
+    }
+  ]
 }
