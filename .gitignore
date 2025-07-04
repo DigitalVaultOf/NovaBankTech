@@ -16,4 +16,8 @@ project.lock.json
 project.fragment.lock.json
 
 # Outras opções úteis
+*.log.vs/
+bin/
+obj/
+
 *.log
