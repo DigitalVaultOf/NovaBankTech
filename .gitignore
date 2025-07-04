@@ -1,10 +1,22 @@
-# Arquivos e pastas do Visual Studio
+# Ignore pastas de build
+bin/
+obj/
+
+# Ignore arquivos do Visual Studio
 .vs/
-*.suo
 *.user
+*.suo
 *.userosscache
 *.sln.docstates
 
-# Diretórios de build
+
+# Ignore arquivos de pacotes/nuget
+packages/
+*.nupkg
+project.lock.json
+project.fragment.lock.json
+
+# Outras opções úteis
+*.log.vs/
 bin/
 obj/
