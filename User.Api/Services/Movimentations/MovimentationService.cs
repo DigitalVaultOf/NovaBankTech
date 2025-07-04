@@ -26,7 +26,7 @@ namespace Bank.Api.Services.Movimentations
                 await _context.Database.ExecuteSqlRawAsync(sql,
                     data.acountNumber = accountNumber,
                     data.value,
-                    data.type);
+                    data.type = 0);
 
                 response.Data = "Transferência realizada com sucesso.";
                 return response;
@@ -49,7 +49,7 @@ namespace Bank.Api.Services.Movimentations
                 await _context.Database.ExecuteSqlRawAsync(sql,
                     data.acountNumber = accountNumber,
                     data.value,
-                    data.type);
+                    data.type = (CamposEnum.MovimentTypeEnum)1);
 
                 response.Data = "Transferência realizada com sucesso.";
                 return response;
