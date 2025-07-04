@@ -1,6 +1,13 @@
 # Ignore pastas de build
-bin/
-obj/
+ApiGateway/
+	bin/
+    obj/
+Auth.Api/
+    bin/
+    obj/
+User.Api/
+    bin/
+    obj/
 
 # Ignore arquivos do Visual Studio
 .vs/
