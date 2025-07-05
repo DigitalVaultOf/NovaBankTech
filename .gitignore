@@ -15,7 +15,9 @@ User.Api/obj/
 *.userosscache
 *.sln.docstates
 
-.idea
+# Ignore arquivos do JetBrains Rider
+.idea/
+.idea/*
 
 # Ignore arquivos de pacotes/nuget
 packages/
