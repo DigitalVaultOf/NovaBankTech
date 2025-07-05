@@ -32,11 +32,11 @@ namespace User.Api.Controllers
             return NoContent();
         }
 
-        [HttpPost("create")]
+        [HttpPost("create-user")]
         public async Task<IActionResult> CreateUserAccount(CreateAccountUserDto userAccountDto)
         {
             await _userAccountService.CreateUserWithAccountAsync(userAccountDto);
-            return Ok("Conta Criada com Sucesso!");
+            return Ok("Usuário e Conta foram criados com sucesso!");
         }
 
         [Authorize]
@@ -50,26 +50,50 @@ namespace User.Api.Controllers
 
 
         //[Authorize]
-        [HttpDelete("delete/{accountNumber}")]
+        [HttpDelete("delete-user/{accountNumber}")]
         public async Task<IActionResult> DeleteUserAsync(string accountNumber)
         {
             var response = await _userAccountService.DeleteUserAsync(accountNumber);
+
+            if (!response.Data)
+            {
+                return BadRequest(new { message = response.Message });
+            }
 
             return Ok(response);
         }
         
         //[Authorize]
         [HttpPut("update-user/{id:guid}")]
-        public async Task<IActionResult> UpdateUser(Guid id, [FromBody] UpdateUserDto updateUserDto)
+        public async Task<IActionResult> UpdateUserAsync(Guid id, [FromBody] UpdateUserDto updateUserDto)
         {
             var response = await _userAccountService.UpdateUserAsync(id, updateUserDto);
             
-            if (!string.IsNullOrEmpty(response.Message) && (response.Message.Contains("Error") || response.Message.Contains("Erro")))
+            if (!response.Data)
             {
-                return BadRequest(response.Message);
+                return BadRequest(response);
             }
             
-            return Ok(response.Message);
+            return Ok(response);
+        }
+        
+        // [Authorize] REMOVER COMENTARIO DEPOIS.
+        [HttpPost("update-password/{id:guid}")]
+        public async Task<IActionResult> UpdatePasswordAsync(Guid id, [FromBody] UpdatePasswordDto updatePasswordDto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var response = await _userAccountService.UpdatePasswordAsync(id, updatePasswordDto);
+
+            if (!response.Data)
+            {
+                return BadRequest(response);
+            }
+            
+            return Ok(response);
         }
         
 

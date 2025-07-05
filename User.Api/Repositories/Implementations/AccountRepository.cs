@@ -15,7 +15,7 @@ namespace User.Api.Repositories.Implementations
         public async Task CreateAccount(Account account)
         {
             await _context.Accounts.AddAsync(account);
-            await _context.SaveChangesAsync();
+            // await _context.SaveChangesAsync();
         }
         public async Task<string> GenerateAccountNumberAsync()
         {
@@ -56,10 +56,10 @@ namespace User.Api.Repositories.Implementations
             }
         }
 
-        public async Task UpdateAccount(Account account)
+        public async Task UpdateAccountAsync(Account account)
         {
             _context.Accounts.Update(account);
-            await _context.SaveChangesAsync();
+            await Task.CompletedTask;
         }
     }
 }
