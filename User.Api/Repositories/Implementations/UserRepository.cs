@@ -15,7 +15,7 @@ namespace User.Api.Repositories.Implementations
         public async Task CreateUser(Users user)
         {
             await _context.Users.AddAsync(user);
-            await _context.SaveChangesAsync();
+            // await _context.SaveChangesAsync();
         }
         
         public async Task<Users> GetByIdAsync(Guid id)
@@ -23,13 +23,13 @@ namespace User.Api.Repositories.Implementations
             return await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
         }
 
-        public async Task UpdateUser(Users user)
+        public async Task UpdateUserAsync(Users user)
         {
             _context.Users.Update(user);
-            await _context.SaveChangesAsync();
+            await Task.CompletedTask;
         }
 
-        public async Task<Users> GetUserByIdWithAccountsAsync(Guid userId)
+        public async Task<Users?> GetUserByIdWithAccountsAsync(Guid userId)
         {
             return await _context.Users.Include(u => u.Accounts).FirstOrDefaultAsync(u => u.Id == userId);
         }
