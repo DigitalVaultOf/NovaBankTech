@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Bank.Api.DTOS;
+using Microsoft.EntityFrameworkCore;
 using User.Api.CamposEnum;
 using User.Api.Data;
 using User.Api.DTOS;
@@ -20,71 +21,80 @@ namespace Bank.Api.Services.UserServices
             _accountRepository = accountRepository;
         }
 
-        public async Task<ResponseModel<string>> CreateUserWithAccountAsync(CreateAccountUserDto dto)
+        public async Task<ResponseModel<bool>> CreateUserWithAccountAsync(CreateAccountUserDto dto)
         {
-            ResponseModel<string> response = new ResponseModel<string>();
+            var response = new ResponseModel<bool>();
 
-            var cpfExiste = await _context.Users.AnyAsync(u => u.Cpf == dto.Cpf);
-            if (cpfExiste)
+            var cpfExists = await _context.Users.AnyAsync(u => u.Cpf == dto.Cpf);
+            
+            if (cpfExists)
             {
-                throw new Exception("CPF já cadastrado.");
+                response.Message = "CPF já cadastrado.";
+                response.Data = false;
+                return response;
             }
 
-            var emailExiste = await _context.Users.AnyAsync(u => u.Email == dto.Email);
-            if (emailExiste)
+            var emailExists = await _context.Users.AnyAsync(u => u.Email == dto.Email);
+            if (emailExists)
             {
-                throw new Exception("Email já cadastrado.");
+                response.Message = "E-mail já cadastrado.";
+                response.Data = false;
+                return response;
             }
+            
+            await using var transaction = await _context.Database.BeginTransactionAsync();
 
-            var user = new Users
-            {
-                Id = Guid.NewGuid(),
-                Name = dto.Name,
-                Cpf = dto.Cpf,
-                Email = dto.Email,
-            };
-
-
-            var senhaHash = BCrypt.Net.BCrypt.HashPassword(dto.Password);
-            var accountNumberCheckingAccount = await _accountRepository.GenerateAccountNumberAsync();
-            var accountNumberSavingsAccount = await _accountRepository.GenerateAccountNumberAsync();
-
-            //Conta Corrente
-            var checkingAccount = new Account
-            {
-                AccountNumber = accountNumberCheckingAccount,
-                AccountType = AccountTypeEnum.CheckingAccount,
-                SenhaHash = senhaHash,
-            };
-
-            //Conta Poupança
-            var savingsAccount = new Account
-            {
-                AccountNumber = accountNumberSavingsAccount,
-                AccountType = AccountTypeEnum.SavingsAccount,
-                SenhaHash = senhaHash,
-            };
-
-            using var transaction = await _context.Database.BeginTransactionAsync();
             try
             {
+                var user = new Users
+                {
+                    Id = Guid.NewGuid(),
+                    Name = dto.Name,
+                    Cpf = dto.Cpf,
+                    Email = dto.Email,
+                };
+                
                 await _userRepository.CreateUser(user);
-                checkingAccount.UserId = user.Id;
-                savingsAccount.UserId = user.Id;
+                
+                var senhaHash = BCrypt.Net.BCrypt.HashPassword(dto.Password);
+                
+                //Conta Corrente
+                var checkingAccount = new Account
+                {
+                    AccountNumber = await _accountRepository.GenerateAccountNumberAsync(),
+                    AccountType = AccountTypeEnum.CheckingAccount,
+                    SenhaHash = senhaHash,
+                    UserId = user.Id,
+                };
+                
                 await _accountRepository.CreateAccount(checkingAccount);
+                
+                //Conta Poupança
+                var savingsAccount = new Account
+                {
+                    AccountNumber = await _accountRepository.GenerateAccountNumberAsync(),
+                    AccountType = AccountTypeEnum.SavingsAccount,
+                    SenhaHash = senhaHash,
+                    UserId = user.Id,
+                };
                 await _accountRepository.CreateAccount(savingsAccount);
+                
+                await _context.SaveChangesAsync();
                 await transaction.CommitAsync();
-
-                response.Message = "Usuário e contas criados com sucesso!";
+                
+                response.Data = true;
+                response.Message = "Usuário e Conta foram criados com sucesso!";
                 return response;
             }
             catch (Exception ex)
             {
                 await transaction.RollbackAsync();
-                response.Message = $"Erro ao criar usuário e contas: {ex.Message} | Inner: {ex.InnerException?.Message}";
+                Console.WriteLine($"LOG ERROR: ERRO CRÍTICO em CreateUserWithAccountAsync: {ex}");
+                response.Message = "Erro ao criar usuário e conta.";
+                response.Data = false;
                 return response;
             }
-
+            
         }
 
         public async Task<ResponseModel<AccountResponseDto>> GetUserByAccountAsync(string accountNumber)
@@ -154,12 +164,13 @@ namespace Bank.Api.Services.UserServices
 
         public async Task<ResponseModel<bool>> DeleteUserAsync(string accountNumber)
         {
-            ResponseModel<bool> response = new ResponseModel<bool>();
+            var response = new ResponseModel<bool>();
 
             try
             {
                 var account = await _accountRepository.GetByAccountNumberWithUserAsync(accountNumber);
-                if (account == null)
+                
+                if (account is null)
                 {
                     response.Message = "Conta não encontrada.";
                     response.Data = false;
@@ -167,7 +178,8 @@ namespace Bank.Api.Services.UserServices
                 }
 
                 var user = await _userRepository.GetByIdAsync(account.UserId);
-                if (user == null)
+                
+                if (user is null)
                 {
                     response.Message = "Usuário não encontrado.";
                     response.Data = false;
@@ -192,6 +204,128 @@ namespace Bank.Api.Services.UserServices
         public async Task UpdateTokenAsync(string accountNumber, string token)
         {
             await _accountRepository.UpdateTokenAsync(accountNumber, token);
+        }
+
+        public async Task<ResponseModel<bool>> UpdateUserAsync(Guid userId, UpdateUserDto dto)
+        {
+            var response = new ResponseModel<bool>();
+            await using var transaction = await _context.Database.BeginTransactionAsync();
+
+            try
+            {
+                var user = await _userRepository.GetUserByIdWithAccountsAsync(userId);
+
+                if (user is null)
+                {
+                    response.Message = "Usuário não encontrado.";
+                    response.Data = false;
+                    return response;
+                }
+                
+                var emailExists = await _context.Users.AnyAsync(u => u.Email == dto.Email && u.Id != userId);
+
+                if (emailExists)
+                {
+                    response.Message = "O e-mail informado já está em uso..";
+                    response.Data = false;
+                    return response;
+
+                }
+                
+                user.Name = dto.Name;
+                user.Email = dto.Email;
+
+                await _userRepository.UpdateUserAsync(user);
+                await _context.SaveChangesAsync();
+                await transaction.CommitAsync();
+
+                response.Message = "Usuário atualizado com sucesso!";
+                response.Data = true;
+                return response;
+                
+                
+            }
+            catch (Exception ex)
+            {
+                await transaction.RollbackAsync();
+                Console.WriteLine($"LOG ERROR: ERRO CRÍTICO em UpdateUserAsync para userId {userId}: {ex}");
+                response.Message = "Ocorreu um erro inesperado ao atualizar o usuário.";
+                response.Data = false;
+            }
+
+            return response;
+        }
+
+        public async Task<ResponseModel<bool>> UpdatePasswordAsync(Guid userId, UpdatePasswordDto updatePasswordDto)
+        {
+            var response = new ResponseModel<bool>();
+            await using var transaction = await _context.Database.BeginTransactionAsync();
+
+            try
+            {
+                var user = await _userRepository.GetUserByIdWithAccountsAsync(userId);
+                
+                if (user is null)
+                {
+                    response.Data = false;
+                    response.Message = "Usuário não encontrado.";
+                    return response;
+                    
+                }
+
+                var account = user.Accounts.FirstOrDefault();
+                
+                if (account is null)
+                {
+                    response.Data = false;
+                    response.Message = "Nenhuma conta associada encontrada para este usuário.";
+                    return response;
+                }
+                
+                var isCurrentPasswordValid = BCrypt.Net.BCrypt.Verify(updatePasswordDto.CurrentPassword, account.SenhaHash);
+                
+                if (!isCurrentPasswordValid)
+                {
+                    response.Data = false;
+                    response.Message = "Senha atual incorreta.";
+                    await transaction.RollbackAsync();
+                    return response;
+                }
+
+                var isNewPasswordSameAsCurrentPassword = BCrypt.Net.BCrypt.Verify(updatePasswordDto.NewPassword, account.SenhaHash);
+                
+                if (isNewPasswordSameAsCurrentPassword)
+                {
+                    response.Data = false;
+                    response.Message = "Sua nova senha deve ser diferente da anterior.";
+                    await transaction.RollbackAsync();
+                    return response;
+                }
+                
+                var newPasswordHash = BCrypt.Net.BCrypt.HashPassword(updatePasswordDto.NewPassword);
+                foreach (var acc in user.Accounts)
+                {
+                    acc.SenhaHash = newPasswordHash;
+                    _context.Accounts.Update(acc);
+                }
+                
+                await _context.SaveChangesAsync();
+                await transaction.CommitAsync();
+
+                response.Data = true;
+                response.Message = "Senha atualizada com sucesso!";
+            }
+            catch (Exception ex)
+            {
+                await transaction.RollbackAsync();
+                Console.WriteLine($"LOG ERROR: ERRO CRÍTICO em UpdatePassword para userId {userId}: {ex}");
+                response.Data = false;
+                response.Message = $"Ocorreu um erro inesperado ao tentar atualizar a senha.";
+
+            }
+
+            return response;
+
         }
     }
 }

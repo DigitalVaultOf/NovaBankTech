@@ -15,12 +15,23 @@ namespace User.Api.Repositories.Implementations
         public async Task CreateUser(Users user)
         {
             await _context.Users.AddAsync(user);
-            await _context.SaveChangesAsync();
+            // await _context.SaveChangesAsync();
         }
-
+        
         public async Task<Users> GetByIdAsync(Guid id)
         {
             return await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
+        }
+
+        public async Task UpdateUserAsync(Users user)
+        {
+            _context.Users.Update(user);
+            await Task.CompletedTask;
+        }
+
+        public async Task<Users?> GetUserByIdWithAccountsAsync(Guid userId)
+        {
+            return await _context.Users.Include(u => u.Accounts).FirstOrDefaultAsync(u => u.Id == userId);
         }
     }
     

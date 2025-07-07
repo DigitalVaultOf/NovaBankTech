@@ -4,6 +4,7 @@ ApiGateway/obj/
 
 Auth.Api/bin/
 Auth.Api/obj/
+
 User.Api/bin/
 User.Api/obj/
 
@@ -13,6 +14,10 @@ User.Api/obj/
 *.suo
 *.userosscache
 *.sln.docstates
+
+# Ignore arquivos do JetBrains Rider
+.idea/
+.idea/*
 
 # Ignore arquivos de pacotes/nuget
 packages/
