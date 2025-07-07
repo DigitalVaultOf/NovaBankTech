@@ -149,7 +149,8 @@ namespace Bank.Api.Services.UserServices
                 var dto = new AccountLoginDto
                 {
                     AccountNumber = account.AccountNumber,
-                    SenhaHash = account.SenhaHash
+                    SenhaHash = account.SenhaHash,
+                    UserId = account.UserId,
                 };
 
                 response.Data = dto;

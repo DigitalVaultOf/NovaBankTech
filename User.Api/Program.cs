@@ -86,7 +86,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")); // MUDAR CONEXÃO LOCAL AQUI.
+    options.UseSqlServer(builder.Configuration.GetConnectionString("CarlosPc")); // MUDAR CONEXÃO LOCAL AQUI.
 });
 
 var app = builder.Build();
