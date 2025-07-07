@@ -1,12 +1,10 @@
 ﻿using Bank.Api.DTOS;
-using Bank.Api.Model;
 using User.Api.Model;
 
-namespace Bank.Api.Repositories.Interfaces
+namespace Bank.Api.Services.HistoryMovementationService
 {
-    public interface IMovementRepository
+    public interface IMovimention
     {
         Task<ResponseModel<List<MovimentHistoryDto>>> GetMovimentationsAsync();
-
     }
 }

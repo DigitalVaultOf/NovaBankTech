@@ -22,6 +22,7 @@ namespace Bank.Api.Services.Movimentations
             try
             {
                 var accountNumber = _httpContextAccessor.HttpContext?.User.FindFirst(c => c.Type == "AccountNumber")?.Value;
+
                 var sql = "EXEC MovimentationsDepositProcedure @p0, @p1, @p2";
                 await _context.Database.ExecuteSqlRawAsync(sql,
                     data.acountNumber = accountNumber,
