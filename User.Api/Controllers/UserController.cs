@@ -40,10 +40,10 @@ namespace User.Api.Controllers
         }
 
         [Authorize]
-        [HttpGet("GetAccountByNumber/{accountNumber}")]
-        public async Task<IActionResult> GetAccountByNumber(string accountNumber)
+        [HttpGet("GetAccountByNumber")]
+        public async Task<IActionResult> GetAccountByNumber()
         {
-            var account = await _userAccountService.GetUserByAccountAsync(accountNumber);
+            var account = await _userAccountService.GetUserByAccountAsync();
 
             return Ok(account);
         }

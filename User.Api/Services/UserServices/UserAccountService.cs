@@ -13,12 +13,14 @@ namespace Bank.Api.Services.UserServices
         private readonly IAccountRepository _accountRepository;
         private readonly IUserRepository _userRepository;
         private readonly AppDbContext _context;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public UserAccountService(AppDbContext context, IUserRepository userRepository, IAccountRepository accountRepository)
+        public UserAccountService(AppDbContext context, IUserRepository userRepository, IAccountRepository accountRepository, IHttpContextAccessor httpContextAccessor = null)
         {
             _context = context;
             _userRepository = userRepository;
             _accountRepository = accountRepository;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public async Task<ResponseModel<bool>> CreateUserWithAccountAsync(CreateAccountUserDto dto)
@@ -97,12 +99,13 @@ namespace Bank.Api.Services.UserServices
             
         }
 
-        public async Task<ResponseModel<AccountResponseDto>> GetUserByAccountAsync(string accountNumber)
+        public async Task<ResponseModel<AccountResponseDto>> GetUserByAccountAsync()
         {
             ResponseModel<AccountResponseDto> response = new ResponseModel<AccountResponseDto>();
 
             try
             {
+                var accountNumber = _httpContextAccessor.HttpContext?.User.FindFirst(c => c.Type == "AccountNumber")?.Value;
 
                 var account = await _accountRepository.GetByAccountNumberWithUserAsync(accountNumber);
                 if (account == null)
