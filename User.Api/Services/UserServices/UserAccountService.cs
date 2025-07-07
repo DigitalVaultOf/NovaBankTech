@@ -164,7 +164,64 @@ namespace Bank.Api.Services.UserServices
                 return response;
             }
         }
+        public async Task<ResponseModel<AccountLoginDto>> GetAccountByCpfAsync(string cpf)
+        {
+            ResponseModel<AccountLoginDto> response = new ResponseModel<AccountLoginDto>();
 
+            try
+            {
+                var account = await _accountRepository.GetByCpfLoginInfo(cpf);
+                if(account == null)
+                {
+                    return null;
+                }
+
+                var dto = new AccountLoginDto
+                {
+                    Cpf = account.User.Cpf,
+                    SenhaHash = account.SenhaHash
+                };
+
+                response.Data = dto;
+                response.Message = "Conta encontrada com sucesso!";
+
+                return response;
+            } catch (Exception ex)
+            {
+                response.Message = $"Erro ao buscar conta por login: {ex.Message} | Inner: {ex.InnerException?.Message}";
+                return response;
+            }
+        }
+
+        public async Task<ResponseModel<AccountLoginDto>> GetAccountByEmailAsync(string email)
+        {
+            ResponseModel<AccountLoginDto> response = new ResponseModel<AccountLoginDto>();
+
+            try
+            {
+                var account = await _accountRepository.GetByEmailLoginInfo(email);
+                if (account == null)
+                {
+                    return null;
+                }
+
+                var dto = new AccountLoginDto
+                {
+                    Email = account.User.Email,
+                    SenhaHash = account.SenhaHash
+                };
+
+                response.Data = dto;
+                response.Message = "Conta encontrada com sucesso!";
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response.Message = $"Erro ao buscar conta por login: {ex.Message} | Inner: {ex.InnerException?.Message}";
+                return response;
+            }
+        }
         public async Task<ResponseModel<bool>> DeleteUserAsync(string accountNumber)
         {
             var response = new ResponseModel<bool>();
@@ -330,5 +387,9 @@ namespace Bank.Api.Services.UserServices
             return response;
 
         }
+
+        
+
+        
     }
 }

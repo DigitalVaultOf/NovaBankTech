@@ -61,5 +61,19 @@ namespace User.Api.Repositories.Implementations
             _context.Accounts.Update(account);
             await Task.CompletedTask;
         }
+
+        public async Task<Account?> GetByEmailLoginInfo(string email)
+        {
+            return await _context.Accounts
+                .Include(a => a.User)
+                .FirstOrDefaultAsync(a => a.User.Email == email);
+        }
+
+        public async Task<Account?> GetByCpfLoginInfo(string cpf)
+        {
+            return await _context.Accounts
+                .Include(a => a.User)
+                .FirstOrDefaultAsync(a => a.User.Cpf == cpf);
+        }
     }
 }
