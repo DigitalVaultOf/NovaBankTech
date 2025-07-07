@@ -178,6 +178,7 @@ namespace Bank.Api.Services.UserServices
 
                 var dto = new AccountLoginDto
                 {
+                    AccountNumber = account.AccountNumber,
                     Cpf = account.User.Cpf,
                     SenhaHash = account.SenhaHash
                 };
@@ -207,6 +208,7 @@ namespace Bank.Api.Services.UserServices
 
                 var dto = new AccountLoginDto
                 {
+                    AccountNumber = account.AccountNumber,
                     Email = account.User.Email,
                     SenhaHash = account.SenhaHash
                 };

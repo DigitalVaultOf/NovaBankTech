@@ -19,22 +19,40 @@ namespace Auth.Api.Services
             _httpClientFactory = httpClientFactory;
         }
 
-
         public async Task<ResponseModel<LoginResponseDto>> AuthenticateAsync(LoginRequestDto dto)
         {
             ResponseModel<LoginResponseDto> response = new ResponseModel<LoginResponseDto>();
             try
             {
                 var cliente = _httpClientFactory.CreateClient();
-                var url = $"{_configuration["UserApi:BaseUrl"]}/api/User/GetAccountByLogin/{dto.AccountNumber}";
 
-                var userResponse = cliente.GetAsync(url);
-                if (!userResponse.Result.IsSuccessStatusCode)
+                string url = null;
+
+                if (!string.IsNullOrWhiteSpace(dto.AccountNumber))
+                {
+                    url = $"{_configuration["UserApi:BaseUrl"]}/api/User/GetAccountByLogin/{Uri.EscapeDataString(dto.AccountNumber.Trim())}";
+                }
+                else if (!string.IsNullOrWhiteSpace(dto.Cpf))
+                {
+                    url = $"{_configuration["UserApi:BaseUrl"]}/api/User/GetAccountByCpf/{Uri.EscapeDataString(dto.Cpf.Trim())}";
+                }
+                else if (!string.IsNullOrWhiteSpace(dto.Email))
+                {
+                    url = $"{_configuration["UserApi:BaseUrl"]}/api/User/GetAccountByEmail/{Uri.EscapeDataString(dto.Email.Trim())}";
+                }
+                else
+                {
+                    throw new Exception("É necessário informar AccountNumber, CPF ou Email.");
+                }
+
+                var userResponse = await cliente.GetAsync(url);
+
+                if (!userResponse.IsSuccessStatusCode)
                 {
                     throw new Exception("Erro ao autenticar usuário.");
                 }
 
-                var accountJson = await userResponse.Result.Content.ReadAsStringAsync();
+                var accountJson = await userResponse.Content.ReadAsStringAsync();
                 dynamic result = JsonConvert.DeserializeObject(accountJson);
 
                 string senhaHash = result.data.senhaHash;
@@ -46,12 +64,14 @@ namespace Auth.Api.Services
                     throw new Exception("Senha inválida.");
                 }
 
-                var claims = new List<Claim>
-            {
-                new Claim("AccountNumber", dto.AccountNumber)
-            };
+                string accountNumber = result.data.accountNumber;
 
-                var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
+                var claims = new List<Claim>
+                {
+                    new Claim("AccountNumber", accountNumber)
+                };
+
+                var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
                 var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
                 var token = new JwtSecurityToken(
@@ -62,15 +82,18 @@ namespace Auth.Api.Services
                     signingCredentials: creds
                 );
 
-                LoginResponseDto loginResponseDto = new LoginResponseDto
+                string tokenString = new JwtSecurityTokenHandler().WriteToken(token);
+
+                var loginResponseDto = new LoginResponseDto
                 {
-                    Token = new JwtSecurityTokenHandler().WriteToken(token)
+                    Token = tokenString
                 };
 
-                var updateUrl = $"{_configuration["UserApi:BaseUrl"]}/api/User/update-token/{dto.AccountNumber}";
-                var updateDto = new { token = loginResponseDto.Token };
+                var updateUrl = $"{_configuration["UserApi:BaseUrl"]}/api/User/update-token/{accountNumber}";
+                var updateDto = new { token = tokenString };
                 var json = JsonConvert.SerializeObject(updateDto);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
+
                 var saveTokenResponse = await cliente.PutAsync(updateUrl, content);
 
                 if (!saveTokenResponse.IsSuccessStatusCode)
@@ -84,11 +107,9 @@ namespace Auth.Api.Services
             }
             catch (Exception ex)
             {
-
                 response.Message = $"Erro ao autenticar usuário: {ex.Message} | Inner: {ex.InnerException?.Message}";
                 return response;
             }
-            
         }
     }
 }
