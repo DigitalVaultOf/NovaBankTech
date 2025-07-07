@@ -49,7 +49,7 @@ namespace User.Api.Controllers
         }
 
 
-        //[Authorize]
+        [Authorize]
         [HttpDelete("delete-user/{accountNumber}")]
         public async Task<IActionResult> DeleteUserAsync(string accountNumber)
         {
@@ -63,7 +63,7 @@ namespace User.Api.Controllers
             return Ok(response);
         }
         
-        //[Authorize]
+        [Authorize]
         [HttpPut("update-user/{id:guid}")]
         public async Task<IActionResult> UpdateUserAsync(Guid id, [FromBody] UpdateUserDto updateUserDto)
         {
@@ -77,7 +77,7 @@ namespace User.Api.Controllers
             return Ok(response);
         }
         
-        // [Authorize] REMOVER COMENTARIO DEPOIS.
+        [Authorize] 
         [HttpPost("update-password/{id:guid}")]
         public async Task<IActionResult> UpdatePasswordAsync(Guid id, [FromBody] UpdatePasswordDto updatePasswordDto)
         {
@@ -95,7 +95,9 @@ namespace User.Api.Controllers
             
             return Ok(response);
         }
-        
+
+        // [Authorize]
+        // [HttpGet("GetUserData/{id:guid}")]
 
     }
 }

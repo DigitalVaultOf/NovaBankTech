@@ -331,5 +331,10 @@ namespace Bank.Api.Services.UserServices
             return response;
 
         }
+
+        public Task<ResponseModel<GetUserDto>> GetUserAsync()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
