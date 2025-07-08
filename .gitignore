@@ -1,7 +1,7 @@
 # Ignore pastas de build
 ApiGateway/bin/
 ApiGateway/obj/
-
+	
 Auth.Api/bin/
 Auth.Api/obj/
 
