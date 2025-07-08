@@ -1,3 +1,4 @@
+using Bank.Api.Services.HistoryMovementationService;
 using Bank.Api.Services.Movimentations;
 using Bank.Api.Services.TransferServices;
 using Bank.Api.Services.UserServices;
@@ -26,6 +27,7 @@ builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 builder.Services.AddScoped<IUserAccountService, UserAccountService>();
 builder.Services.AddScoped<ITransferService, TransferService>();
 builder.Services.AddScoped<IMovimentationService, MovimentationService>();
+builder.Services.AddScoped<IMovimention, MovimentionService>();
 
 builder.Services.AddAuthentication("Bearer")
     .AddJwtBearer("Bearer", options =>
@@ -86,7 +88,9 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("CarlosPc")); // MUDAR CONEXÃO LOCAL AQUI.
+  
+    options.UseSqlServer(builder.Configuration.GetConnectionString("Raul")); // MUDAR CONEXÃO LOCAL AQUI.
+
 });
 
 var app = builder.Build();

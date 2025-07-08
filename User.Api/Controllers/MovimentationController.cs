@@ -1,8 +1,9 @@
 ﻿using Bank.Api.DTOS;
+using Bank.Api.Services.HistoryMovementationService;
 using Bank.Api.Services.Movimentations;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+
 
 namespace Bank.Api.Controllers
 {
@@ -12,10 +13,11 @@ namespace Bank.Api.Controllers
     public class MovimentationController : ControllerBase
     {
         public readonly IMovimentationService _movimentationService;
-
-        public MovimentationController(IMovimentationService movimentationService)
+        private readonly IMovimention _movimention;
+        public MovimentationController(IMovimentationService movimentationService, IMovimention movimention)
         {
             _movimentationService = movimentationService;
+            _movimention = movimention;
         }
 
         [HttpPost("deposit")]
@@ -31,5 +33,13 @@ namespace Bank.Api.Controllers
             var response = await _movimentationService.MovimentationWithdrawAsync(data);
             return Ok(response);
         }
+
+        [HttpGet ("ListMovementaion")]
+        public async Task<IActionResult> GetMovimentationsAsync()
+        {
+            var response= await _movimention.GetMovimentationsAsync();
+            return Ok(response);
+        }
+
     }
 }
