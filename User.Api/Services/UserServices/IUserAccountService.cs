@@ -15,5 +15,6 @@ namespace Bank.Api.Services.UserServices
         Task UpdateTokenAsync(string accountNumber, string token);
         Task<ResponseModel<bool>> UpdateUserAsync(Guid userId, UpdateUserDto dto);
         Task<ResponseModel<bool>> UpdatePasswordAsync(Guid userId, UpdatePasswordDto updatePasswordDto);
+        Task<ResponseModel<GetUserDto>> GetUserAsync();
     }
 }
