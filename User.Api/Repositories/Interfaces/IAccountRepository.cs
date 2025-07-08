@@ -8,6 +8,8 @@ namespace User.Api.Repositories.Interfaces
         Task<string> GenerateAccountNumberAsync();
         Task<Account?> GetByAccountNumberWithUserAsync(string accountNumber);
         Task<Account?> GetByAccountLoginInfo(string accountNumber);
+        Task<Account?> GetByEmailLoginInfo(string email);
+        Task<Account?> GetByCpfLoginInfo(string cpf);
         Task UpdateTokenAsync(string accountNumber, string token);
         Task UpdateAccountAsync(Account account);
     }

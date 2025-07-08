@@ -9,6 +9,8 @@ namespace Bank.Api.Services.UserServices
         Task<ResponseModel<bool>> CreateUserWithAccountAsync(CreateAccountUserDto dto);
         Task<ResponseModel<AccountResponseDto>> GetUserByAccountAsync();
         Task<ResponseModel<AccountLoginDto>> GetAccountByLoginAsync(string accountNumber);
+        Task<ResponseModel<AccountLoginDto>> GetAccountByCpfAsync(string cpf);
+        Task<ResponseModel<AccountLoginDto>> GetAccountByEmailAsync(string email);
         Task<ResponseModel<bool>> DeleteUserAsync(string accountNumber);
         Task UpdateTokenAsync(string accountNumber, string token);
         Task<ResponseModel<bool>> UpdateUserAsync(Guid userId, UpdateUserDto dto);

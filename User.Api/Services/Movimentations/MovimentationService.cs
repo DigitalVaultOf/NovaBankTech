@@ -19,14 +19,14 @@ namespace Bank.Api.Services.Movimentations
         {
             var response = new ResponseModel<string>();
             {
-                try
-                {
-                    var accountNumber = _httpContextAccessor.HttpContext?.User.FindFirst(c => c.Type == "AccountNumber")?.Value;
-                    var sql = "EXEC MovimentationsDepositProcedure @p0, @p1, @p2";
-                    await _context.Database.ExecuteSqlRawAsync(sql,
-                        data.acountNumber = accountNumber,
-                        data.value,
-                        data.type = 0);
+                var accountNumber = _httpContextAccessor.HttpContext?.User.FindFirst(c => c.Type == "AccountNumber")?.Value;
+
+                var sql = "EXEC MovimentationsDepositProcedure @p0, @p1, @p2";
+                await _context.Database.ExecuteSqlRawAsync(sql,
+                    data.acountNumber = accountNumber,
+                    data.value,
+                    data.type = 0);
+
 
                     response.Data = "Transferência realizada com sucesso.";
                     return response;
