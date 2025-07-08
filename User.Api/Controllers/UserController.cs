@@ -25,6 +25,21 @@ namespace User.Api.Controllers
             return Ok(account);
         }
 
+        [HttpGet("GetAccountByCpf/{cpf}")]
+        public async Task<IActionResult> GetAccountByCpf(string cpf)
+        {
+            var response = await _userAccountService.GetAccountByCpfAsync(cpf);
+            return Ok(response);
+        }
+
+        [HttpGet("GetAccountByEmail/{email}")]
+        public async Task<IActionResult> GetAccountByEmail(string email)
+        {
+            var response = await _userAccountService.GetAccountByEmailAsync(email);
+            return Ok(response);
+        }
+
+
         [HttpPut("update-token/{accountNumber}")]
         public async Task<IActionResult> UpdateToken(string accountNumber, [FromBody] UpdateTokenDto dto)
         {
