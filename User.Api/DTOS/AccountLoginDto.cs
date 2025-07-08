@@ -4,5 +4,6 @@
     {
         public string AccountNumber { get; set; }
         public string SenhaHash { get; set; }
+        public Guid UserId { get; set; }
     }
 }

@@ -37,6 +37,8 @@ namespace Auth.Api.Services
                 var accountJson = await userResponse.Result.Content.ReadAsStringAsync();
                 dynamic result = JsonConvert.DeserializeObject(accountJson);
 
+                string userIdStr = result.data.userId;
+
                 string senhaHash = result.data.senhaHash;
 
                 bool senhaValida = BCrypt.Net.BCrypt.Verify(dto.Password, senhaHash);
@@ -48,7 +50,8 @@ namespace Auth.Api.Services
 
                 var claims = new List<Claim>
             {
-                new Claim("AccountNumber", dto.AccountNumber)
+                new Claim("AccountNumber", dto.AccountNumber),
+                new Claim("UserId", userIdStr)
             };
 
                 var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
