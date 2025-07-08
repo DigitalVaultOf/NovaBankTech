@@ -71,7 +71,7 @@ namespace Auth.Api.Services
                 var claims = new List<Claim>
 
             {
-                new Claim("AccountNumber", dto.AccountNumber),
+                new Claim("AccountNumber", accountNumber),
                 new Claim("UserId", userIdStr)
             };
 
