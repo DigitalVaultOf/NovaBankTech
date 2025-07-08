@@ -10,5 +10,6 @@ namespace Bank.Api.DTOS
         public decimal value { get; set; }
         [JsonIgnore]
         public MovimentTypeEnum type { get; set; }
+        public string Password { get; set; }
     }
 }

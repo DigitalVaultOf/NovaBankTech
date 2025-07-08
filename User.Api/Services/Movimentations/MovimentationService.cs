@@ -22,6 +22,16 @@ namespace Bank.Api.Services.Movimentations
             {
                 var accountNumber = _httpContextAccessor.HttpContext?.User.FindFirst(c => c.Type == "AccountNumber")?.Value;
 
+                var remetente = await _context.Accounts
+                    .FirstOrDefaultAsync(a => a.AccountNumber == accountNumber);
+
+                bool senhaCorreta = BCrypt.Net.BCrypt.Verify(data.Password, remetente.SenhaHash);
+                if (!senhaCorreta)
+                {
+                    response.Message = "Senha incorreta.";
+                    return response;
+                }
+
                 var sql = "EXEC MovimentationsDepositProcedure @p0, @p1, @p2";
                 await _context.Database.ExecuteSqlRawAsync(sql,
                     data.acountNumber = accountNumber,
@@ -46,6 +56,16 @@ namespace Bank.Api.Services.Movimentations
             var response = new ResponseModel<string>();
             try
             {
+                var remetente = await _context.Accounts
+                    .FirstOrDefaultAsync(a => a.AccountNumber == accountNumber);
+
+                bool senhaCorreta = BCrypt.Net.BCrypt.Verify(data.Password, remetente.SenhaHash);
+                if (!senhaCorreta)
+                {
+                    response.Message = "Senha incorreta.";
+                    return response;
+                }
+
                 var sql = "EXEC MovimentationsWithdrawProcedure @p0, @p1, @p2";
                 await _context.Database.ExecuteSqlRawAsync(sql,
                     data.acountNumber = accountNumber,
