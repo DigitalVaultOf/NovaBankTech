@@ -111,8 +111,13 @@ namespace User.Api.Controllers
             return Ok(response);
         }
 
-        // [Authorize]
-        // [HttpGet("GetUserData/{id:guid}")]
+        [Authorize]
+        [HttpGet("GetUserById")]
+        public async Task<IActionResult> GetUserByIdAsync()
+        {
+            var response = await _userAccountService.GetUserByIdAsync();
+            return Ok(response);
+        }
 
     }
 }

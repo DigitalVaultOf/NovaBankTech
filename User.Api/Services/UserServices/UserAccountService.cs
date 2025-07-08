@@ -391,9 +391,39 @@ namespace Bank.Api.Services.UserServices
 
         }
 
-        public Task<ResponseModel<GetUserDto>> GetUserAsync()
+        public async Task<ResponseModel<GetUserDto>> GetUserByIdAsync()
         {
-            throw new NotImplementedException();
+            var response = new  ResponseModel<GetUserDto>();
+
+            try
+            {
+                var accountNumber = _httpContextAccessor.HttpContext?.User.FindFirst(c => c.Type == "AccountNumber")?.Value;
+                var userId = _httpContextAccessor.HttpContext?.User.FindFirst(u => u.Type == "UserId")?.Value;
+                var userIdGuid = Guid.Parse(userId);
+                var user = await  _userRepository.GetByIdAsync(userIdGuid);
+                
+                var dto = new GetUserDto()
+                {
+                    
+                    Id = userIdGuid,
+                    AccountNumber = accountNumber,
+                    Name = user.Name,
+                    Email = user.Email,
+                    CPF = user.Cpf,
+                };
+                
+                response.Data = dto;
+                response.Message = "Usuário encontrado com sucesso!";
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erro ao encontrar dados do usuário: {ex.Message}");
+                response.Message = "Ocorreu um erro inesperado.";
+            }
+
+            return response;
+
         }
 
     }
