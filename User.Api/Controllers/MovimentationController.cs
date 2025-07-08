@@ -41,5 +41,18 @@ namespace Bank.Api.Controllers
             return Ok(response);
         }
 
+        [HttpGet("ListMovementaion/1weak")]
+        public async Task<IActionResult> GetMovimentations1weakAsync()
+        {
+            var response = await _movimention.GetMovimentations1WeakAsync();
+            return Ok(response);
+        }
+
+        [HttpGet("ListMovementaion/1mounth")]
+        public async Task<IActionResult> GetMovimentations1mounthAsync()
+        {
+            var response = await _movimention.GetMovimentations1MounthAsync();
+            return Ok(response);
+        }
     }
 }
