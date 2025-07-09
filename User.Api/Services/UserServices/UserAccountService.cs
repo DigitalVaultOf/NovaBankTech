@@ -14,13 +14,15 @@ namespace Bank.Api.Services.UserServices
         private readonly IUserRepository _userRepository;
         private readonly AppDbContext _context;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly HttpClient _httpClient;
 
-        public UserAccountService(AppDbContext context, IUserRepository userRepository, IAccountRepository accountRepository, IHttpContextAccessor httpContextAccessor = null)
+        public UserAccountService(AppDbContext context, IUserRepository userRepository, IAccountRepository accountRepository, IHttpContextAccessor httpContextAccessor = null, HttpClient httpClient = null)
         {
             _context = context;
             _userRepository = userRepository;
             _accountRepository = accountRepository;
             _httpContextAccessor = httpContextAccessor;
+            _httpClient = httpClient;
         }
 
         public async Task<ResponseModel<bool>> CreateUserWithAccountAsync(CreateAccountUserDto dto)
@@ -83,7 +85,23 @@ namespace Bank.Api.Services.UserServices
                 
                 await _context.SaveChangesAsync();
                 await transaction.CommitAsync();
-                
+
+                var emailPayload = new
+                {
+                    Nome = user.Name,
+                    Email = user.Email,
+                    ContaCorrente = checkingAccount.AccountNumber,
+                    ContaPoupanca = savingsAccount.AccountNumber
+                };
+
+                var responseEmail = await _httpClient.PostAsJsonAsync("https://localhost:7146/api/Email/send-welcome", emailPayload);
+
+                if (!responseEmail.IsSuccessStatusCode)
+                {
+                    response.Message = "Falha ao enviar email";
+                    return response;
+                }
+
                 response.Data = true;
                 response.Message = "Usuário e Conta foram criados com sucesso!";
                 return response;

@@ -13,6 +13,14 @@
       {
         "Path": "ApiGateway\\ApiGateway.csproj",
         "Action": "Start"
+      },
+      {
+        "Path": "Email.Api\\Email.Api.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "Pix.Api\\Pix.Api.csproj",
+        "Action": "Start"
       }
     ]
   }
