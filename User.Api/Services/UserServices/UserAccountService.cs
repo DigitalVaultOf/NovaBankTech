@@ -159,7 +159,7 @@ namespace Bank.Api.Services.UserServices
 
             try
             {
-                var account = await _accountRepository.GetByAccountLoginInfo(accountNumber);
+                var account = await _accountRepository.GetByAccountNumberWithUserAsync(accountNumber);
                 if (account == null)
                 {
                     return null;
@@ -170,6 +170,7 @@ namespace Bank.Api.Services.UserServices
                     AccountNumber = account.AccountNumber,
                     SenhaHash = account.SenhaHash,
                     UserId = account.UserId,
+                    Status = account.User.Status
                 };
 
                 response.Data = dto;
@@ -200,7 +201,8 @@ namespace Bank.Api.Services.UserServices
                 {
                     AccountNumber = account.AccountNumber,
                     Cpf = account.User.Cpf,
-                    SenhaHash = account.SenhaHash
+                    SenhaHash = account.SenhaHash,
+                    Status = account.User.Status
                 };
 
                 response.Data = dto;
@@ -230,7 +232,8 @@ namespace Bank.Api.Services.UserServices
                 {
                     AccountNumber = account.AccountNumber,
                     Email = account.User.Email,
-                    SenhaHash = account.SenhaHash
+                    SenhaHash = account.SenhaHash,
+                    Status = account.User.Status
                 };
 
                 response.Data = dto;
