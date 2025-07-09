@@ -111,7 +111,7 @@ namespace User.Api.Controllers
             return Ok(response);
         }
 
-        [Authorize]
+        // [Authorize]
         [HttpGet("GetUserById")]
         public async Task<IActionResult> GetUserByIdAsync()
         {
