@@ -1,55 +1,103 @@
 {
-  "Routes": [
-    {
-      "DownstreamPathTemplate": "/api/{everything}",
-      "DownstreamScheme": "https",
-      "DownstreamHostAndPorts": [
+    "Routes": [
         {
-          "Host": "localhost",
-          "Port": 7180
-        }
-      ],
-      "UpstreamPathTemplate": "/user/api/{everything}",
-      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
-      "SwaggerKey": "user"
-    },
-    {
-      "DownstreamPathTemplate": "/api/{everything}",
-      "DownstreamScheme": "https",
-      "DownstreamHostAndPorts": [
+            "DownstreamPathTemplate": "/api/{everything}",
+            "DownstreamScheme": "https",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 7180
+                }
+            ],
+            "UpstreamPathTemplate": "/user/api/{everything}",
+            "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+            "SwaggerKey": "user"
+        },
         {
-          "Host": "localhost",
-          "Port": 7133
+            "DownstreamPathTemplate": "/api/{everything}",
+            "DownstreamScheme": "https",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 7133
+                }
+            ],
+            "UpstreamPathTemplate": "/auth/api/{everything}",
+            "UpstreamHttpMethod": [ "GET", "POST" ],
+            "SwaggerKey": "auth"
+        },
+        {
+            "DownstreamPathTemplate": "/api/{everything}",
+            "DownstreamScheme": "https",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 7146
+                }
+            ],
+            "UpstreamPathTemplate": "/api/Email/{everything}",
+            "UpstreamHttpMethod": [ "POST", "GET" ],
+            "SwaggerKey": "email"
+        },
+        {
+            "DownstreamPathTemplate": "/api/{everything}",
+            "DownstreamScheme": "https",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 7250
+                }
+            ],
+            "UpstreamPathTemplate": "/api/{everything}",
+            "UpstreamHttpMethod": [ "POST", "GET" ],
+            "SwaggerKey": "pix"
         }
-      ],
-      "UpstreamPathTemplate": "/auth/api/{everything}",
-      "UpstreamHttpMethod": [ "GET", "POST" ],
-      "SwaggerKey": "auth"
+    ],
+    "SwaggerEndPoints": [
+        {
+            "Key": "user",
+            "Config": [
+                {
+                    "Name": "User API",
+                    "Version": "v1",
+                    "Url": "https://localhost:7180/swagger/v1/swagger.json"
+                }
+            ]
+        },
+        {
+            "Key": "auth",
+            "Config": [
+                {
+                    "Name": "Auth API",
+                    "Version": "v1",
+                    "Url": "https://localhost:7133/swagger/v1/swagger.json"
+                }
+            ]
+        },
+        {
+            "Key": "email",
+            "Config": [
+                {
+                    "Name": "Email API",
+                    "Version": "v1",
+                    "Url": "https://localhost:7146/swagger/v1/swagger.json"
+                }
+            ]
+        },
+        {
+            "Key": "pix",
+            "Config": [
+                {
+                    "Name": "Pix API",
+                    "Version": "v1",
+                    "Url": "https://localhost:7250/swagger/v1/swagger.json"
+                }
+            ]
+        }
+    ],
+    "GlobalConfiguration": {
+        "BaseUrl": "https://localhost:7178",
+        "RequestIdKey": "OcRequestId",
+        "RouteIsCaseSensitive": false
     }
-  ],
-  "SwaggerEndPoints": [
-    {
-      "Key": "user",
-      "Config": [
-        {
-          "Name": "User API",
-          "Version": "v1",
-          "Url": "https://localhost:7180/swagger/v1/swagger.json"
-        }
-      ]
-    },
-    {
-      "Key": "auth",
-      "Config": [
-        {
-          "Name": "Auth API",
-          "Version": "v1",
-          "Url": "https://localhost:7133/swagger/v1/swagger.json"
-        }
-      ]
-    }
-  ],
-  "GlobalConfiguration": {
-    "BaseUrl": "https://localhost:7000"
-  }
 }
