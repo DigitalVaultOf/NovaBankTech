@@ -2,6 +2,7 @@ using Bank.Api.Services.HistoryMovementationService;
 using Bank.Api.Services.Movimentations;
 using Bank.Api.Services.TransferServices;
 using Bank.Api.Services.UserServices;
+using Bank.Api.Utils;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -28,6 +29,11 @@ builder.Services.AddScoped<IUserAccountService, UserAccountService>();
 builder.Services.AddScoped<ITransferService, TransferService>();
 builder.Services.AddScoped<IMovimentationService, MovimentationService>();
 builder.Services.AddScoped<IMovimention, MovimentionService>();
+
+builder.Services.AddHttpClient<EmailSender>();
+builder.Services.AddHttpClient<UserAccountService>();
+
+
 
 builder.Services.AddAuthentication("Bearer")
     .AddJwtBearer("Bearer", options =>
