@@ -86,18 +86,19 @@ namespace Bank.Api.Services.UserServices
                 await _context.SaveChangesAsync();
                 await transaction.CommitAsync();
 
-                var emailPayload = new
+                var emailPayload = new SendWelcomeEmailDto
                 {
-                    Nome = user.Name,
-                    Email = user.Email,
-                    ContaCorrente = checkingAccount.AccountNumber,
-                    ContaPoupanca = savingsAccount.AccountNumber
+                    nome = user.Name,
+                    email = user.Email,
+                    contaCorrente = checkingAccount.AccountNumber,
+                    contaPoupanca = savingsAccount.AccountNumber
                 };
 
-                var responseEmail = await _httpClient.PostAsJsonAsync("https://localhost:7146/api/Email/send-welcome", emailPayload);
+                var responseEmail = await _httpClient.PostAsJsonAsync("https://localhost:7178/api/Email/Email/send-welcome", emailPayload);
 
                 if (!responseEmail.IsSuccessStatusCode)
                 {
+                    response.Data = false;
                     response.Message = "Falha ao enviar email";
                     return response;
                 }
