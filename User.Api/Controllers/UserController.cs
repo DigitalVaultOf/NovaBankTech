@@ -50,8 +50,8 @@ namespace User.Api.Controllers
         [HttpPost("create-user")]
         public async Task<IActionResult> CreateUserAccount(CreateAccountUserDto userAccountDto)
         {
-            await _userAccountService.CreateUserWithAccountAsync(userAccountDto);
-            return Ok("Usuário e Conta foram criados com sucesso!");
+            var response = await _userAccountService.CreateUserWithAccountAsync(userAccountDto);
+            return Ok(response);
         }
 
         [Authorize]
