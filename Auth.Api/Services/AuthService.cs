@@ -30,15 +30,18 @@ namespace Auth.Api.Services
 
                 if (!string.IsNullOrWhiteSpace(dto.AccountNumber))
                 {
-                    url = $"{_configuration["UserApi:BaseUrl"]}/api/User/GetAccountByLogin/{Uri.EscapeDataString(dto.AccountNumber.Trim())}";
+                    url =
+                        $"{_configuration["UserApi:BaseUrl"]}/api/User/GetAccountByLogin/{Uri.EscapeDataString(dto.AccountNumber.Trim())}";
                 }
                 else if (!string.IsNullOrWhiteSpace(dto.Cpf))
                 {
-                    url = $"{_configuration["UserApi:BaseUrl"]}/api/User/GetAccountByCpf/{Uri.EscapeDataString(dto.Cpf.Trim())}";
+                    url =
+                        $"{_configuration["UserApi:BaseUrl"]}/api/User/GetAccountByCpf/{Uri.EscapeDataString(dto.Cpf.Trim())}";
                 }
                 else if (!string.IsNullOrWhiteSpace(dto.Email))
                 {
-                    url = $"{_configuration["UserApi:BaseUrl"]}/api/User/GetAccountByEmail/{Uri.EscapeDataString(dto.Email.Trim())}";
+                    url =
+                        $"{_configuration["UserApi:BaseUrl"]}/api/User/GetAccountByEmail/{Uri.EscapeDataString(dto.Email.Trim())}";
                 }
                 else
                 {
@@ -56,8 +59,8 @@ namespace Auth.Api.Services
                 dynamic result = JsonConvert.DeserializeObject(accountJson);
 
                 string userIdStr = result.data.userId;
-
                 string senhaHash = result.data.senhaHash;
+                /* bool accountStatus = result.data.status; */ // MARCOS ESTÁ MEXENDO AQUI
 
                 bool senhaValida = BCrypt.Net.BCrypt.Verify(dto.Password, senhaHash);
 
@@ -66,14 +69,23 @@ namespace Auth.Api.Services
                     throw new Exception("Senha inválida.");
                 }
 
+                /* MARCOS ESTÁ MEXENDO AQUI
+                if (!accountStatus)
+                {
+                    response.Message =
+                        "Não foi possível realizar login, sua conta está desativada, contate a Administração.";
+                    return response;
+                    
+                } */
+
                 string accountNumber = result.data.accountNumber;
 
                 var claims = new List<Claim>
 
-            {
-                new Claim("AccountNumber", accountNumber),
-                new Claim("UserId", userIdStr)
-            };
+                {
+                    new Claim("AccountNumber", accountNumber),
+                    new Claim("UserId", userIdStr)
+                };
 
 
                 var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
