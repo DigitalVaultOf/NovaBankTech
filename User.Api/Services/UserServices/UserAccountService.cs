@@ -233,6 +233,7 @@ namespace Bank.Api.Services.UserServices
             {
                 var account = await _accountRepository.GetByAccountNumberWithUserAsync(accountNumber);
                 
+                
                 if (account is null)
                 {
                     response.Message = "Conta não encontrada.";
@@ -269,14 +270,17 @@ namespace Bank.Api.Services.UserServices
             await _accountRepository.UpdateTokenAsync(accountNumber, token);
         }
 
-        public async Task<ResponseModel<bool>> UpdateUserAsync(Guid userId, UpdateUserDto dto)
+        public async Task<ResponseModel<bool>> UpdateUserAsync(UpdateUserDto dto)
         {
             var response = new ResponseModel<bool>();
+           
             await using var transaction = await _context.Database.BeginTransactionAsync();
 
             try
             {
-                var user = await _userRepository.GetUserByIdWithAccountsAsync(userId);
+                var userId = _httpContextAccessor.HttpContext?.User.FindFirst(u => u.Type == "UserId")?.Value;
+                var userIdGuid = Guid.Parse(userId);
+                var user = await _userRepository.GetUserByIdWithAccountsAsync(userIdGuid);
 
                 if (user is null)
                 {
@@ -285,7 +289,7 @@ namespace Bank.Api.Services.UserServices
                     return response;
                 }
                 
-                var emailExists = await _context.Users.AnyAsync(u => u.Email == dto.Email && u.Id != userId);
+                var emailExists = await _context.Users.AnyAsync(u => u.Email == dto.Email && u.Id != userIdGuid);
 
                 if (emailExists)
                 {
@@ -311,7 +315,7 @@ namespace Bank.Api.Services.UserServices
             catch (Exception ex)
             {
                 await transaction.RollbackAsync();
-                Console.WriteLine($"LOG ERROR: ERRO CRÍTICO em UpdateUserAsync para userId {userId}: {ex}");
+                Console.WriteLine($"LOG ERROR: ERRO CRÍTICO em UpdateUserAsync para userId: {ex}");
                 response.Message = "Ocorreu um erro inesperado ao atualizar o usuário.";
                 response.Data = false;
             }
@@ -319,14 +323,17 @@ namespace Bank.Api.Services.UserServices
             return response;
         }
 
-        public async Task<ResponseModel<bool>> UpdatePasswordAsync(Guid userId, UpdatePasswordDto updatePasswordDto)
+        public async Task<ResponseModel<bool>> UpdatePasswordAsync(UpdatePasswordDto updatePasswordDto)
         {
             var response = new ResponseModel<bool>();
             await using var transaction = await _context.Database.BeginTransactionAsync();
 
             try
             {
-                var user = await _userRepository.GetUserByIdWithAccountsAsync(userId);
+                var userId = _httpContextAccessor.HttpContext?.User.FindFirst(u => u.Type == "UserId")?.Value;
+                
+                var userIdGuid = Guid.Parse(userId);
+                var user = await _userRepository.GetUserByIdWithAccountsAsync(userIdGuid);
                 
                 if (user is null)
                 {
@@ -381,7 +388,7 @@ namespace Bank.Api.Services.UserServices
             catch (Exception ex)
             {
                 await transaction.RollbackAsync();
-                Console.WriteLine($"LOG ERROR: ERRO CRÍTICO em UpdatePassword para userId {userId}: {ex}");
+                Console.WriteLine($"LOG ERROR: ERRO CRÍTICO em UpdatePassword para userId: {ex}");
                 response.Data = false;
                 response.Message = $"Ocorreu um erro inesperado ao tentar atualizar a senha.";
 
