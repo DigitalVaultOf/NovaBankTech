@@ -16,12 +16,13 @@ namespace Auth.Api.Controllers
             _authService = authService;
         }
 
-
+        
+        // MARCOS ESTÁ MEXENDO AQUI
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginRequestDto loginRequest)
         {
             var response = await _authService.AuthenticateAsync(loginRequest);
-            return Ok(response);
+            return !response.IsSuccess ? StatusCode(403, response) : Ok(response);
         }
     }
 }

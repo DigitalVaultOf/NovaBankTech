@@ -45,14 +45,19 @@ namespace Auth.Api.Services
                 }
                 else
                 {
-                    throw new Exception("É necessário informar AccountNumber, CPF ou Email.");
+                    response.Message = "É necessário informar AccountNumber, CPF ou Email.";
+                    response.IsSuccess = false;
+                    return response;
+                    // throw new Exception("É necessário informar AccountNumber, CPF ou Email.");
                 }
 
                 var userResponse = await cliente.GetAsync(url);
 
                 if (!userResponse.IsSuccessStatusCode)
                 {
-                    throw new Exception("Erro ao autenticar usuário.");
+                    response.Message = "Erro ao autenticar usuário.";
+                    response.IsSuccess = false;
+                    return response;
                 }
 
                 var accountJson = await userResponse.Content.ReadAsStringAsync();
@@ -60,23 +65,25 @@ namespace Auth.Api.Services
 
                 string userIdStr = result.data.userId;
                 string senhaHash = result.data.senhaHash;
-                /* bool accountStatus = result.data.status; */ // MARCOS ESTÁ MEXENDO AQUI
-
+                bool accountStatus = result.data.status;  // MARCOS ESTÁ MEXENDO AQUI
                 bool senhaValida = BCrypt.Net.BCrypt.Verify(dto.Password, senhaHash);
 
                 if (!senhaValida)
                 {
-                    throw new Exception("Senha inválida.");
+                    response.Message = "Senha incorreta.";
+                    response.IsSuccess = false;
+                    return response;
+                    // throw new Exception("Senha inválida.");
                 }
 
-                /* MARCOS ESTÁ MEXENDO AQUI
+                // MARCOS ESTÁ MEXENDO AQUI
                 if (!accountStatus)
                 {
-                    response.Message =
-                        "Não foi possível realizar login, sua conta está desativada, contate a Administração.";
+                    response.Message = "Não foi possível realizar login, sua conta está desativada, contate a Administração.";
+                    response.IsSuccess = false;
                     return response;
                     
-                } */
+                } 
 
                 string accountNumber = result.data.accountNumber;
 
@@ -119,11 +126,13 @@ namespace Auth.Api.Services
                 }
 
                 response.Data = loginResponseDto;
+                response.IsSuccess = true;
                 response.Message = "Usuário autenticado com sucesso!";
                 return response;
             }
             catch (Exception ex)
             {
+                response.IsSuccess = false;
                 response.Message = $"Erro ao autenticar usuário: {ex.Message} | Inner: {ex.InnerException?.Message}";
                 return response;
             }
