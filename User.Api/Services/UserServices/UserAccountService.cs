@@ -194,7 +194,7 @@ namespace Bank.Api.Services.UserServices
             {
                 var accountNumbers = await _accountRepository.GetAccountNumbersByCpfLoginInfo(cpf);
 
-                if (accountNumbers == null || !accountNumbers.Any())/* ** */
+                if (accountNumbers == null || !accountNumbers.Any())
                 /* ** */
                 {/* ** */
                     /* ** */
@@ -223,6 +223,7 @@ namespace Bank.Api.Services.UserServices
 
                 var dto = new AccountLoginDto
                 {
+                    
                     /* ** */
                     AccountNumbers = accountNumbers,/* ** */
                     /* ** */
@@ -287,23 +288,16 @@ namespace Bank.Api.Services.UserServices
 
                 var dto = new AccountLoginDto
                 {
-                    /* ** */
-                    AccountNumbers = accountNumbers,/* ** */
-                    /* ** */
-                    Email = user.Email,/* ** */
-                    /* ** */
-                    Cpf = user.Cpf,/* ** */
-                    /* ** */
-                    SenhaHash = firstAccountForUser?.SenhaHash,/* ** */
-                    /* ** */
-                    UserId = user.Id,/* ** */
-                    /* ** */
-                    Status = user.Status/* ** */
+                    AccountNumbers = accountNumbers,
+                    Email = user.Email,
+                    Cpf = user.Cpf,
+                    SenhaHash = firstAccountForUser?.SenhaHash,
+                    UserId = user.Id,
+                    Status = user.Status
                 };
 
                 response.Data = dto;
-                /* ** */
-                response.Message = "Contas encontradas com sucesso!";/* ** */
+                response.Message = "Contas encontradas com sucesso!";
 
                 return response;
             }
@@ -492,10 +486,10 @@ namespace Bank.Api.Services.UserServices
 
             try
             {
-                var accountNumber = _httpContextAccessor.HttpContext?.User.FindFirst(c => c.Type == "AccountNumber")?.Value;
                 var userId = _httpContextAccessor.HttpContext?.User.FindFirst(u => u.Type == "UserId")?.Value;
                 var userIdGuid = Guid.Parse(userId);
                 var user = await _userRepository.GetByIdAsync(userIdGuid);
+                var accountNumber = _httpContextAccessor.HttpContext?.User.FindFirst(c => c.Type == "AccountNumber")?.Value;
 
                 var dto = new GetUserDto()
                 {
