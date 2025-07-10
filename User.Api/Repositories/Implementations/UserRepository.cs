@@ -33,6 +33,20 @@ namespace User.Api.Repositories.Implementations
         {
             return await _context.Users.Include(u => u.Accounts).FirstOrDefaultAsync(u => u.Id == userId);
         }
+
+        public async Task<Users> GetUserByCpfAsync(string cpf)
+        {
+            return await _context.Users
+                                 .Include(u => u.Accounts)
+                                 .FirstOrDefaultAsync(u => u.Cpf == cpf);
+        }
+
+        public async Task<Users> GetUserByEmailAsync(string email)
+        {
+            return await _context.Users
+                                 .Include(u => u.Accounts) 
+                                 .FirstOrDefaultAsync(u => u.Email == email);
+        }
     }
     
 }

@@ -62,18 +62,20 @@ namespace User.Api.Repositories.Implementations
             await Task.CompletedTask;
         }
 
-        public async Task<Account?> GetByEmailLoginInfo(string email)
+        public async Task<List<string>> GetAccountNumbersByEmailLoginInfo(string email)
         {
             return await _context.Accounts
-                .Include(a => a.User)
-                .FirstOrDefaultAsync(a => a.User.Email == email);
+                .Where(a => a.User.Email == email)
+                .Select(a => a.AccountNumber) 
+                .ToListAsync();
         }
 
-        public async Task<Account?> GetByCpfLoginInfo(string cpf)
+        public async Task<List<string>> GetAccountNumbersByCpfLoginInfo(string cpf)
         {
             return await _context.Accounts
-                .Include(a => a.User)
-                .FirstOrDefaultAsync(a => a.User.Cpf == cpf);
+                .Where(a => a.User.Cpf == cpf)
+                .Select(a => a.AccountNumber) 
+                .ToListAsync();
         }
     }
 }
