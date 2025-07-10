@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Pix.Api.Controllers
@@ -7,5 +8,12 @@ namespace Pix.Api.Controllers
     [ApiController]
     public class PixController : ControllerBase
     {
+        [Authorize]
+        [HttpGet("Teste")]
+        public async Task<IActionResult> GetAccountByLogin(string accountNumber)
+        {
+            var account = accountNumber;
+            return Ok(account);
+        }
     }
 }
