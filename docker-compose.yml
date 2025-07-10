@@ -1,0 +1,55 @@
+version: '3.4'
+
+services:
+  auth:
+    build: ./Auth.Api
+    ports: ["5001:8080"]
+    networks: [appnet]
+
+  user:
+    build: ./Bank.Api
+    ports: ["5002:8080"]
+    networks: [appnet]
+    depends_on:
+      - sqlserver
+
+  email:
+    build: ./Email.Api
+    ports: ["5003:8080"]
+    networks: [appnet]
+    entrypoint: ["/wait-for-it.sh", "sqlserver:1433", "--", "dotnet", "Bank.Api.dll"]
+    depends_on:
+      - sqlserver
+
+  pix:
+    build: ./Pix.Api
+    ports: ["5004:8080"]
+    networks: [appnet]
+    depends_on:
+      - sqlserver
+
+  apigateway:
+    build: ./ApiGateway
+    ports: ["5005:8080"]
+    networks: [appnet]
+    depends_on: 
+      - user
+      - auth
+      - email
+      - pix
+
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sqlserver
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=SenhaSuperSegura123!
+    ports:
+      - "1433:1433"
+    networks:
+      - appnet
+    restart: always
+
+networks:
+  appnet:
+    driver: bridge

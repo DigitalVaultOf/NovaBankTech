@@ -15,6 +15,7 @@ namespace Bank.Api.Services.UserServices
         private readonly AppDbContext _context;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly HttpClient _httpClient;
+        private readonly IConfiguration _configuration;
 
         public UserAccountService(AppDbContext context, IUserRepository userRepository, IAccountRepository accountRepository, IHttpContextAccessor httpContextAccessor = null, HttpClient httpClient = null)
         {
@@ -28,6 +29,9 @@ namespace Bank.Api.Services.UserServices
         public async Task<ResponseModel<bool>> CreateUserWithAccountAsync(CreateAccountUserDto dto)
         {
             var response = new ResponseModel<bool>();
+
+            var emailApiBaseUrl = _configuration["EmailApi:BaseUrl"];
+            
 
             var cpfExists = await _context.Users.AnyAsync(u => u.Cpf == dto.Cpf);
             
@@ -94,7 +98,7 @@ namespace Bank.Api.Services.UserServices
                     contaPoupanca = savingsAccount.AccountNumber
                 };
 
-                var responseEmail = await _httpClient.PostAsJsonAsync("https://localhost:7178/api/Email/Email/send-welcome", emailPayload);
+                var responseEmail = await _httpClient.PostAsJsonAsync($"{emailApiBaseUrl}/send-welcome", emailPayload);
 
                 if (!responseEmail.IsSuccessStatusCode)
                 {

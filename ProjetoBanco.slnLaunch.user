@@ -3,10 +3,6 @@
     "Name": "Novo Perfil",
     "Projects": [
       {
-        "Path": "User.Api\\Bank.Api.csproj",
-        "Action": "Start"
-      },
-      {
         "Path": "Auth.Api\\Auth.Api.csproj",
         "Action": "Start"
       },
@@ -20,6 +16,10 @@
       },
       {
         "Path": "Pix.Api\\Pix.Api.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "Bank.Api\\Bank.Api.csproj",
         "Action": "Start"
       }
     ]

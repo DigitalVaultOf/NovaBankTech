@@ -1,103 +1,88 @@
 {
     "Routes": [
         {
-            "DownstreamPathTemplate": "/api/{everything}",
-            "DownstreamScheme": "https",
+            "DownstreamPathTemplate": "/api/user/{everything}",
+            "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
-                    "Host": "localhost",
-                    "Port": 7180
+                    "Host": "user",
+                    "Port": 8080
                 }
             ],
             "UpstreamPathTemplate": "/user/api/{everything}",
             "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
-            "SwaggerKey": "user"
+            "Priority": 1,
+            "QoSOptions": {
+                "ExceptionsAllowedBeforeBreaking": 3,
+                "DurationOfBreak": 10000,
+                "TimeoutValue": 5000
+            }
         },
         {
-            "DownstreamPathTemplate": "/api/{everything}",
-            "DownstreamScheme": "https",
+            "DownstreamPathTemplate": "/api/auth/{everything}",
+            "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
-                    "Host": "localhost",
-                    "Port": 7133
+                    "Host": "auth",
+                    "Port": 8080
                 }
             ],
             "UpstreamPathTemplate": "/auth/api/{everything}",
             "UpstreamHttpMethod": [ "GET", "POST" ],
-            "SwaggerKey": "auth"
+            "Priority": 1
         },
         {
-            "DownstreamPathTemplate": "/api/{everything}",
-            "DownstreamScheme": "https",
+            "DownstreamPathTemplate": "/api/email/{everything}",
+            "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
-                    "Host": "localhost",
-                    "Port": 7146
+                    "Host": "email",
+                    "Port": 8080
                 }
             ],
-            "UpstreamPathTemplate": "/api/Email/{everything}",
+            "UpstreamPathTemplate": "/email/api/{everything}",
             "UpstreamHttpMethod": [ "POST", "GET" ],
-            "SwaggerKey": "email"
+            "Priority": 1
         },
         {
-            "DownstreamPathTemplate": "/api/{everything}",
-            "DownstreamScheme": "https",
+            "DownstreamPathTemplate": "/api/pix/{everything}",
+            "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
-                    "Host": "localhost",
-                    "Port": 7250
+                    "Host": "pix",
+                    "Port": 8080
                 }
             ],
-            "UpstreamPathTemplate": "/api/{everything}",
+            "UpstreamPathTemplate": "/pix/api/{everything}",
             "UpstreamHttpMethod": [ "POST", "GET" ],
-            "SwaggerKey": "pix"
-        }
-    ],
-    "SwaggerEndPoints": [
-        {
-            "Key": "user",
-            "Config": [
-                {
-                    "Name": "User API",
-                    "Version": "v1",
-                    "Url": "https://localhost:7180/swagger/v1/swagger.json"
-                }
-            ]
+            "Priority": 1
         },
         {
-            "Key": "auth",
-            "Config": [
+            "DownstreamPathTemplate": "/health",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
                 {
-                    "Name": "Auth API",
-                    "Version": "v1",
-                    "Url": "https://localhost:7133/swagger/v1/swagger.json"
+                    "Host": "user",
+                    "Port": 8080
                 }
-            ]
-        },
-        {
-            "Key": "email",
-            "Config": [
-                {
-                    "Name": "Email API",
-                    "Version": "v1",
-                    "Url": "https://localhost:7146/swagger/v1/swagger.json"
-                }
-            ]
-        },
-        {
-            "Key": "pix",
-            "Config": [
-                {
-                    "Name": "Pix API",
-                    "Version": "v1",
-                    "Url": "https://localhost:7250/swagger/v1/swagger.json"
-                }
-            ]
+            ],
+            "UpstreamPathTemplate": "/user/health",
+            "UpstreamHttpMethod": [ "GET" ]
         }
     ],
     "GlobalConfiguration": {
-        "BaseUrl": "https://localhost:7178",
+        "BaseUrl": "http://apigateway:8080",
         "RequestIdKey": "OcRequestId",
-        "RouteIsCaseSensitive": false
+        "RouteIsCaseSensitive": false,
+        "RateLimitOptions": {
+            "ClientIdHeader": "ClientId",
+            "QuotaExceededMessage": "Rate limit exceeded!",
+            "DisableRateLimitHeaders": false
+        },
+        "QoSOptions": {
+            "ExceptionsAllowedBeforeBreaking": 3,
+            "DurationOfBreak": 10000,
+            "TimeoutValue": 5000
+        }
     }
 }
