@@ -199,6 +199,7 @@ namespace Bank.Api.Services.UserServices
 
                 var dto = new AccountLoginDto
                 {
+                    UserId = account.UserId,
                     AccountNumber = account.AccountNumber,
                     Cpf = account.User.Cpf,
                     SenhaHash = account.SenhaHash,
@@ -230,6 +231,7 @@ namespace Bank.Api.Services.UserServices
 
                 var dto = new AccountLoginDto
                 {
+                    UserId = account.UserId,
                     AccountNumber = account.AccountNumber,
                     Email = account.User.Email,
                     SenhaHash = account.SenhaHash,
@@ -426,10 +428,10 @@ namespace Bank.Api.Services.UserServices
 
             try
             {
-                var accountNumber = _httpContextAccessor.HttpContext?.User.FindFirst(c => c.Type == "AccountNumber")?.Value;
                 var userId = _httpContextAccessor.HttpContext?.User.FindFirst(u => u.Type == "UserId")?.Value;
                 var userIdGuid = Guid.Parse(userId);
-                var user = await  _userRepository.GetByIdAsync(userIdGuid);
+                var user = await  _userRepository.GetUserByIdWithAccountsAsync(userIdGuid);
+                var accountNumber = user.Accounts.FirstOrDefault()?.AccountNumber;
                 
                 var dto = new GetUserDto()
                 {
