@@ -32,6 +32,7 @@ builder.Services.AddScoped<IMovimention, MovimentionService>();
 
 builder.Services.AddHttpClient<EmailSender>();
 builder.Services.AddHttpClient<UserAccountService>();
+builder.Services.AddHttpClient<PixClient>();
 
 
 
