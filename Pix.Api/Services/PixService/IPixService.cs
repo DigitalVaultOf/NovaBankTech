@@ -6,5 +6,6 @@ namespace Pix.Api.Services.PixService
     public interface IPixService
     {
         Task<ResponseModel<string>> RegistroPix(RegistroPixDto data);
+        Task<ResponseModel<string>> RegistroTransferencia(TransferDto data);
     }
 }

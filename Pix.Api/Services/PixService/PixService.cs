@@ -29,11 +29,45 @@ namespace Pix.Api.Services.PixService
                 response.Data = "Chave criada com sucesso";
                 return response;
             }
-            catch(Exception e) {
+            catch (Exception e)
+            {
                 response.Message = $"Erro ao realizar registro: {e.Message}";
                 return response;
             }
 
+        }
+
+        public async Task<ResponseModel<string>> RegistroTransferencia(TransferDto data)
+        {
+            var response = new ResponseModel<string>();
+            try
+            {
+                bool existsGoing = await _context.Pix.AnyAsync(p => p.PixKey == data.Going);
+                bool existsComing = await _context.Pix.AnyAsync(p => p.PixKey == data.Coming);
+                if (existsGoing && existsComing)
+                {
+                    var id = Guid.NewGuid();
+                    var sql = "EXEC RegistrarTrasnferencia @p0, @p1, @p2, @p3";
+                    await _context.Database.ExecuteSqlRawAsync(sql,
+                        id,
+                        data.Going,
+                        data.Coming,
+                        data.Amount);
+                    response.Data = "Transferencia realizada com sucesso";
+                    return response;
+                }
+                else
+                {
+                    response.Message = "Error";
+                    return response;
+                }
+
+            }
+            catch (Exception e)
+            {
+                response.Message = $"Erro ao transferir: {e.Message}";
+                return response;
+            }
         }
     }
 }
