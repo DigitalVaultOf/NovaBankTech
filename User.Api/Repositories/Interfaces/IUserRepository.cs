@@ -8,5 +8,7 @@ namespace User.Api.Repositories.Interfaces
         Task UpdateUserAsync(Users user);
         Task<Users?> GetByIdAsync(Guid id);
         Task<Users?> GetUserByIdWithAccountsAsync(Guid userId);
+        Task<Users> GetUserByCpfAsync(string cpf);
+        Task<Users> GetUserByEmailAsync(string email);
     }
 }

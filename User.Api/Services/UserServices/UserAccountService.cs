@@ -30,7 +30,7 @@ namespace Bank.Api.Services.UserServices
             var response = new ResponseModel<bool>();
 
             var cpfExists = await _context.Users.AnyAsync(u => u.Cpf == dto.Cpf);
-            
+
             if (cpfExists)
             {
                 response.Message = "CPF já cadastrado.";
@@ -45,7 +45,7 @@ namespace Bank.Api.Services.UserServices
                 response.Data = false;
                 return response;
             }
-            
+
             await using var transaction = await _context.Database.BeginTransactionAsync();
 
             try
@@ -57,11 +57,11 @@ namespace Bank.Api.Services.UserServices
                     Cpf = dto.Cpf,
                     Email = dto.Email,
                 };
-                
+
                 await _userRepository.CreateUser(user);
-                
+
                 var senhaHash = BCrypt.Net.BCrypt.HashPassword(dto.Password);
-                
+
                 //Conta Corrente
                 var checkingAccount = new Account
                 {
@@ -70,9 +70,9 @@ namespace Bank.Api.Services.UserServices
                     SenhaHash = senhaHash,
                     UserId = user.Id,
                 };
-                
+
                 await _accountRepository.CreateAccount(checkingAccount);
-                
+
                 //Conta Poupança
                 var savingsAccount = new Account
                 {
@@ -82,7 +82,7 @@ namespace Bank.Api.Services.UserServices
                     UserId = user.Id,
                 };
                 await _accountRepository.CreateAccount(savingsAccount);
-                
+
                 await _context.SaveChangesAsync();
                 await transaction.CommitAsync();
 
@@ -115,7 +115,7 @@ namespace Bank.Api.Services.UserServices
                 response.Data = false;
                 return response;
             }
-            
+
         }
 
         public async Task<ResponseModel<AccountResponseDto>> GetUserByAccountAsync()
@@ -185,33 +185,67 @@ namespace Bank.Api.Services.UserServices
                 return response;
             }
         }
+        
         public async Task<ResponseModel<AccountLoginDto>> GetAccountByCpfAsync(string cpf)
         {
             ResponseModel<AccountLoginDto> response = new ResponseModel<AccountLoginDto>();
 
             try
             {
-                var account = await _accountRepository.GetByCpfLoginInfo(cpf);
-                if(account == null)
-                {
-                    return null;
-                }
+                var accountNumbers = await _accountRepository.GetAccountNumbersByCpfLoginInfo(cpf);
+
+                if (accountNumbers == null || !accountNumbers.Any())/* ** */
+                /* ** */
+                {/* ** */
+                    /* ** */
+                    response.Message = "Nenhuma conta encontrada para o CPF informado.";/* ** */
+                    /* ** */
+                    return response;/* ** */
+                    /* ** */
+                }/* ** */
+
+                /* ** */
+                var user = await _userRepository.GetUserByCpfAsync(cpf);/* ** */
+
+                /* ** */
+                if (user == null)/* ** */
+                /* ** */
+                {/* ** */
+                    /* ** */
+                    response.Message = "Usuário não encontrado para o CPF informado.";/* ** */
+                    /* ** */
+                    return response;/* ** */
+                    /* ** */
+                }/* ** */
+                /* ** */
+                var firstAccountForUser = user.Accounts.FirstOrDefault();/* ** */
+
 
                 var dto = new AccountLoginDto
                 {
-                    AccountNumber = account.AccountNumber,
-                    Cpf = account.User.Cpf,
-                    SenhaHash = account.SenhaHash,
-                    Status = account.User.Status
+                    /* ** */
+                    AccountNumbers = accountNumbers,/* ** */
+                    /* ** */
+                    Cpf = user.Cpf,/* ** */
+                    /* ** */
+                    Email = user.Email,/* ** */
+                    /* ** */
+                    SenhaHash = firstAccountForUser?.SenhaHash,/* ** */
+                    /* ** */
+                    UserId = user.Id,/* ** */
+                    /* ** */
+                    Status = user.Status/* ** */
                 };
 
                 response.Data = dto;
-                response.Message = "Conta encontrada com sucesso!";
+                /* ** */
+                response.Message = "Contas encontradas com sucesso!";/* ** */
 
                 return response;
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
-                response.Message = $"Erro ao buscar conta por login: {ex.Message} | Inner: {ex.InnerException?.Message}";
+                response.Message = $"Erro ao buscar contas por CPF: {ex.Message} | Inner: {ex.InnerException?.Message}";
                 return response;
             }
         }
@@ -222,28 +256,60 @@ namespace Bank.Api.Services.UserServices
 
             try
             {
-                var account = await _accountRepository.GetByEmailLoginInfo(email);
-                if (account == null)
-                {
-                    return null;
-                }
+                /* ** */
+                var accountNumbers = await _accountRepository.GetAccountNumbersByEmailLoginInfo(email);/* ** */
+                /* ** */
+                if (accountNumbers == null || !accountNumbers.Any())/* ** */
+                /* ** */
+                {/* ** */
+                    /* ** */
+                    response.Message = "Nenhuma conta encontrada para o e-mail informado.";/* ** */
+                    /* ** */
+                    return response;/* ** */
+                    /* ** */
+                }/* ** */
+
+                /* ** */
+                var user = await _userRepository.GetUserByEmailAsync(email);/* ** */
+
+                /* ** */
+                if (user == null)/* ** */
+                /* ** */
+                {/* ** */
+                    /* ** */
+                    response.Message = "Usuário não encontrado para o e-mail informado.";/* ** */
+                    /* ** */
+                    return response;/* ** */
+                    /* ** */
+                }/* ** */
+                /* ** */
+                var firstAccountForUser = user.Accounts.FirstOrDefault();/* ** */
 
                 var dto = new AccountLoginDto
                 {
-                    AccountNumber = account.AccountNumber,
-                    Email = account.User.Email,
-                    SenhaHash = account.SenhaHash,
-                    Status = account.User.Status
+                    /* ** */
+                    AccountNumbers = accountNumbers,/* ** */
+                    /* ** */
+                    Email = user.Email,/* ** */
+                    /* ** */
+                    Cpf = user.Cpf,/* ** */
+                    /* ** */
+                    SenhaHash = firstAccountForUser?.SenhaHash,/* ** */
+                    /* ** */
+                    UserId = user.Id,/* ** */
+                    /* ** */
+                    Status = user.Status/* ** */
                 };
 
                 response.Data = dto;
-                response.Message = "Conta encontrada com sucesso!";
+                /* ** */
+                response.Message = "Contas encontradas com sucesso!";/* ** */
 
                 return response;
             }
             catch (Exception ex)
             {
-                response.Message = $"Erro ao buscar conta por login: {ex.Message} | Inner: {ex.InnerException?.Message}";
+                response.Message = $"Erro ao buscar contas por e-mail: {ex.Message} | Inner: {ex.InnerException?.Message}";
                 return response;
             }
         }
@@ -254,8 +320,8 @@ namespace Bank.Api.Services.UserServices
             try
             {
                 var account = await _accountRepository.GetByAccountNumberWithUserAsync(accountNumber);
-                
-                
+
+
                 if (account is null)
                 {
                     response.Message = "Conta não encontrada.";
@@ -264,7 +330,7 @@ namespace Bank.Api.Services.UserServices
                 }
 
                 var user = await _userRepository.GetByIdAsync(account.UserId);
-                
+
                 if (user is null)
                 {
                     response.Message = "Usuário não encontrado.";
@@ -295,7 +361,7 @@ namespace Bank.Api.Services.UserServices
         public async Task<ResponseModel<bool>> UpdateUserAsync(UpdateUserDto dto)
         {
             var response = new ResponseModel<bool>();
-           
+
             await using var transaction = await _context.Database.BeginTransactionAsync();
 
             try
@@ -310,7 +376,7 @@ namespace Bank.Api.Services.UserServices
                     response.Data = false;
                     return response;
                 }
-                
+
                 var emailExists = await _context.Users.AnyAsync(u => u.Email == dto.Email && u.Id != userIdGuid);
 
                 if (emailExists)
@@ -320,7 +386,7 @@ namespace Bank.Api.Services.UserServices
                     return response;
 
                 }
-                
+
                 user.Name = dto.Name;
                 user.Email = dto.Email;
 
@@ -331,8 +397,8 @@ namespace Bank.Api.Services.UserServices
                 response.Message = "Usuário atualizado com sucesso!";
                 response.Data = true;
                 return response;
-                
-                
+
+
             }
             catch (Exception ex)
             {
@@ -353,29 +419,29 @@ namespace Bank.Api.Services.UserServices
             try
             {
                 var userId = _httpContextAccessor.HttpContext?.User.FindFirst(u => u.Type == "UserId")?.Value;
-                
+
                 var userIdGuid = Guid.Parse(userId);
                 var user = await _userRepository.GetUserByIdWithAccountsAsync(userIdGuid);
-                
+
                 if (user is null)
                 {
                     response.Data = false;
                     response.Message = "Usuário não encontrado.";
                     return response;
-                    
+
                 }
 
                 var account = user.Accounts.FirstOrDefault();
-                
+
                 if (account is null)
                 {
                     response.Data = false;
                     response.Message = "Nenhuma conta associada encontrada para este usuário.";
                     return response;
                 }
-                
+
                 var isCurrentPasswordValid = BCrypt.Net.BCrypt.Verify(updatePasswordDto.CurrentPassword, account.SenhaHash);
-                
+
                 if (!isCurrentPasswordValid)
                 {
                     response.Data = false;
@@ -385,7 +451,7 @@ namespace Bank.Api.Services.UserServices
                 }
 
                 var isNewPasswordSameAsCurrentPassword = BCrypt.Net.BCrypt.Verify(updatePasswordDto.NewPassword, account.SenhaHash);
-                
+
                 if (isNewPasswordSameAsCurrentPassword)
                 {
                     response.Data = false;
@@ -393,14 +459,14 @@ namespace Bank.Api.Services.UserServices
                     await transaction.RollbackAsync();
                     return response;
                 }
-                
+
                 var newPasswordHash = BCrypt.Net.BCrypt.HashPassword(updatePasswordDto.NewPassword);
                 foreach (var acc in user.Accounts)
                 {
                     acc.SenhaHash = newPasswordHash;
                     _context.Accounts.Update(acc);
                 }
-                
+
                 await _context.SaveChangesAsync();
                 await transaction.CommitAsync();
 
@@ -422,25 +488,25 @@ namespace Bank.Api.Services.UserServices
 
         public async Task<ResponseModel<GetUserDto>> GetUserByIdAsync()
         {
-            var response = new  ResponseModel<GetUserDto>();
+            var response = new ResponseModel<GetUserDto>();
 
             try
             {
                 var accountNumber = _httpContextAccessor.HttpContext?.User.FindFirst(c => c.Type == "AccountNumber")?.Value;
                 var userId = _httpContextAccessor.HttpContext?.User.FindFirst(u => u.Type == "UserId")?.Value;
                 var userIdGuid = Guid.Parse(userId);
-                var user = await  _userRepository.GetByIdAsync(userIdGuid);
-                
+                var user = await _userRepository.GetByIdAsync(userIdGuid);
+
                 var dto = new GetUserDto()
                 {
-                    
+
                     Id = userIdGuid,
                     AccountNumber = accountNumber,
                     Name = user.Name,
                     Email = user.Email,
                     CPF = user.Cpf,
                 };
-                
+
                 response.Data = dto;
                 response.Message = "Usuário encontrado com sucesso!";
 
