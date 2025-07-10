@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Pix.Api.DTOS;
+using Pix.Api.Services.PixService;
 
 namespace Pix.Api.Controllers
 {
@@ -8,12 +10,19 @@ namespace Pix.Api.Controllers
     [ApiController]
     public class PixController : ControllerBase
     {
-        [Authorize]
-        [HttpGet("Teste")]
-        public async Task<IActionResult> GetAccountByLogin(string accountNumber)
+        private readonly IPixService _pixService;
+
+        public PixController(IPixService pixService)
         {
-            var account = accountNumber;
-            return Ok(account);
+            _pixService = pixService;
+        }
+
+        [Authorize]
+        [HttpPost("registrar")]
+        public async Task<IActionResult> GetAccountByLogin(RegistroPixDto data)
+        {
+            var response = await _pixService.RegistroPix(data);
+            return Ok(response);
         }
     }
 }

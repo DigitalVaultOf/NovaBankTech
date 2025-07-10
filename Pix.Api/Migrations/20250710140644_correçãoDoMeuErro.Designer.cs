@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Pix.Api.Data;
 
@@ -11,9 +12,11 @@ using Pix.Api.Data;
 namespace Pix.Api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250710140644_correçãoDoMeuErro")]
+    partial class correçãoDoMeuErro
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -24,7 +27,7 @@ namespace Pix.Api.Migrations
 
             modelBuilder.Entity("Pix.Api.Models.PixModel", b =>
                 {
-                    b.Property<Guid>("IdPix")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -44,7 +47,7 @@ namespace Pix.Api.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("IdPix");
+                    b.HasKey("Id");
 
                     b.HasIndex("PixKey")
                         .IsUnique();
