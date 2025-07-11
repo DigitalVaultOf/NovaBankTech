@@ -107,7 +107,7 @@ namespace Auth.Api.Services
                 bool senhaValida = BCrypt.Net.BCrypt.Verify(dto.Password, senhaHash);
                 if (!senhaValida)
                 {
-                    response.Message = "Senha incorreta.";
+                    response.Message = "Não foi possível realizar o login. Verifique seus dados e tente novamente.";
                     response.IsSuccess = false;
                     return response;
                 }
