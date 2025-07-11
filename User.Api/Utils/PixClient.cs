@@ -52,5 +52,12 @@ namespace Bank.Api.Utils
 
             return resposes;
         }
+        public async Task MandarPixAsync(MakePixDto dto)
+        {
+            AddAuthorizationHeader();
+
+            var response = await _httpClient.PostAsJsonAsync("https://localhost:7250/api/Pix/transferir", dto);
+            response.EnsureSuccessStatusCode();
+        }
     }
 }

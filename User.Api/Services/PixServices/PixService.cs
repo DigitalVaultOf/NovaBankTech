@@ -1,5 +1,7 @@
 ﻿using Bank.Api.DTOS;
 using Bank.Api.Utils;
+using Microsoft.EntityFrameworkCore;
+using User.Api.Data;
 using User.Api.Model;
 
 namespace Bank.Api.Services.PixServices
@@ -8,11 +10,13 @@ namespace Bank.Api.Services.PixServices
     {
         private readonly PixClient _client;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly AppDbContext _context;
 
-        public PixService(PixClient client, IHttpContextAccessor httpContextAccessor)
+        public PixService(PixClient client, IHttpContextAccessor httpContextAccessor, AppDbContext context)
         {
             _client = client;
             _httpContextAccessor = httpContextAccessor;
+            _context = context;
         }
 
         public async Task<ResponseModel<string>> CriarPix(RegistroPixDto data)
@@ -48,6 +52,52 @@ namespace Bank.Api.Services.PixServices
             catch (Exception e)
             {
                 response.Message = $"Error: {e.Message}";
+                return response;
+            }
+        }
+
+        public async Task<ResponseModel<string>> MakeTransfer(MakePixDto data)
+        {
+            var accountNumber = _httpContextAccessor.HttpContext?.User.FindFirst(c => c.Type == "AccountNumber")?.Value;
+            var response = new ResponseModel<string>();
+            try
+            {
+                var go = await GetAccount(data.Going);
+                if (go != null)
+                {
+                    var userAccount = await _context.Accounts.Where(a => a.AccountNumber == go.Data).FirstOrDefaultAsync();
+                    if (userAccount != null)
+                    {
+                        var sql = "EXEC MovimentationsDepositProcedure @p0, @p1, @p2";
+                        await _context.Database.ExecuteSqlRawAsync(sql,
+                            go.Data,
+                            data.Amount,
+                            3);
+                    }
+                    var sql2 = "EXEC MovimentationsWithdrawProcedure @p0, @p1, @p2";
+                    await _context.Database.ExecuteSqlRawAsync(sql2,
+                        accountNumber,
+                        data.Amount,
+                        3);
+                    response.Data = "Pix feito com sucesso";
+                    _client.MandarPixAsync(data);
+                    return response;
+                }
+                else
+                {
+                    var sql2 = "EXEC MovimentationsWithdrawProcedure @p0, @p1, @p2";
+                    await _context.Database.ExecuteSqlRawAsync(sql2,
+                        accountNumber,
+                        data.Amount,
+                        "Pix");
+                    response.Data = "Pix feito com sucesso";
+                    _client.MandarPixAsync(data);
+                    return response;
+                }
+            }
+            catch (Exception e)
+            {
+                response.Message = $"Error 1: {e.Message}";
                 return response;
             }
         }

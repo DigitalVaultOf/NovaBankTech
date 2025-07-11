@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Azure;
+using Microsoft.EntityFrameworkCore;
 using Pix.Api.Data;
 using Pix.Api.DTOS;
 using Pix.Api.Models;

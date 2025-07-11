@@ -26,11 +26,26 @@ namespace Bank.Api.Controllers
 
         [HttpPost("get")]
         [Authorize]
-        public async Task<IActionResult> getNumber([FromBody]string chave)
+        public async Task<IActionResult> getNumber([FromBody] string chave)
         {
             try
             {
                 var response = await _pixService.GetAccount(chave);
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost("mandar")]
+        [Authorize]
+        public async Task<IActionResult> transferPix([FromBody] MakePixDto data)
+        {
+            try
+            {
+                var response = await _pixService.MakeTransfer(data);
                 return Ok(response);
             }
             catch (Exception ex)

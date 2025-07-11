@@ -7,5 +7,6 @@ namespace Bank.Api.Services.PixServices
     {
         Task<ResponseModel<string>> CriarPix(RegistroPixDto data);
         Task<ResponseModel<string>> GetAccount(string chave);
+        Task<ResponseModel<string>> MakeTransfer(MakePixDto data);
     }
 }
