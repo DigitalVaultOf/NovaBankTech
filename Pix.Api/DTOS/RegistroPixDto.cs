@@ -8,6 +8,6 @@
 
         public string Bank { get; set; }
 
-        public string Account { get; set; }
+        public string? Account { get; set; }
     }
 }

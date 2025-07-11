@@ -19,7 +19,7 @@ namespace Pix.Api.Controllers
 
         [Authorize]
         [HttpPost("registrar")]
-        public async Task<IActionResult> CreateKey(RegistroPixDto data)
+        public async Task<IActionResult> CreateKey([FromBody]RegistroPixDto data)
         {
             var response = await _pixService.RegistroPix(data);
             return Ok(response);

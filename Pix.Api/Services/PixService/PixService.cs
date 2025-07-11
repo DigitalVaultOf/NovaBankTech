@@ -8,13 +8,16 @@ namespace Pix.Api.Services.PixService
     public class PixService : IPixService
     {
         private readonly AppDbContext _context;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public PixService(AppDbContext context)
+        public PixService(AppDbContext context, IHttpContextAccessor httpContextAccessor)
         {
             _context = context;
+            _httpContextAccessor = httpContextAccessor;
         }
         public async Task<ResponseModel<string>> RegistroPix(RegistroPixDto data)
         {
+            var accountNumber = _httpContextAccessor.HttpContext?.User.FindFirst(c => c.Type == "AccountNumber")?.Value;
             var response = new ResponseModel<string>();
             try
             {
@@ -25,7 +28,7 @@ namespace Pix.Api.Services.PixService
                     data.Name,
                     data.PixKey,
                     data.Bank,
-                    data.Account);
+                    accountNumber);
                 response.Data = "Chave criada com sucesso";
                 return response;
             }

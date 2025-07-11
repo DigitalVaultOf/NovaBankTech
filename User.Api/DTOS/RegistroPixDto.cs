@@ -1,4 +1,6 @@
-﻿namespace Bank.Api.DTOS
+﻿using System.Text.Json.Serialization;
+
+namespace Bank.Api.DTOS
 {
     public class RegistroPixDto
     {
@@ -8,6 +10,7 @@
 
         public string Bank { get; set; }
 
-        public string Account { get; set; }
+        [JsonIgnore]
+        public string? Account { get; set; }
     }
 }
