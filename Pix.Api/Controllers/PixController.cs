@@ -32,5 +32,21 @@ namespace Pix.Api.Controllers
             var response = await _pixService.RegistroTransferencia(data);
             return Ok(response);
         }
+
+        [Authorize]
+        [HttpPost("get")]
+        public async Task<IActionResult> GetAccountNumber([FromBody]string number)
+        {
+            try
+            {
+                var response = await _pixService.GetNumberAccountAsync(number);
+
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

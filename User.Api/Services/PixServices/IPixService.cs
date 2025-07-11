@@ -6,5 +6,6 @@ namespace Bank.Api.Services.PixServices
     public interface IPixService
     {
         Task<ResponseModel<string>> CriarPix(RegistroPixDto data);
+        Task<ResponseModel<string>> GetAccount(string chave);
     }
 }

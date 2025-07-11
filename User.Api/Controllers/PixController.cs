@@ -1,5 +1,6 @@
 ﻿using Bank.Api.DTOS;
 using Bank.Api.Services.PixServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,6 +22,21 @@ namespace Bank.Api.Controllers
         {
             var response = await _pixService.CriarPix(data);
             return Ok(response);
+        }
+
+        [HttpPost("get")]
+        [Authorize]
+        public async Task<IActionResult> getNumber([FromBody]string chave)
+        {
+            try
+            {
+                var response = await _pixService.GetAccount(chave);
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

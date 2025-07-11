@@ -7,5 +7,6 @@ namespace Pix.Api.Services.PixService
     {
         Task<ResponseModel<string>> RegistroPix(RegistroPixDto data);
         Task<ResponseModel<string>> RegistroTransferencia(TransferDto data);
+        Task<ResponseModel<string>> GetNumberAccountAsync(string chave);
     }
 }

@@ -35,5 +35,21 @@ namespace Bank.Api.Services.PixServices
                 return response;
             }
         }
+
+        public async Task<ResponseModel<string>> GetAccount(string chave)
+        {
+            var response = new ResponseModel<string>();
+            try
+            {
+                var pesquisa = await _client.Pesquisar(chave);
+                response.Data = pesquisa.Data;
+                return response;
+            }
+            catch (Exception e)
+            {
+                response.Message = $"Error: {e.Message}";
+                return response;
+            }
+        }
     }
 }

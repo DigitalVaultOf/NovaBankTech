@@ -72,5 +72,25 @@ namespace Pix.Api.Services.PixService
                 return response;
             }
         }
+
+        public async Task<ResponseModel<string>> GetNumberAccountAsync(string chave)
+        {
+            var response = new ResponseModel<string>();
+
+            try
+            {
+                var number = await _context.Pix.Where(p => p.PixKey == chave).Select(p => p.AccountNumber).FirstOrDefaultAsync();
+
+                response.Data = number;
+
+                return response;
+            }
+            catch (Exception e)
+            {
+                response.Message = $"Error: {e.Message}";
+                return response;
+            }
+
+        }
     }
 }
