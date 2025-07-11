@@ -17,13 +17,15 @@ namespace Bank.Api.Services.UserServices
         private readonly HttpClient _httpClient;
         private readonly IConfiguration _configuration;
 
-        public UserAccountService(AppDbContext context, IUserRepository userRepository, IAccountRepository accountRepository, IHttpContextAccessor httpContextAccessor = null, HttpClient httpClient = null)
+
+        public UserAccountService(AppDbContext context, IUserRepository userRepository, IAccountRepository accountRepository, IHttpContextAccessor httpContextAccessor, HttpClient httpClient, IConfiguration configuration)
         {
             _context = context;
             _userRepository = userRepository;
             _accountRepository = accountRepository;
             _httpContextAccessor = httpContextAccessor;
             _httpClient = httpClient;
+            _configuration = configuration;
         }
 
         public async Task<ResponseModel<bool>> CreateUserWithAccountAsync(CreateAccountUserDto dto)
@@ -38,6 +40,20 @@ namespace Bank.Api.Services.UserServices
             if (cpfExists)
             {
                 response.Message = "CPF já cadastrado.";
+                response.Data = false;
+                return response;
+            }
+
+            if (dto == null)
+            {
+                response.Message = "DTO inválido (nulo).";
+                response.Data = false;
+                return response;
+            }
+
+            if (string.IsNullOrWhiteSpace(dto.Cpf) || string.IsNullOrWhiteSpace(dto.Email))
+            {
+                response.Message = "CPF ou E-mail não foram fornecidos.";
                 response.Data = false;
                 return response;
             }
@@ -86,9 +102,6 @@ namespace Bank.Api.Services.UserServices
                     UserId = user.Id,
                 };
                 await _accountRepository.CreateAccount(savingsAccount);
-                
-                await _context.SaveChangesAsync();
-                await transaction.CommitAsync();
 
                 var emailPayload = new SendWelcomeEmailDto
                 {
@@ -100,12 +113,16 @@ namespace Bank.Api.Services.UserServices
 
                 var responseEmail = await _httpClient.PostAsJsonAsync($"{emailApiBaseUrl}/send-welcome", emailPayload);
 
+
                 if (!responseEmail.IsSuccessStatusCode)
                 {
                     response.Data = false;
                     response.Message = "Falha ao enviar email";
                     return response;
                 }
+                
+                await _context.SaveChangesAsync();
+                await transaction.CommitAsync();
 
                 response.Data = true;
                 response.Message = "Usuário e Conta foram criados com sucesso!";

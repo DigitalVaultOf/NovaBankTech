@@ -21,6 +21,3 @@ COPY --from=publish /app/publish .
 COPY appsettings.json ./appsettings.json
 ENTRYPOINT ["dotnet", "Bank.Api.dll"]
 
-# Copia o script para o container
-COPY wait-for-it.sh /wait-for-it.sh
-RUN chmod +x /wait-for-it.sh
