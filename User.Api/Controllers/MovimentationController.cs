@@ -60,7 +60,7 @@ namespace Bank.Api.Controllers
         public async Task<ActionResult<PagesOfMovimentHistoryDto<MovimentHistoryDto>>> GetUserMovementHistory(
             [FromQuery] MovimentRequestDto request) // Parâmetros da query string são mapeados para MovimentRequestDto
         {
-            var response = await _movimentationService.GetUserMovementHistoryAsync(userId, request);
+            var response = await _movimention.GetPagedMovimentationsAsync(request);
             return Ok(response);
         }
     }
