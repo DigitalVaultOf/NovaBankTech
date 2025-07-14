@@ -25,7 +25,7 @@ namespace Auth.Api.Services
             try
             {
                 var client = _httpClientFactory.CreateClient();
-                string baseUrl = _configuration["Auth:BaseUrl"];
+                string baseUrl = _configuration["UserApi:BaseUrl"];
                 string url = null;
                 bool loginPorCpfOuEmail = false; 
                 

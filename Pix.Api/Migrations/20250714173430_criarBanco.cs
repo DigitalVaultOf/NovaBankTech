@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Pix.Api.Migrations
 {
     /// <inheritdoc />
-    public partial class firstMigration : Migration
+    public partial class criarBanco : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -15,14 +15,15 @@ namespace Pix.Api.Migrations
                 name: "Pix",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IdPix = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    NameUser = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PixKey = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Bank = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Bank = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AccountNumber = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Pix", x => x.Id);
+                    table.PrimaryKey("PK_Pix", x => x.IdPix);
                 });
 
             migrationBuilder.CreateTable(

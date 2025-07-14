@@ -13,6 +13,11 @@ builder.Services.AddOpenApi();
 builder.Services.AddHttpClient();
 
 builder.Services.AddSwaggerGen();
+builder.Services.AddHttpClient("UserApiClient", client =>
+{
+    client.BaseAddress = new Uri(builder.Configuration["UserApi:BaseUrl"]);
+});
+
 
 
 builder.Services.AddAuthentication("Bearer")

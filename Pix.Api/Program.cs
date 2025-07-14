@@ -71,7 +71,7 @@ builder.Services.AddSwaggerGen(options =>
 
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("MarcosSENAI")); // MUDAR CONEXÃO LOCAL AQUI.
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")); 
 
 });
 
@@ -82,6 +82,12 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+}
+
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    db.Database.Migrate(); // Aplica as migrations automaticamente
 }
 
 app.UseHttpsRedirection();

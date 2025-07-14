@@ -30,7 +30,7 @@ namespace Bank.Api.Utils
         {
             AddAuthorizationHeader();
 
-            var response = await _httpClient.PostAsJsonAsync("https://localhost:7250/api/Pix/registrar", dto);
+            var response = await _httpClient.PostAsJsonAsync("http://apigateway:8080/pix/api/Pix/registrar", dto);
             response.EnsureSuccessStatusCode();
         }
 
@@ -38,7 +38,7 @@ namespace Bank.Api.Utils
         {
             AddAuthorizationHeader();
             var resposes = new ResponseModel<string>();
-            var response = await _httpClient.PostAsJsonAsync("https://localhost:7250/api/Pix/get", chave);
+            var response = await _httpClient.PostAsJsonAsync("http://apigateway:8080/pix/api/pix/get", chave);
             if (response.IsSuccessStatusCode)
             {
                 var json = await response.Content.ReadAsStringAsync();
@@ -56,7 +56,7 @@ namespace Bank.Api.Utils
         {
             AddAuthorizationHeader();
 
-            var response = await _httpClient.PostAsJsonAsync("https://localhost:7250/api/Pix/transferir", dto);
+            var response = await _httpClient.PostAsJsonAsync("http://apigateway:8080/pix/api/pix/transferir", dto);
             response.EnsureSuccessStatusCode();
         }
     }
