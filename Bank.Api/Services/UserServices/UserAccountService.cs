@@ -466,5 +466,20 @@ namespace Bank.Api.Services.UserServices
 
         }
 
+        public async Task<ResponseModel<List<Account>>> GetAllAcounts()
+        {
+            var response = new ResponseModel<List<Account>>();
+            try
+            {
+                var accounts = await _context.Accounts.ToListAsync();
+                response.Data = accounts;
+            }
+            catch (Exception ex)
+            {
+                response.Message = ex.Message;
+            }
+            return response;
+        }
+
     }
 }

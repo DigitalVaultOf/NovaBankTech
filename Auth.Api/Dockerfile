@@ -6,7 +6,7 @@ FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /src
 
 # Copia o csproj relativo ao contexto ./Auth.Api
-COPY ["Auth.Api.csproj", "./"]
+COPY Auth.Api.csproj .
 
 RUN dotnet restore "Auth.Api.csproj"
 

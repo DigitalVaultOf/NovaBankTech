@@ -26,7 +26,7 @@ namespace Auth.Api.Services
             {
                 var client = _httpClientFactory.CreateClient();
 
-                string baseUrl = $"{_configuration["UserApi:BaseUrl"]}"; // Deve ser "http://apigateway:8080/user/api/User"
+                string baseUrl = $"{_configuration["UserApi:BaseUrl"]}"; 
 
                 string url;
 
