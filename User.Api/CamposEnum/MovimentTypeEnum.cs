@@ -2,7 +2,8 @@
 {
     public enum MovimentTypeEnum
     {
-        deposit = 0,
-        whitdraw = 1,
+        deposito = 0,
+        saque = 1,
+        pix = 2,
     }
 }
