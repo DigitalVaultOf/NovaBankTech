@@ -72,14 +72,15 @@ namespace Bank.Api.Services.PixServices
                         await _context.Database.ExecuteSqlRawAsync(sql,
                             go.Data,
                             data.Amount,
-                            3);
+                            2);
                     }
                     var sql2 = "EXEC MovimentationsWithdrawProcedure @p0, @p1, @p2";
                     await _context.Database.ExecuteSqlRawAsync(sql2,
                         accountNumber,
                         data.Amount,
-                        3);
+                        2);
                     response.Data = "Pix feito com sucesso";
+                    _client.MandarPixAsync(data);
                     _client.MandarPixAsync(data);
                     return response;
                 }
@@ -89,7 +90,7 @@ namespace Bank.Api.Services.PixServices
                     await _context.Database.ExecuteSqlRawAsync(sql2,
                         accountNumber,
                         data.Amount,
-                        "Pix");
+                        2);
                     response.Data = "Pix feito com sucesso";
                     _client.MandarPixAsync(data);
                     return response;
