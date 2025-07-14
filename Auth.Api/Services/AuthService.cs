@@ -24,12 +24,11 @@ namespace Auth.Api.Services
             var response = new ResponseModel<LoginResponseDto>();
             try
             {
-                var cliente = _httpClientFactory.CreateClient();
+                var client = _httpClientFactory.CreateClient();
+                string baseUrl = _configuration["Auth:BaseUrl"];
                 string url = null;
                 bool loginPorCpfOuEmail = false; 
-
-                string url;
-
+                
                 if (!string.IsNullOrWhiteSpace(dto.AccountNumber))
                 {
                     url = $"{baseUrl}/GetAccountByLogin/{Uri.EscapeDataString(dto.AccountNumber.Trim())}";
@@ -139,7 +138,7 @@ namespace Auth.Api.Services
                 string tokenString = new JwtSecurityTokenHandler().WriteToken(token);
 
                 // Atualiza token no User API
-                var updateUrl = $"{baseUrl}/update-token/{accountNumber}";
+                var updateUrl = $"{baseUrl}/update-token/{dto.AccountNumber}";
                 var updateDto = new { token = tokenString };
                 var json = JsonConvert.SerializeObject(updateDto);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
