@@ -1,5 +1,6 @@
 using Bank.Api.Services.HistoryMovementationService;
 using Bank.Api.Services.Movimentations;
+using Bank.Api.Services.PixServices;
 using Bank.Api.Services.TransferServices;
 using Bank.Api.Services.UserServices;
 using Bank.Api.Utils;
@@ -29,9 +30,11 @@ builder.Services.AddScoped<IUserAccountService, UserAccountService>();
 builder.Services.AddScoped<ITransferService, TransferService>();
 builder.Services.AddScoped<IMovimentationService, MovimentationService>();
 builder.Services.AddScoped<IMovimention, MovimentionService>();
+builder.Services.AddScoped<IPixService, PixService>();
 
 builder.Services.AddHttpClient<EmailSender>();
 builder.Services.AddHttpClient<UserAccountService>();
+builder.Services.AddHttpClient<PixClient>();
 
 
 

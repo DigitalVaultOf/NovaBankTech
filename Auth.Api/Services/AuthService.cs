@@ -24,9 +24,9 @@ namespace Auth.Api.Services
             var response = new ResponseModel<LoginResponseDto>();
             try
             {
-                var client = _httpClientFactory.CreateClient();
-
-                string baseUrl = $"{_configuration["UserApi:BaseUrl"]}"; 
+                var cliente = _httpClientFactory.CreateClient();
+                string url = null;
+                bool loginPorCpfOuEmail = false; 
 
                 string url;
 
@@ -44,35 +44,86 @@ namespace Auth.Api.Services
                 }
                 else
                 {
-                    throw new Exception("É necessário informar AccountNumber, CPF ou Email.");
+                    response.Message = "É necessário informar AccountNumber, CPF ou Email.";
+                    response.IsSuccess = false;
+                    return response;
                 }
 
                 var userResponse = await client.GetAsync(url);
 
                 if (!userResponse.IsSuccessStatusCode)
                 {
-                    throw new Exception($"Erro ao autenticar usuário. Status: {userResponse.StatusCode}");
+                  
+                    response.Message = "Erro ao autenticar usuário.";
+                    response.IsSuccess = false;
+                    return response;
                 }
 
                 var accountJson = await userResponse.Content.ReadAsStringAsync();
                 dynamic result = JsonConvert.DeserializeObject(accountJson);
-
                 string userIdStr = result.data.userId;
                 string senhaHash = result.data.senhaHash;
+                bool accountStatus = result.data.status;
+                string accountNumberParaToken = null; 
+
+                if (loginPorCpfOuEmail)
+                {
+                    List<string> contasDoUsuario = JsonConvert.DeserializeObject<List<string>>(result.data.accountNumbers.ToString());
+
+                    if (contasDoUsuario == null || !contasDoUsuario.Any())
+                    {
+                        response.Message = "Nenhuma conta encontrada para o CPF/E-mail informado.";
+                        response.IsSuccess = false;
+                        return response;
+                    }
+
+                    if (contasDoUsuario.Count > 1 && string.IsNullOrWhiteSpace(dto.SelectedAccountNumber))
+                    {
+                        response.Message = "Múltiplas contas encontradas. Por favor, selecione uma.";
+                        response.IsSuccess = false;
+                        response.Data = new LoginResponseDto { AccountNumbers = contasDoUsuario };
+                        return response;
+                    }
+                    else if (!string.IsNullOrWhiteSpace(dto.SelectedAccountNumber))
+                    {
+                        if (!contasDoUsuario.Contains(dto.SelectedAccountNumber))
+                        {
+                            response.Message = "O número de conta selecionado não está associado a este CPF/E-mail.";
+                            response.IsSuccess = false;
+                            return response;
+                        }
+                        accountNumberParaToken = dto.SelectedAccountNumber;
+                    }
+                    else
+                    {
+                        accountNumberParaToken = contasDoUsuario.First();
+                    }
+                }
+                else
+                {
+                    accountNumberParaToken = result.data.accountNumber;
+                }
 
                 bool senhaValida = BCrypt.Net.BCrypt.Verify(dto.Password, senhaHash);
                 if (!senhaValida)
                 {
-                    throw new Exception("Senha inválida.");
+                    response.Message = "Não foi possível realizar o login. Verifique seus dados e tente novamente.";
+                    response.IsSuccess = false;
+                    return response;
                 }
 
-                string accountNumber = result.data.accountNumber;
+                if (!accountStatus)
+                {
+                    response.Message = "Não foi possível realizar login, sua conta está desativada, contate a Administração.";
+                    response.IsSuccess = false;
+                    return response;
+                }
 
                 var claims = new List<Claim>
-        {
-            new Claim("AccountNumber", accountNumber),
-            new Claim("UserId", userIdStr)
-        };
+                {
+                    new Claim("AccountNumber", accountNumberParaToken),
+                    new Claim("UserId", userIdStr)
+                };
 
                 var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
                 var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);

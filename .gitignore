@@ -8,6 +8,9 @@ Auth.Api/obj/
 User.Api/bin/
 User.Api/obj/
 
+Pix.Api/bin/
+Pix.Api/obj/
+
 # Ignore arquivos do Visual Studio
 .vs/
 *.user

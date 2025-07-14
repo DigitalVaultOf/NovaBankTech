@@ -1,9 +1,8 @@
-﻿namespace Auth.Api.Models
+﻿namespace Pix.Api.Models
 {
     public class ResponseModel<T>
     {
         public T? Data { get; set; }
         public string? Message { get; set; }
-        public bool IsSuccess { get; set; } 
     }
 }

@@ -13,8 +13,8 @@ namespace Bank.Api.Services.UserServices
         Task<ResponseModel<AccountLoginDto>> GetAccountByEmailAsync(string email);
         Task<ResponseModel<bool>> DeleteUserAsync(string accountNumber);
         Task UpdateTokenAsync(string accountNumber, string token);
-        Task<ResponseModel<bool>> UpdateUserAsync(Guid userId, UpdateUserDto dto);
-        Task<ResponseModel<bool>> UpdatePasswordAsync(Guid userId, UpdatePasswordDto updatePasswordDto);
+        Task<ResponseModel<bool>> UpdateUserAsync(UpdateUserDto dto);
+        Task<ResponseModel<bool>> UpdatePasswordAsync(UpdatePasswordDto updatePasswordDto);
         Task<ResponseModel<GetUserDto>> GetUserByIdAsync();
         Task<ResponseModel<List<Account>>> GetAllAcounts();
     }
