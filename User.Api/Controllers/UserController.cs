@@ -50,8 +50,8 @@ namespace User.Api.Controllers
         [HttpPost("create-user")]
         public async Task<IActionResult> CreateUserAccount(CreateAccountUserDto userAccountDto)
         {
-            await _userAccountService.CreateUserWithAccountAsync(userAccountDto);
-            return Ok("Usuário e Conta foram criados com sucesso!");
+            var response = await _userAccountService.CreateUserWithAccountAsync(userAccountDto);
+            return Ok(response);
         }
 
         [Authorize]
@@ -79,10 +79,10 @@ namespace User.Api.Controllers
         }
         
         [Authorize]
-        [HttpPut("update-user/{id:guid}")]
-        public async Task<IActionResult> UpdateUserAsync(Guid id, [FromBody] UpdateUserDto updateUserDto)
+        [HttpPut("update-user")]
+        public async Task<IActionResult> UpdateUserAsync([FromBody] UpdateUserDto updateUserDto)
         {
-            var response = await _userAccountService.UpdateUserAsync(id, updateUserDto);
+            var response = await _userAccountService.UpdateUserAsync(updateUserDto);
             
             if (!response.Data)
             {
@@ -93,15 +93,15 @@ namespace User.Api.Controllers
         }
         
         [Authorize] 
-        [HttpPost("update-password/{id:guid}")]
-        public async Task<IActionResult> UpdatePasswordAsync(Guid id, [FromBody] UpdatePasswordDto updatePasswordDto)
+        [HttpPost("update-password")]
+        public async Task<IActionResult> UpdatePasswordAsync([FromBody] UpdatePasswordDto updatePasswordDto)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var response = await _userAccountService.UpdatePasswordAsync(id, updatePasswordDto);
+            var response = await _userAccountService.UpdatePasswordAsync(updatePasswordDto);
 
             if (!response.Data)
             {
@@ -111,7 +111,7 @@ namespace User.Api.Controllers
             return Ok(response);
         }
 
-        [Authorize]
+        // [Authorize]
         [HttpGet("GetUserById")]
         public async Task<IActionResult> GetUserByIdAsync()
         {
