@@ -21,26 +21,26 @@ namespace Auth.Api.Services
 
         public async Task<ResponseModel<LoginResponseDto>> AuthenticateAsync(LoginRequestDto dto)
         {
-            ResponseModel<LoginResponseDto> response = new ResponseModel<LoginResponseDto>();
+            var response = new ResponseModel<LoginResponseDto>();
             try
             {
                 var cliente = _httpClientFactory.CreateClient();
                 string url = null;
                 bool loginPorCpfOuEmail = false; 
 
+                string url;
+
                 if (!string.IsNullOrWhiteSpace(dto.AccountNumber))
                 {
-                    url = $"{_configuration["UserApi:BaseUrl"]}/api/User/GetAccountByLogin/{Uri.EscapeDataString(dto.AccountNumber.Trim())}";
+                    url = $"{baseUrl}/GetAccountByLogin/{Uri.EscapeDataString(dto.AccountNumber.Trim())}";
                 }
                 else if (!string.IsNullOrWhiteSpace(dto.Cpf))
                 {
-                    url = $"{_configuration["UserApi:BaseUrl"]}/api/User/GetAccountByCpf/{Uri.EscapeDataString(dto.Cpf.Trim())}";
-                    loginPorCpfOuEmail = true;
+                    url = $"{baseUrl}/GetAccountByCpf/{Uri.EscapeDataString(dto.Cpf.Trim())}";
                 }
                 else if (!string.IsNullOrWhiteSpace(dto.Email))
                 {
-                    url = $"{_configuration["UserApi:BaseUrl"]}/api/User/GetAccountByEmail/{Uri.EscapeDataString(dto.Email.Trim())}";
-                    loginPorCpfOuEmail = true;
+                    url = $"{baseUrl}/GetAccountByEmail/{Uri.EscapeDataString(dto.Email.Trim())}";
                 }
                 else
                 {
@@ -49,7 +49,7 @@ namespace Auth.Api.Services
                     return response;
                 }
 
-                var userResponse = await cliente.GetAsync(url);
+                var userResponse = await client.GetAsync(url);
 
                 if (!userResponse.IsSuccessStatusCode)
                 {
@@ -138,34 +138,29 @@ namespace Auth.Api.Services
 
                 string tokenString = new JwtSecurityTokenHandler().WriteToken(token);
 
-                var loginResponseDto = new LoginResponseDto
-                {
-                    Token = tokenString
-                };
-
-                var updateUrl = $"{_configuration["UserApi:BaseUrl"]}/api/User/update-token/{accountNumberParaToken}";
+                // Atualiza token no User API
+                var updateUrl = $"{baseUrl}/update-token/{accountNumber}";
                 var updateDto = new { token = tokenString };
                 var json = JsonConvert.SerializeObject(updateDto);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-                var saveTokenResponse = await cliente.PutAsync(updateUrl, content);
+                var saveTokenResponse = await client.PutAsync(updateUrl, content);
 
                 if (!saveTokenResponse.IsSuccessStatusCode)
                 {
-                    Console.WriteLine($"Erro ao salvar token no User API.");
+                    Console.WriteLine($"Erro ao salvar token no User API. Status: {saveTokenResponse.StatusCode}");
                 }
 
-                response.Data = loginResponseDto;
-                response.IsSuccess = true;
+                response.Data = new LoginResponseDto { Token = tokenString };
                 response.Message = "Usuário autenticado com sucesso!";
                 return response;
             }
             catch (Exception ex)
             {
-                response.IsSuccess = false;
-                response.Message = $"Erro ao autenticar usuário: {ex.Message} | Inner: {ex.InnerException?.Message}";
+                response.Message = $"Erro ao autenticar usuário: {ex.Message}";
                 return response;
             }
         }
+
     }
 }

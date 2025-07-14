@@ -77,7 +77,14 @@ namespace User.Api.Controllers
 
             return Ok(response);
         }
-        
+
+        [HttpGet("GetUsuarios")]
+        public async Task<IActionResult> GetAllAcounts()
+        {
+            var accounts = await _userAccountService.GetAllAcounts();
+            return Ok(accounts);
+        }
+
         [Authorize]
         [HttpPut("update-user")]
         public async Task<IActionResult> UpdateUserAsync([FromBody] UpdateUserDto updateUserDto)

@@ -14,7 +14,7 @@
                     <li><strong>Conta Corrente:</strong> {contaCorrente}</li>
                     <li><strong>Conta Poupança:</strong> {contaPoupanca}</li>
                 </ul>
-                <p>Atenciosamente,<br/>Equipe Banco Exemplo</p>
+                <p>Atenciosamente,<br/>Equipe NovaBankTech</p>
             </body>
             </html>";
         }

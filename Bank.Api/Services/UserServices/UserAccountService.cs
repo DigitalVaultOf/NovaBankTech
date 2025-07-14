@@ -15,25 +15,45 @@ namespace Bank.Api.Services.UserServices
         private readonly AppDbContext _context;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly HttpClient _httpClient;
+        private readonly IConfiguration _configuration;
 
-        public UserAccountService(AppDbContext context, IUserRepository userRepository, IAccountRepository accountRepository, IHttpContextAccessor httpContextAccessor = null, HttpClient httpClient = null)
+
+        public UserAccountService(AppDbContext context, IUserRepository userRepository, IAccountRepository accountRepository, IHttpContextAccessor httpContextAccessor, HttpClient httpClient, IConfiguration configuration)
         {
             _context = context;
             _userRepository = userRepository;
             _accountRepository = accountRepository;
             _httpContextAccessor = httpContextAccessor;
             _httpClient = httpClient;
+            _configuration = configuration;
         }
 
         public async Task<ResponseModel<bool>> CreateUserWithAccountAsync(CreateAccountUserDto dto)
         {
             var response = new ResponseModel<bool>();
 
+            var emailApiBaseUrl = _configuration["EmailApi:BaseUrl"];
+            
+
             var cpfExists = await _context.Users.AnyAsync(u => u.Cpf == dto.Cpf);
 
             if (cpfExists)
             {
                 response.Message = "CPF já cadastrado.";
+                response.Data = false;
+                return response;
+            }
+
+            if (dto == null)
+            {
+                response.Message = "DTO inválido (nulo).";
+                response.Data = false;
+                return response;
+            }
+
+            if (string.IsNullOrWhiteSpace(dto.Cpf) || string.IsNullOrWhiteSpace(dto.Email))
+            {
+                response.Message = "CPF ou E-mail não foram fornecidos.";
                 response.Data = false;
                 return response;
             }
@@ -83,9 +103,6 @@ namespace Bank.Api.Services.UserServices
                 };
                 await _accountRepository.CreateAccount(savingsAccount);
 
-                await _context.SaveChangesAsync();
-                await transaction.CommitAsync();
-
                 var emailPayload = new SendWelcomeEmailDto
                 {
                     nome = user.Name,
@@ -94,7 +111,8 @@ namespace Bank.Api.Services.UserServices
                     contaPoupanca = savingsAccount.AccountNumber
                 };
 
-                var responseEmail = await _httpClient.PostAsJsonAsync("https://localhost:7178/api/Email/Email/send-welcome", emailPayload);
+                var responseEmail = await _httpClient.PostAsJsonAsync($"{emailApiBaseUrl}/send-welcome", emailPayload);
+
 
                 if (!responseEmail.IsSuccessStatusCode)
                 {
@@ -102,6 +120,9 @@ namespace Bank.Api.Services.UserServices
                     response.Message = "Falha ao enviar email";
                     return response;
                 }
+                
+                await _context.SaveChangesAsync();
+                await transaction.CommitAsync();
 
                 response.Data = true;
                 response.Message = "Usuário e Conta foram criados com sucesso!";
@@ -513,6 +534,21 @@ namespace Bank.Api.Services.UserServices
 
             return response;
 
+        }
+
+        public async Task<ResponseModel<List<Account>>> GetAllAcounts()
+        {
+            var response = new ResponseModel<List<Account>>();
+            try
+            {
+                var accounts = await _context.Accounts.ToListAsync();
+                response.Data = accounts;
+            }
+            catch (Exception ex)
+            {
+                response.Message = ex.Message;
+            }
+            return response;
         }
 
     }
