@@ -12,8 +12,8 @@ using Pix.Api.Data;
 namespace Pix.Api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250710140644_correçãoDoMeuErro")]
-    partial class correçãoDoMeuErro
+    [Migration("20250714173430_criarBanco")]
+    partial class criarBanco
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,7 +27,7 @@ namespace Pix.Api.Migrations
 
             modelBuilder.Entity("Pix.Api.Models.PixModel", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("IdPix")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -47,7 +47,7 @@ namespace Pix.Api.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("Id");
+                    b.HasKey("IdPix");
 
                     b.HasIndex("PixKey")
                         .IsUnique();

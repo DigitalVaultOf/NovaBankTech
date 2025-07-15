@@ -71,11 +71,17 @@ builder.Services.AddSwaggerGen(options =>
 
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")); // MUDAR CONEXÃO LOCAL AQUI.
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")); 
 
 });
 
 var app = builder.Build();
+
+// Configure the HTTP request pipeline.
+
+    app.UseSwagger();
+    app.UseSwaggerUI();
+
 
 using (var scope = app.Services.CreateScope())
 {
@@ -83,14 +89,7 @@ using (var scope = app.Services.CreateScope())
     db.Database.Migrate(); // Aplica as migrations automaticamente
 }
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 app.UseAuthorization();
 

@@ -70,6 +70,24 @@
             "UpstreamHttpMethod": [ "GET" ]
         }
     ],
+    "SwaggerEndPoints": [
+        {
+            "Key": "User API",
+            "Config": "/user/swagger/v1/swagger.json"
+        },
+        {
+            "Key": "Auth API",
+            "Config": "/auth/swagger/v1/swagger.json"
+        },
+        {
+            "Key": "Email API",
+            "Config": "/email/swagger/v1/swagger.json"
+        },
+        {
+            "Key": "Pix API",
+            "Config": "/pix/swagger/v1/swagger.json"
+        }
+    ],
     "GlobalConfiguration": {
         "BaseUrl": "http://apigateway:8080",
         "RequestIdKey": "OcRequestId",

@@ -1,5 +1,6 @@
 ﻿using Auth.Api.Dtos;
 using Auth.Api.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Auth.Api.Controllers
@@ -15,8 +16,7 @@ namespace Auth.Api.Controllers
             _authService = authService;
         }
 
-        
-        // MARCOS ESTÁ MEXENDO AQUI
+        [AllowAnonymous]
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginRequestDto loginRequest)
         {
