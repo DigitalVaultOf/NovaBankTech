@@ -8,7 +8,6 @@ FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 
-# Copia o csproj **relativo ao contexto ./Pix.Api**
 COPY ["Pix.Api.csproj", "./"]
 
 RUN dotnet restore "./Pix.Api.csproj"
@@ -20,9 +19,17 @@ RUN dotnet build "./Pix.Api.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
+
 RUN dotnet publish "./Pix.Api.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+
+RUN if [ -d "/src/Data/Scripts" ]; then \
+    mkdir -p /app/publish/Scripts && cp -r /src/Data/Scripts/* /app/publish/Scripts/; \
+    else echo "Scripts folder not found, skipping..."; \
+    fi
 
 FROM base AS final
 WORKDIR /app
+
 COPY --from=publish /app/publish .
+
 ENTRYPOINT ["dotnet", "Pix.Api.dll"]

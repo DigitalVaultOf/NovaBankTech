@@ -2,6 +2,7 @@ using System.Text;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Pix.Api.Data;
+using Pix.Api.Data.Scripts;
 using Pix.Api.Services.PixService;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -87,6 +88,11 @@ using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     db.Database.Migrate(); // Aplica as migrations automaticamente
+
+    SqlScriptExecutor.ExecuteSqlScriptsFromFolder(
+        db,
+        Path.Combine(AppContext.BaseDirectory, "Scripts")
+    );
 }
 
 //app.UseHttpsRedirection();

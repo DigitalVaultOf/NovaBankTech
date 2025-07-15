@@ -1,3 +1,4 @@
+using Bank.Api.Data.Scripts;
 using Bank.Api.Services.HistoryMovementationService;
 using Bank.Api.Services.Movimentations;
 using Bank.Api.Services.PixServices;
@@ -36,7 +37,15 @@ builder.Services.AddHttpClient<EmailSender>();
 builder.Services.AddHttpClient<UserAccountService>();
 builder.Services.AddHttpClient<PixClient>();
 
-
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+    });
+});
 
 builder.Services.AddAuthentication("Bearer")
     .AddJwtBearer("Bearer", options =>
@@ -109,6 +118,11 @@ using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     db.Database.Migrate(); // Aplica as migrations automaticamente
+
+    SqlScriptExecutor.ExecuteSqlScriptsFromFolder(
+        db,
+        Path.Combine(AppContext.BaseDirectory, "Scripts")
+    );
 }
 
 
@@ -117,6 +131,7 @@ using (var scope = app.Services.CreateScope())
     app.UseSwaggerUI();
     app.UseDeveloperExceptionPage();
 
+app.UseCors("AllowAll");
 
 //app.UseHttpsRedirection();
 
