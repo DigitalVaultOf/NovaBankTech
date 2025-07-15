@@ -72,6 +72,7 @@ builder.Services.AddSwaggerGen(options =>
 
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
+
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")); 
 
 });
@@ -94,6 +95,14 @@ using (var scope = app.Services.CreateScope())
         Path.Combine(AppContext.BaseDirectory, "Scripts")
     );
 }
+
+
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    db.Database.Migrate(); // Aplica as migrations automaticamente
+}
+
 
 //app.UseHttpsRedirection();
 
