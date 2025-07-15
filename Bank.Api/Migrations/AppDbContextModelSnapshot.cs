@@ -8,7 +8,7 @@ using User.Api.Data;
 
 #nullable disable
 
-namespace User.Api.Migrations
+namespace Bank.Api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
     partial class AppDbContextModelSnapshot : ModelSnapshot
