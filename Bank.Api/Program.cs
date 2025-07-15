@@ -1,3 +1,4 @@
+using Bank.Api.Data.Scripts;
 using Bank.Api.Services.HistoryMovementationService;
 using Bank.Api.Services.Movimentations;
 using Bank.Api.Services.PixServices;
@@ -36,7 +37,15 @@ builder.Services.AddHttpClient<EmailSender>();
 builder.Services.AddHttpClient<UserAccountService>();
 builder.Services.AddHttpClient<PixClient>();
 
-
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+    });
+});
 
 builder.Services.AddAuthentication("Bearer")
     .AddJwtBearer("Bearer", options =>
@@ -99,7 +108,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")); // MUDAR CONEXÃO LOCAL AQUI.
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")); 
 
 });
 
@@ -109,15 +118,20 @@ using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     db.Database.Migrate(); // Aplica as migrations automaticamente
+
+    SqlScriptExecutor.ExecuteSqlScriptsFromFolder(
+        db,
+        Path.Combine(AppContext.BaseDirectory, "Scripts")
+    );
 }
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
+
     app.MapOpenApi();
     app.UseSwagger();
     app.UseSwaggerUI();
-}
+    app.UseDeveloperExceptionPage();
+
+app.UseCors("AllowAll");
 
 //app.UseHttpsRedirection();
 

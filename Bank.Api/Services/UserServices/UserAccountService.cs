@@ -149,7 +149,7 @@ namespace Bank.Api.Services.UserServices
             {
                 await transaction.RollbackAsync();
                 Console.WriteLine($"LOG ERROR: ERRO CRÍTICO em CreateUserWithAccountAsync: {ex}");
-                response.Message = "Erro ao criar usuário e conta.";
+                response.Message = $"Erro ao criar usuário e conta. {ex.Message}";
                 response.Data = false;
                 return response;
             }

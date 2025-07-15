@@ -13,6 +13,11 @@ builder.Services.AddOpenApi();
 builder.Services.AddHttpClient();
 
 builder.Services.AddSwaggerGen();
+builder.Services.AddHttpClient("UserApiClient", client =>
+{
+    client.BaseAddress = new Uri(builder.Configuration["UserApi:BaseUrl"]);
+});
+
 
 
 builder.Services.AddAuthentication("Bearer")
@@ -35,13 +40,11 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
+
     app.MapOpenApi();
     app.UseSwagger();
     app.UseSwaggerUI();
-}
+
 
 //app.UseHttpsRedirection();
 
