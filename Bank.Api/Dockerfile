@@ -19,5 +19,7 @@ FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 COPY appsettings.json ./appsettings.json
-ENTRYPOINT ["dotnet", "Bank.Api.dll"]
 
+COPY Data/Scripts /app/Scripts
+
+ENTRYPOINT ["dotnet", "Bank.Api.dll"]
