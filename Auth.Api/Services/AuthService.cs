@@ -173,6 +173,7 @@ namespace Auth.Api.Services
 
                 response.Data = new LoginResponseDto { Token = tokenString, AccountNumbers = loginPorCpfOuEmail && result.data.accountNumbers != null ? JsonConvert.DeserializeObject<List<string>>(result.data.accountNumbers.ToString()) : null };
                 response.Message = "Usuário autenticado com sucesso!";
+                response.IsSuccess = true;
                 return response;
             }
             catch (Exception ex)
