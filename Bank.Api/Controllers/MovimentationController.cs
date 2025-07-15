@@ -34,10 +34,10 @@ namespace Bank.Api.Controllers
             return Ok(response);
         }
 
-        [HttpGet ("listmovimentation")]
-        public async Task<IActionResult> GetMovimentationsAsync()
+        [HttpPost("listmovimentation")]
+        public async Task<IActionResult> GetMovimentationsAsync([FromBody]HistorySelectDto data)
         {
-            var response= await _movimention.GetMovimentationsAsync();
+            var response= await _movimention.GetMovimentationsAsync(data);
             return Ok(response);
         }
 

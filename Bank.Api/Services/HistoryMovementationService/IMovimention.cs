@@ -5,7 +5,7 @@ namespace Bank.Api.Services.HistoryMovementationService
 {
     public interface IMovimention
     {
-        Task<ResponseModel<List<MovimentHistoryDto>>> GetMovimentationsAsync();
+        Task<ResponseModel<List<MovimentHistoryDto>>> GetMovimentationsAsync(HistorySelectDto data);
         Task<ResponseModel<List<MovimentHistoryDto>>> GetMovimentations1WeakAsync();
         Task<ResponseModel<List<MovimentHistoryDto>>> GetMovimentations1MounthAsync();
     }

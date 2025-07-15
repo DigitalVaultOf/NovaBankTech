@@ -16,7 +16,7 @@ namespace Bank.Api.Services.HistoryMovementationService
         }
    
 
-        public async Task<ResponseModel<List<MovimentHistoryDto>>> GetMovimentationsAsync()
+        public async Task<ResponseModel<List<MovimentHistoryDto>>> GetMovimentationsAsync(HistorySelectDto data)
         {
             var response = new ResponseModel<List<MovimentHistoryDto>>();
             try
@@ -24,7 +24,7 @@ namespace Bank.Api.Services.HistoryMovementationService
                 var accountNumber = _httpContextAccessor.HttpContext?.User.FindFirst(c => c.Type == "AccountNumber")?.Value;
 
                 var movimentations = await _context.Moviments
-                 .Where(m => m.accountNumber == accountNumber)
+                 .Where(m => m.accountNumber == accountNumber && m.DateTimeMoviment >= data.start && m.DateTimeMoviment <= data.end)
                  .OrderByDescending(m => m.DateTimeMoviment)
                  .ToListAsync();
                 var dto = movimentations.Select(m => new MovimentHistoryDto
