@@ -38,10 +38,10 @@ app.UseCors("AllowAngularDevClient");
 
 app.UseRouting();
 
-app.UseSwaggerForOcelotUI(opt =>
-{
-    opt.PathToSwaggerGenerator = "/swagger/docs";
-}).UseOcelot().Wait();
+//app.UseSwaggerForOcelotUI(opt =>
+//{
+//    opt.PathToSwaggerGenerator = "/swagger/docs";
+//}).UseOcelot().Wait();
 
 app.UseAuthorization();
 

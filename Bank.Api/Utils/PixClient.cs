@@ -30,7 +30,8 @@ namespace Bank.Api.Utils
         {
             AddAuthorizationHeader();
 
-            var response = await _httpClient.PostAsJsonAsync("http://apigateway:8080/pix/api/Pix/registrar", dto);
+            var response = await _httpClient.PostAsJsonAsync("http://apigateway:8080/pix/api/registrar"
+, dto);
             response.EnsureSuccessStatusCode();
         }
 
