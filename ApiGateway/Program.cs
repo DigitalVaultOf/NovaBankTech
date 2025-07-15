@@ -28,17 +28,20 @@ builder.Services.AddOcelot().AddPolly();
 
 var app = builder.Build();
 
-if (!app.Environment.IsDevelopment())
-{
-    app.UseExceptionHandler("/Error");
-    app.UseHsts();
-}
+app.UseExceptionHandler("/Error");
+app.UseHsts();
 
-app.UseHttpsRedirection();
+
+//app.UseHttpsRedirection();
 
 app.UseCors("AllowAngularDevClient");
 
 app.UseRouting();
+
+app.UseSwaggerForOcelotUI(opt =>
+{
+    opt.PathToSwaggerGenerator = "/swagger/docs";
+}).UseOcelot().Wait();
 
 app.UseAuthorization();
 

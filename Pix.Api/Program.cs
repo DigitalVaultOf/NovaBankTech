@@ -78,11 +78,10 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
+
     app.UseSwagger();
     app.UseSwaggerUI();
-}
+
 
 using (var scope = app.Services.CreateScope())
 {
@@ -90,7 +89,7 @@ using (var scope = app.Services.CreateScope())
     db.Database.Migrate(); // Aplica as migrations automaticamente
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 app.UseAuthorization();
 

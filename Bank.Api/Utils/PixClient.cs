@@ -56,7 +56,7 @@ namespace Bank.Api.Utils
         {
             AddAuthorizationHeader();
 
-            var response = await _httpClient.PostAsJsonAsync("http://apigateway:8080/pix/api/pix/transferir", dto);
+            var response = await _httpClient.PostAsJsonAsync("http://apigateway:8080/pix/api/mandar", dto);
             response.EnsureSuccessStatusCode();
         }
     }

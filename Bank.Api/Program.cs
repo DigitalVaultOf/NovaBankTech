@@ -111,14 +111,12 @@ using (var scope = app.Services.CreateScope())
     db.Database.Migrate(); // Aplica as migrations automaticamente
 }
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
+
     app.MapOpenApi();
     app.UseSwagger();
     app.UseSwaggerUI();
     app.UseDeveloperExceptionPage();
-}
+
 
 //app.UseHttpsRedirection();
 
