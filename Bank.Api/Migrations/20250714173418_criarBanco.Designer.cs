@@ -9,11 +9,11 @@ using User.Api.Data;
 
 #nullable disable
 
-namespace User.Api.Migrations
+namespace Bank.Api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250703124246_CreateMovimentations")]
-    partial class CreateMovimentations
+    [Migration("20250714173418_criarBanco")]
+    partial class criarBanco
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,15 +33,18 @@ namespace User.Api.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("DateTimeMoviment")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("MovimentTypeEnum")
                         .HasColumnType("int");
 
                     b.Property<string>("accountNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("value")
-                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 
@@ -134,6 +137,9 @@ namespace User.Api.Migrations
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
+
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 

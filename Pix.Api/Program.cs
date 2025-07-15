@@ -2,6 +2,7 @@ using System.Text;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Pix.Api.Data;
+using Pix.Api.Data.Scripts;
 using Pix.Api.Services.PixService;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -71,18 +72,30 @@ builder.Services.AddSwaggerGen(options =>
 
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")); // MUDAR CONEX�O LOCAL AQUI.
+
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")); 
 
 });
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
+
     app.UseSwagger();
     app.UseSwaggerUI();
+
+
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    db.Database.Migrate(); // Aplica as migrations automaticamente
+
+    SqlScriptExecutor.ExecuteSqlScriptsFromFolder(
+        db,
+        Path.Combine(AppContext.BaseDirectory, "Scripts")
+    );
 }
+
 
 using (var scope = app.Services.CreateScope())
 {
@@ -90,7 +103,8 @@ using (var scope = app.Services.CreateScope())
     db.Database.Migrate(); // Aplica as migrations automaticamente
 }
 
-app.UseHttpsRedirection();
+
+//app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
