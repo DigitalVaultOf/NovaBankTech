@@ -1,4 +1,5 @@
-﻿using Bank.Api.DTOS;
+﻿using System.Security.Claims;
+using Bank.Api.DTOS;
 using Bank.Api.Services.HistoryMovementationService;
 using Bank.Api.Services.Movimentations;
 using Microsoft.AspNetCore.Authorization;
@@ -52,6 +53,14 @@ namespace Bank.Api.Controllers
         public async Task<IActionResult> GetMovimentations1mounthAsync()
         {
             var response = await _movimention.GetMovimentations1MounthAsync();
+            return Ok(response);
+        }
+
+        [HttpGet("history")] // Rota específica para este endpoint, ex: /api/Movimentation/history
+        public async Task<ActionResult<PagesOfMovimentHistoryDto<MovimentHistoryDto>>> GetUserMovementHistory(
+            [FromQuery] MovimentRequestDto request) // Parâmetros da query string são mapeados para MovimentRequestDto
+        {
+            var response = await _movimention.GetPagedMovimentationsAsync(request);
             return Ok(response);
         }
     }
