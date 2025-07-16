@@ -1,36 +1,78 @@
+﻿version: '3.8'
 
 services:
   auth:
-    build: ./Auth.Api
-    ports: ["5001:8080"]
-    networks: [appnet]
+    build:
+      context: .
+      dockerfile: Auth.Api/Dockerfile
+    ports:
+      - "5001:8080"
+    networks:
+      - appnet
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:8080
+    depends_on:
+      - sqlserver
+      - rabbitmq
 
   user:
-    build: ./Bank.Api
-    ports: ["5002:8080"]
-    networks: [appnet]
+    build:
+      context: .
+      dockerfile: Bank.Api/Dockerfile
+    ports:
+      - "5002:8080"
+    networks:
+      - appnet
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:8080
     depends_on:
       - sqlserver
+      - rabbitmq
 
   email:
-    build: ./Email.Api
-    ports: ["5003:8080"]
-    networks: [appnet]
+    build:
+      context: .
+      dockerfile: Email.Api/Dockerfile
+    ports:
+      - "5003:8080"
+    networks:
+      - appnet
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:8080
     depends_on:
       - sqlserver
+      - rabbitmq
 
   pix:
-    build: ./Pix.Api
-    ports: ["5004:8080"]
-    networks: [appnet]
+    build:
+      context: .
+      dockerfile: Pix.Api/Dockerfile
+    ports:
+      - "5004:8080"
+    networks:
+      - appnet
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:8080
     depends_on:
       - sqlserver
+      - rabbitmq
 
   apigateway:
-    build: ./ApiGateway
-    ports: ["5005:8080"]
-    networks: [appnet]
-    depends_on: 
+    build:
+      context: .
+      dockerfile: ApiGateway/Dockerfile
+    ports:
+      - "5005:8080"
+    networks:
+      - appnet
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:8080
+    depends_on:
       - user
       - auth
       - email
@@ -47,7 +89,28 @@ services:
     networks:
       - appnet
     restart: always
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"    # Porta de comunicação
+      - "15672:15672"  # Painel de gerenciamento web
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+    networks:
+      - appnet
+    restart: always
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
 
 networks:
   appnet:
     driver: bridge
+
+volumes:
+  sqlserver_data:
+  rabbitmq_data:

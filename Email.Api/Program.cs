@@ -1,4 +1,5 @@
 using Email.Api.Model;
+using Email.Api.Services.RabbitMQServices;
 using Email.Api.Services.RegisterEmailServices;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +11,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddHostedService<RabbitMQConsumer>();
+
 builder.Services.Configure<SmtpSettings>(builder.Configuration.GetSection("SmtpSettings"));
 builder.Services.AddScoped<IRegisterEmailService, RegisterEmailService>();
 
@@ -18,6 +21,9 @@ var app = builder.Build();
 
     app.UseSwagger();
     app.UseSwaggerUI();
+
+
+app.MapGet("/", () => "Email.Api rodando e escutando RabbitMQ!");
 
 
 app.UseHttpsRedirection();
