@@ -1,0 +1,23 @@
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Payments.Api.Models;
+
+public class MonthPaymentModel
+{
+    [Key] public Guid IdPayment { get; set; } = Guid.NewGuid();
+
+    [Required(ErrorMessage = "ID do usuário é obrigatório")]
+    public Guid UserId { get; set; }
+
+    public int? InvoiceNumber { get; set; }
+    public bool InvoiceIsPaid { get; set; }
+    public int? SlipNumber { get; set; }
+    public bool SlipIsPaid { get; set; }
+    public DateTime? PaymentDate { get; set; }
+    public int Month { get; set; }
+    public int Year { get; set; }
+    public DateTime DueDate { get; set; }
+    public DateTime CreatedAt { get; set; } = DateTime.Now;
+    public DateTime UpdatedAt { get; set; } = DateTime.Now;
+    public decimal Amount { get; set; } = 0;
+}
