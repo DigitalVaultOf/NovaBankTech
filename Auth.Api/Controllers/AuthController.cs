@@ -1,11 +1,11 @@
 ﻿using Auth.Api.Dtos;
 using Auth.Api.Services;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Auth.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/auth")]
     [ApiController]
     public class AuthController : ControllerBase
     {
@@ -16,13 +16,15 @@ namespace Auth.Api.Controllers
             _authService = authService;
         }
 
-        
-        // MARCOS ESTÁ MEXENDO AQUI
+        [AllowAnonymous]
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginRequestDto loginRequest)
         {
             var response = await _authService.AuthenticateAsync(loginRequest);
             return !response.IsSuccess ? StatusCode(403, response) : Ok(response);
         }
+
+        [HttpGet("test")]
+        public IActionResult Test() => Ok("Auth API funcionando");
     }
 }
