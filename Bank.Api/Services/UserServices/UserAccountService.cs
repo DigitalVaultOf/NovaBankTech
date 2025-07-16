@@ -118,27 +118,27 @@ namespace Bank.Api.Services.UserServices
                     contaPoupanca = savingsAccount.AccountNumber
                 };
 
-                // var responseEmail = await _httpClient.PostAsJsonAsync($"{emailApiBaseUrl}/send-welcome", emailPayload);
+                var responseEmail = await _httpClient.PostAsJsonAsync($"{emailApiBaseUrl}/send-welcome", emailPayload);
                 // _ =_httpClient.PostAsJsonAsync($"{emailApiBaseUrl}/send-welcome", emailPayload);
-                _ = Task.Run(async () =>
-                {
-                    try
-                    {
-                        await _httpClient.PostAsJsonAsync($"{emailApiBaseUrl}/send-welcome", emailPayload);
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine($"Erro ao enviar e-mail assíncrono: {ex.Message}");
-                    }
-                });
+                // _ = Task.Run(async () =>
+                // {
+                //     try
+                //     {
+                //         await _httpClient.PostAsJsonAsync($"{emailApiBaseUrl}/send-welcome", emailPayload);
+                //     }
+                //     catch (Exception ex)
+                //     {
+                //         Console.WriteLine($"Erro ao enviar e-mail assíncrono: {ex.Message}");
+                //     }
+                // });
 
 
-               /* if (!responseEmail.IsSuccessStatusCode)
+                if (!responseEmail.IsSuccessStatusCode)
                 {
                     response.Data = false;
                     response.Message = "Falha ao enviar email";
                     return response;
-                } */
+                } 
                
                 response.Data = true;
                 response.Message = "Usuário e Conta foram criados com sucesso!";
