@@ -12,8 +12,8 @@ using Pix.Api.Data;
 namespace Pix.Api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250714173430_criarBanco")]
-    partial class criarBanco
+    [Migration("20250715220718_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
