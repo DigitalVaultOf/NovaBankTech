@@ -60,5 +60,13 @@ namespace Bank.Api.Utils
             var response = await _httpClient.PostAsJsonAsync("http://apigateway:8080/pix/api/mandar", dto);
             response.EnsureSuccessStatusCode();
         }
+
+        public async Task HasPix()
+        {
+            AddAuthorizationHeader();
+
+            var response = await _httpClient.PostAsJsonAsync("http://apigateway:8080/pix/api/has", 1);
+            response.EnsureSuccessStatusCode();
+        }
     }
 }

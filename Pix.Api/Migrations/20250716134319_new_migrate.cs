@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Pix.Api.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class new_migrate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

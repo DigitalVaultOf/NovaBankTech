@@ -1,4 +1,5 @@
-﻿using Azure;
+﻿using System;
+using Azure;
 using Microsoft.EntityFrameworkCore;
 using Pix.Api.Data;
 using Pix.Api.DTOS;
@@ -91,7 +92,24 @@ namespace Pix.Api.Services.PixService
                 response.Message = $"Error: {e.Message}";
                 return response;
             }
+        }
 
+        public async Task<ResponseModel<bool>> HasPix()
+        {
+            var accountNumber = _httpContextAccessor.HttpContext?.User.FindFirst(c => c.Type == "AccountNumber")?.Value;
+            var response = new ResponseModel<bool>();
+
+            bool has = await _context.Pix.AnyAsync(p => p.AccountNumber == accountNumber);
+            if (has == true)
+            {
+                response.Data = true;
+                return response;
+            }
+            else
+            {
+                response.Message = "Error";
+                return response;
+            }
         }
     }
 }

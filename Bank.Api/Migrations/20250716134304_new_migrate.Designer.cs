@@ -12,8 +12,8 @@ using User.Api.Data;
 namespace Bank.Api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250715220657_Initial")]
-    partial class Initial
+    [Migration("20250716134304_new_migrate")]
+    partial class new_migrate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
