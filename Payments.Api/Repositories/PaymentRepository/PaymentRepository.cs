@@ -6,10 +6,20 @@ namespace Payments.Api.Repositories.PaymentRepository;
 
 public class PaymentRepository(AppDbContext context) : IPaymentRepository
 {
-    private readonly AppDbContext _context = context;
-
-    public async Task<MonthPaymentModel?> GetMonthPaymentAsync(Guid userId, int month, int year)
+    public async Task<MonthPaymentModel?> GetMonthPaymentsAsync(Guid userId, int month, int year)
     {
-        return await  _context.MonthPayments.FirstOrDefaultAsync(p => p.UserId == userId && p.Month == month && p.Year == year);
+        return await context.MonthPayments.FirstOrDefaultAsync(p =>
+            p.UserId == userId && p.Month == month && p.Year == year);
+    }
+
+    public async Task<MonthPaymentModel?> GetMonthPaymentsByIdAsync(Guid paymentId)
+    {
+        return await context.MonthPayments.FirstOrDefaultAsync(p => p.PaymentId == paymentId);
+    }
+
+    public Task AddPayment(MonthPaymentModel paymentModel)
+    {
+        context.MonthPayments.Add(paymentModel);
+        return Task.CompletedTask;
     }
 }
