@@ -35,7 +35,14 @@ services:
       - auth
       - email
       - pix
-
+  
+  payments:
+    build: ./Payments.Api
+    ports: ["5007:8080"]
+    networks: [appnet]
+    depends_on:
+      - sqlserver
+      
   sqlserver:
     image: mcr.microsoft.com/mssql/server:2022-latest
     container_name: sqlserver
