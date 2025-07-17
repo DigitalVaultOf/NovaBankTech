@@ -1,6 +1,8 @@
 ﻿using System.Net.Mime;
+using System.Security.Claims;
 using System.Text;
 using System.Text.Json;
+using Microsoft.AspNetCore.Http;
 using ReportApi.Model;
 
 namespace ReportApi.Services.ReportService;
@@ -8,39 +10,41 @@ namespace ReportApi.Services.ReportService;
 public class ReportService : IReportService
 {
     private readonly HttpClient _httpClient;
+    private readonly IHttpContextAccessor _httpContextAccessor;
     private const string MovimentationApiUrl = "http://user:8080/api/Movimentation/listmovimentation";
 
-    public ReportService(HttpClient httpClient)
+    public ReportService(HttpClient httpClient, IHttpContextAccessor httpContextAccessor)
     {
         _httpClient = httpClient;
+        _httpContextAccessor = httpContextAccessor;
     }
 
     public async Task<(byte[] fileBytes, string fileName, string contentType)> GenerateCsvReportAsync()
     {
-        List<Report>? movimentations = null;
+        var user = _httpContextAccessor.HttpContext?.User;
+        var accountNumber = user?.FindFirst("AccountNumber")?.Value;
 
-        try
+        if (string.IsNullOrEmpty(accountNumber))
+            throw new Exception("AccountNumber não encontrado no token.");
+
+        var token = _httpContextAccessor.HttpContext?.Request.Headers["Authorization"].ToString();
+
+        if (string.IsNullOrEmpty(token))
+            throw new Exception("Token não encontrado no cabeçalho da requisição.");
+
+        var request = new HttpRequestMessage(HttpMethod.Get, MovimentationApiUrl);
+        request.Headers.Add("Authorization", token);
+
+        var response = await _httpClient.SendAsync(request);
+        response.EnsureSuccessStatusCode();
+
+        var json = await response.Content.ReadAsStringAsync();
+        var movimentationResponse = JsonSerializer.Deserialize<MovimentationListResponse>(json, new JsonSerializerOptions
         {
-            Console.WriteLine("Buscando dados da API de movimentações...");
+            PropertyNameCaseInsensitive = true
+        });
 
-            var response = await _httpClient.GetAsync(MovimentationApiUrl);
-            response.EnsureSuccessStatusCode();
-
-            var json = await response.Content.ReadAsStringAsync();
-            Console.WriteLine("Resposta JSON da API: " + json);
-
-            movimentations = JsonSerializer.Deserialize<List<Report>>(json, new JsonSerializerOptions
-            {
-                PropertyNameCaseInsensitive = true
-            });
-
-            Console.WriteLine($"Foram obtidas {movimentations?.Count ?? 0} movimentações.");
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine("Erro ao obter dados da API: " + ex.Message);
-            throw new Exception("Erro ao obter dados da API de movimentações: " + ex.Message);
-        }
+        var movimentations = movimentationResponse?.Data;
 
         if (movimentations == null || movimentations.Count == 0)
             throw new Exception("Nenhuma movimentação encontrada.");
@@ -57,11 +61,11 @@ public class ReportService : IReportService
         var fileBytes = Encoding.UTF8.GetBytes(sb.ToString());
         var fileName = $"relatorio_{DateTime.Now:yyyyMMddHHmmss}.csv";
 
-        return (fileBytes, fileName, System.Net.Mime.MediaTypeNames.Text.Csv);
+        return (fileBytes, fileName, MediaTypeNames.Text.Plain);
     }
 
     public Task<(byte[] fileBytes, string fileName, string contentType)> GeneratePdfReportAsync()
     {
-        throw new NotImplementedException("Geração PDF ainda não implementada.");
+        throw new NotImplementedException();
     }
 }

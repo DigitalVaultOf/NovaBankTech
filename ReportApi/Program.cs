@@ -2,11 +2,13 @@ using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using ReportApi.Services.ReportService;
+using System.Net.Http.Headers;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddHttpContextAccessor();
+
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddAuthorization();
@@ -25,6 +27,20 @@ builder.Services.AddAuthentication("Bearer")
                 Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"] ?? throw new InvalidOperationException("Token JWT não configurado para o serviço de Relatórios.")))
         };
     });
+
+builder.Services.AddHttpClient("MovimentationApiClient", (serviceProvider, client) =>
+{
+    client.BaseAddress = new Uri("http://user:8080/");
+
+    var httpContextAccessor = serviceProvider.GetRequiredService<IHttpContextAccessor>();
+    var authorizationHeader = httpContextAccessor.HttpContext?.Request.Headers["Authorization"].FirstOrDefault();
+
+    if (!string.IsNullOrEmpty(authorizationHeader) && authorizationHeader.StartsWith("Bearer ", StringComparison.OrdinalIgnoreCase))
+    {
+        var accessToken = authorizationHeader.Substring("Bearer ".Length).Trim();
+        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+    }
+});
 
 builder.Services.AddSwaggerGen(options =>
 {
@@ -61,7 +77,6 @@ builder.Services.AddSwaggerGen(options =>
 });
 
 builder.Services.AddScoped<IReportService, ReportService>();
-builder.Services.AddHttpClient();
 
 var app = builder.Build();
 
