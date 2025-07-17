@@ -109,7 +109,7 @@ namespace Bank.Api.Services.PixServices
             try
             {
                 var boole = await _client.HasPix();
-                response.Data = boole;
+                response.Data = boole.Data;
                 return response;
             }
             catch
