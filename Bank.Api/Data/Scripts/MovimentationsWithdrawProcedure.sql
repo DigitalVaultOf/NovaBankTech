@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE MovimentationsWithdrawProcedure
+﻿CREATE OR ALTER PROCEDURE MovimentationsWithdrawProcedure
     @AccountNumber NVARCHAR(20),
     @Value DECIMAL(18,2),
     @MovimentType NVARCHAR(255)

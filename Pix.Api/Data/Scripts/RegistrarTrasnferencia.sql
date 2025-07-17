@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE RegistrarTrasnferencia
+﻿CREATE OR ALTER PROCEDURE RegistrarTrasnferencia
     @IdPix UNIQUEIDENTIFIER,
     @Going VARCHAR(255),
     @Coming VARCHAR(255),

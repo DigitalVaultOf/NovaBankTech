@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE RealizarTransferencia
+﻿CREATE OR ALTER PROCEDURE RealizarTransferencia
     @AccountNumberFrom NVARCHAR(20),
     @AccountNumberTo NVARCHAR(20),
     @Amount DECIMAL(18,2),
