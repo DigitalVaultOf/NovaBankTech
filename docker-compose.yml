@@ -1,5 +1,3 @@
-﻿version: '3.8'
-
 services:
   auth:
     build:
@@ -77,6 +75,17 @@ services:
       - auth
       - email
       - pix
+
+  payments:
+    build: ./Payments.Api
+    ports:
+      - "${PAYMENTS_PORT:-5007}:8080"
+    networks:
+      - appnet
+    depends_on:
+      - sqlserver
+    environment:
+      - ConnectionStrings__DefaultConnection=Server=sqlserver,1433;Database=PaymentsBank;User Id=sa;Password=Senha123!;TrustServerCertificate=True
 
   sqlserver:
     image: mcr.microsoft.com/mssql/server:2022-latest

@@ -1,21 +1,17 @@
 using System.Text;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using Pix.Api.Data;
-using Pix.Api.Data.Scripts;
-using Pix.Api.Services.PixService;
+using Payments.Api.Data;
+using Payments.Api.Repositories.PaymentRepository;
+using Payments.Api.Services.PaymentService;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
-
 builder.Services.AddHttpContextAccessor();
-
 builder.Services.AddEndpointsApiExplorer();
-
-builder.Services.AddScoped<IPixService, PixService>();
-
+builder.Services.AddAuthorization();
 builder.Services.AddAuthentication("Bearer")
     .AddJwtBearer("Bearer", options =>
     {
@@ -28,7 +24,8 @@ builder.Services.AddAuthentication("Bearer")
             ValidIssuer = builder.Configuration["Jwt:Issuer"],
             ValidAudience = builder.Configuration["Jwt:Audience"],
             IssuerSigningKey = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+                Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"] ??
+                                       throw new InvalidOperationException("Token JWT não configurado.")))
         };
     });
 
@@ -36,7 +33,7 @@ builder.Services.AddSwaggerGen(options =>
 {
     options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
     {
-        Title = "Pix API",
+        Title = "Payments API",
         Version = "v1"
     });
 
@@ -62,37 +59,24 @@ builder.Services.AddSwaggerGen(options =>
                     Id = "Bearer"
                 }
             },
-            new string[] {}
+            []
         }
     });
 });
 
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
-
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")); 
-
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+
+builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
+builder.Services.AddScoped<IPaymentService, PaymentService>();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 
-    app.UseSwagger();
-    app.UseSwaggerUI();
-
-
-using (var scope = app.Services.CreateScope())
-{
-    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    db.Database.Migrate(); // Aplica as migrations automaticamente
-
-    SqlScriptExecutor.ExecuteSqlScriptsFromFolder(
-        db,
-        Path.Combine(AppContext.BaseDirectory, "Scripts")
-    );
-}
-
+app.UseSwagger();
+app.UseSwaggerUI();
 
 using (var scope = app.Services.CreateScope())
 {
@@ -100,11 +84,9 @@ using (var scope = app.Services.CreateScope())
     db.Database.Migrate(); // Aplica as migrations automaticamente
 }
 
-
-//app.UseHttpsRedirection();
-
+// app.UseHttpsRedirection();
+app.UseAuthentication();
 app.UseAuthorization();
-
 app.MapControllers();
 
 app.Run();
