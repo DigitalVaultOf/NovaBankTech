@@ -12,8 +12,13 @@ using Pix.Api.Data;
 namespace Pix.Api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
+<<<<<<<< HEAD:Pix.Api/Migrations/20250716134319_new_migrate.Designer.cs
     [Migration("20250716134319_new_migrate")]
     partial class new_migrate
+========
+    [Migration("20250717025708_Initial")]
+    partial class Initial
+>>>>>>>> 8dd7f9160fe4f4c2b27a6dd08224c7154dafeb6d:Pix.Api/Migrations/20250717025708_Initial.Designer.cs
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
