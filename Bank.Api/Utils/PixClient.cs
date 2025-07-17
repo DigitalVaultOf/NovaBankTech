@@ -1,7 +1,8 @@
 ﻿using System;
+using Azure;
 using Bank.Api.DTOS;
-using User.Api.Model;
 using Newtonsoft.Json;
+using User.Api.Model;
 
 namespace Bank.Api.Utils
 {
@@ -61,12 +62,24 @@ namespace Bank.Api.Utils
             response.EnsureSuccessStatusCode();
         }
 
-        public async Task HasPix()
+        public async Task<ResponseModel<bool>> HasPix()
         {
             AddAuthorizationHeader();
-
-            var response = await _httpClient.PostAsJsonAsync("http://apigateway:8080/pix/api/has", 1);
-            response.EnsureSuccessStatusCode();
+            var response = new ResponseModel<bool>();
+            var res = await _httpClient.PostAsJsonAsync("http://apigateway:8080/pix/api/has", 1);
+            res.EnsureSuccessStatusCode();
+            if (res.IsSuccessStatusCode)
+            {
+                var json = await res.Content.ReadAsStringAsync();
+                var resultadoInterno = JsonConvert.DeserializeObject<ResponseModel<bool>>(json);
+                response.Data = resultadoInterno.Data;
+                return response;
+            }
+            else
+            {
+                response.Data = false;
+                return response;
+            }
         }
     }
 }

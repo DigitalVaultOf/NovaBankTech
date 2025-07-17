@@ -1,6 +1,7 @@
 ﻿using Bank.Api.DTOS;
 using Bank.Api.Utils;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic;
 using User.Api.Data;
 using User.Api.Model;
 
@@ -99,6 +100,21 @@ namespace Bank.Api.Services.PixServices
             catch (Exception e)
             {
                 response.Message = $"Error 1: {e.Message}";
+                return response;
+            }
+        }
+        public async Task<ResponseModel<bool>> hasPix()
+        {
+            var response = new ResponseModel<bool>();
+            try
+            {
+                var boole = await _client.HasPix();
+                response.Data = boole;
+                return response;
+            }
+            catch
+            {
+                response.Message = "Error";
                 return response;
             }
         }
