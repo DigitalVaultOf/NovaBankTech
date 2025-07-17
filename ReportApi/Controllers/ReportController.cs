@@ -33,4 +33,22 @@ public class ReportController : ControllerBase
         }
     }
 
+    [HttpGet("pdf")]
+    public async Task<IActionResult> GetPdf()
+    {
+        try
+        {
+            var (fileBytes, fileName, contentType) = await _reportService.GeneratePdfReportAsync();
+            return File(fileBytes, contentType, fileName);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, new
+            {
+                mensagem = "Erro ao gerar PDF",
+                detalhe = ex.Message,
+                pilha = ex.StackTrace
+            });
+        }
+    }
 }
