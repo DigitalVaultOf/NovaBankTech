@@ -79,11 +79,20 @@ namespace User.Api.Controllers
         }
 
         [HttpGet("GetUsuarios")]
+        public async Task<IActionResult> GetAllUsers()
+        {
+            var accounts = await _userAccountService.GetAllUsers();
+            return Ok(accounts);
+        }
+
+        [HttpGet("GetAccounts")]
         public async Task<IActionResult> GetAllAcounts()
         {
             var accounts = await _userAccountService.GetAllAcounts();
             return Ok(accounts);
         }
+
+
 
         [Authorize]
         [HttpPut("update-user")]

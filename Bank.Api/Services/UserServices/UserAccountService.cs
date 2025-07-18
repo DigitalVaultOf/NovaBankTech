@@ -554,5 +554,24 @@ namespace Bank.Api.Services.UserServices
 
             return response;
         }
+
+        public async Task<ResponseModel<List<Users>>> GetAllUsers()
+        {
+            var response = new ResponseModel<List<Users>>();
+
+            try
+            {
+                var user = await _context.Users.ToListAsync();
+                response.Data = user;
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+                response.Message = ex.Message;
+                return response;
+                
+            }
+        }
     }
 }

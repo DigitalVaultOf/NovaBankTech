@@ -11,12 +11,7 @@
             ],
             "UpstreamPathTemplate": "/user/api/{everything}",
             "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
-            "Priority": 1,
-            "QoSOptions": {
-                "ExceptionsAllowedBeforeBreaking": 3,
-                "DurationOfBreak": 10000,
-                "TimeoutValue": 5000
-            }
+            "Priority": 1
         },
         {
             "DownstreamPathTemplate": "/api/auth/{everything}",
@@ -84,7 +79,7 @@
             "Priority": 1
         },
         {
-            "DownstreamPathTemplate": "/api/{everything}",
+            "DownstreamPathTemplate": "/api/payments/{everything}",
             "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {

@@ -17,5 +17,6 @@ namespace Bank.Api.Services.UserServices
         Task<ResponseModel<bool>> UpdatePasswordAsync(UpdatePasswordDto updatePasswordDto);
         Task<ResponseModel<GetUserDto>> GetUserByIdAsync();
         Task<ResponseModel<List<Account>>> GetAllAcounts();
+        Task<ResponseModel<List<Users>>> GetAllUsers();
     }
 }
