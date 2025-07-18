@@ -54,7 +54,7 @@
                 }
             ],
             "UpstreamPathTemplate": "/pix/api/{everything}",
-            "UpstreamHttpMethod": [ "POST", "GET" ],
+            "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
             "Priority": 1
         },
         {
@@ -81,6 +81,19 @@
             ],
             "UpstreamPathTemplate": "/transfer/api/{everything}",
             "UpstreamHttpMethod": [ "POST" ],
+            "Priority": 1
+        },
+        {
+            "DownstreamPathTemplate": "/api/userpix/{everything}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "user",
+                    "Port": 8080
+                }
+            ],
+            "UpstreamPathTemplate": "/userpix/api/{everything}",
+            "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
             "Priority": 1
         },
         {

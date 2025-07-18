@@ -30,9 +30,9 @@ namespace Bank.Api.Utils
         public async Task CriarPixAsync(RegistroPixDto dto)
         {
             AddAuthorizationHeader();
+            var resposes = new ResponseModel<string>();
 
-            var response = await _httpClient.PostAsJsonAsync("http://apigateway:8080/pix/api/registrar"
-, dto);
+            var response = await _httpClient.PostAsJsonAsync("http://apigateway:8080/pix/api/registrar", dto);
             response.EnsureSuccessStatusCode();
         }
 
@@ -40,7 +40,7 @@ namespace Bank.Api.Utils
         {
             AddAuthorizationHeader();
             var resposes = new ResponseModel<string>();
-            var response = await _httpClient.PostAsJsonAsync("http://apigateway:8080/pix/api/pix/get", chave);
+            var response = await _httpClient.PostAsJsonAsync("http://apigateway:8080/pix/api/get", chave);
             if (response.IsSuccessStatusCode)
             {
                 var json = await response.Content.ReadAsStringAsync();
@@ -58,28 +58,8 @@ namespace Bank.Api.Utils
         {
             AddAuthorizationHeader();
 
-            var response = await _httpClient.PostAsJsonAsync("http://apigateway:8080/pix/api/mandar", dto);
+            var response = await _httpClient.PostAsJsonAsync("http://apigateway:8080/pix/api/transferir", dto);
             response.EnsureSuccessStatusCode();
-        }
-
-        public async Task<ResponseModel<bool>> HasPix()
-        {
-            AddAuthorizationHeader();
-            var response = new ResponseModel<bool>();
-            var res = await _httpClient.PostAsJsonAsync("http://apigateway:8080/pix/api/has", 1);
-            res.EnsureSuccessStatusCode();
-            if (res.IsSuccessStatusCode)
-            {
-                var json = await res.Content.ReadAsStringAsync();
-                var resultadoInterno = JsonConvert.DeserializeObject<ResponseModel<bool>>(json);
-                response.Data = resultadoInterno.Data;
-                return response;
-            }
-            else
-            {
-                response.Data = false;
-                return response;
-            }
         }
     }
 }

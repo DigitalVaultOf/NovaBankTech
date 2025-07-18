@@ -3,16 +3,17 @@ using Bank.Api.Services.PixServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Bank.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PixController : ControllerBase
+    public class UserPixController : ControllerBase
     {
         private readonly IPixService _pixService;
 
-        public PixController(IPixService pixService)
+        public UserPixController(IPixService pixService)
         {
             _pixService = pixService;
         }

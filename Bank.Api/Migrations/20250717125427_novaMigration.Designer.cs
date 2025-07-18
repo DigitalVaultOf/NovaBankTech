@@ -12,13 +12,8 @@ using User.Api.Data;
 namespace Bank.Api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-<<<<<<<< HEAD:Bank.Api/Migrations/20250716134304_new_migrate.Designer.cs
-    [Migration("20250716134304_new_migrate")]
-    partial class new_migrate
-========
-    [Migration("20250717025734_Initial")]
-    partial class Initial
->>>>>>>> 8dd7f9160fe4f4c2b27a6dd08224c7154dafeb6d:Bank.Api/Migrations/20250717025734_Initial.Designer.cs
+    [Migration("20250717125427_novaMigration")]
+    partial class novaMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

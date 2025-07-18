@@ -63,5 +63,18 @@ namespace Pix.Api.Controllers
                 return BadRequest(ex.Message);
             }
         }
+        [Authorize]
+        [HttpGet("pix")]
+        public async Task<IActionResult> GetPix()
+        {
+            try
+            {
+                var response = await _pixService.getPixKey();
+                return Ok(response);
+            }catch(Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
     }
 }

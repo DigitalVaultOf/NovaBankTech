@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Pix.Api.Data;
 using Pix.Api.DTOS;
 using Pix.Api.Models;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Pix.Api.Services.PixService
 {
@@ -110,6 +111,15 @@ namespace Pix.Api.Services.PixService
                 response.Message = "Error";
                 return response;
             }
+        }
+
+        public async Task<ResponseModel<string>> getPixKey()
+        {
+            var accountNumber = _httpContextAccessor.HttpContext?.User.FindFirst(c => c.Type == "AccountNumber")?.Value;
+            var response = new ResponseModel<string>();
+            var pixAcount = await _context.Pix.Where(p => p.AccountNumber == accountNumber).Select(p => p.PixKey).FirstOrDefaultAsync();
+            response.Data = pixAcount;
+            return response;
         }
     }
 }
