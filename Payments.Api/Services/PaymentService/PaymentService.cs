@@ -56,6 +56,7 @@ public class PaymentService(IPaymentRepository paymentRepository, AppDbContext c
             var newPayment = new MonthPaymentModel
             {
                 UserId = dto.UserId,
+                AccountNumber = dto.AccountNumber,
                 Amount = dto.Amount,
                 Month = dto.Month,
                 Year = dto.Year,
@@ -111,6 +112,19 @@ public class PaymentService(IPaymentRepository paymentRepository, AppDbContext c
                 response.Message = "Saldo insuficiente para realizar o pagamento do boleto.";
                 response.Data = false;
                 return response;
+            }
+
+            var debitDto = new DebitPaymentDto
+            {
+                AccountNumber = existingPayment.AccountNumber,
+                Value = existingPayment.Amount
+            };
+            
+            var debitSuccess = await bankApiClient.DebitFromAccountAsync(debitDto);
+            
+            if (!debitSuccess)
+            {
+                throw new Exception("A API de Banco recusou a operação de débito.");
             }
 
             existingPayment.BankSlipIsPaid = true;

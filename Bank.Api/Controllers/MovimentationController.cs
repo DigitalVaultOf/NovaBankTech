@@ -15,6 +15,7 @@ namespace Bank.Api.Controllers
     {
         public readonly IMovimentationService _movimentationService;
         private readonly IMovimention _movimention;
+
         public MovimentationController(IMovimentationService movimentationService, IMovimention movimention)
         {
             _movimentationService = movimentationService;
@@ -35,10 +36,10 @@ namespace Bank.Api.Controllers
             return Ok(response);
         }
 
-        [HttpGet ("listmovimentation")]
+        [HttpGet("listmovimentation")]
         public async Task<IActionResult> GetMovimentationsAsync()
         {
-            var response= await _movimention.GetMovimentationsAsync();
+            var response = await _movimention.GetMovimentationsAsync();
             return Ok(response);
         }
 
@@ -62,6 +63,13 @@ namespace Bank.Api.Controllers
         {
             var response = await _movimention.GetPagedMovimentationsAsync(request);
             return Ok(response);
+        }
+
+        [HttpPost("MakeDebitPayment")]
+        public async Task<IActionResult> MakeDebitPayment([FromBody] DebitPaymentDto data)
+        {
+            var response = await _movimentationService.ProcessDebitPaymentAsync(data);
+            return response.Data ? Ok(response) : BadRequest(response);
         }
     }
 }

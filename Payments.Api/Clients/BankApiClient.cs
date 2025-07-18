@@ -1,6 +1,8 @@
-﻿using Newtonsoft.Json;
+﻿using Bank.Api.DTOS;
+using Newtonsoft.Json;
 using Payments.Api.Models;
 using User.Api.DTOS;
+using DebitPaymentDto = Payments.Api.DTOS.DebitPaymentDto;
 
 namespace Payments.Api.Clients;
 
@@ -38,5 +40,16 @@ public class BankApiClient(HttpClient httpClient, IHttpContextAccessor httpConte
         }
 
         return responseData.Data.Balance;
+    }
+
+    public async Task<bool> DebitFromAccountAsync(DebitPaymentDto dto)
+    {
+        AddAuthorizationHeader();
+
+        const string url = "http://apigateway:8080/movimentation/api/Movimentation/MakeDebitPayment";
+
+        var response = await httpClient.PostAsJsonAsync(url, dto);
+
+        return response.IsSuccessStatusCode;
     }
 }

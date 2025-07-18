@@ -8,7 +8,7 @@ public class MonthPaymentModel
 
     [Required(ErrorMessage = "ID do usuário é obrigatório")]
     public Guid UserId { get; set; }
-
+    public string AccountNumber { get; set; } 
     public int? BankSlipNumber { get; set; }
     public bool BankSlipIsPaid { get; set; }
     public DateTime? PaymentDate { get; set; }

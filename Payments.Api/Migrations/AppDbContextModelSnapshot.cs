@@ -28,8 +28,18 @@ namespace Payments.Api.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("AccountNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<decimal>("Amount")
                         .HasColumnType("decimal(18, 2)");
+
+                    b.Property<bool>("BankSlipIsPaid")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("BankSlipNumber")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -37,23 +47,11 @@ namespace Payments.Api.Migrations
                     b.Property<DateTime>("DueDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("InvoiceIsPaid")
-                        .HasColumnType("bit");
-
-                    b.Property<int?>("InvoiceNumber")
-                        .HasColumnType("int");
-
                     b.Property<int>("Month")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("PaymentDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<bool>("SlipIsPaid")
-                        .HasColumnType("bit");
-
-                    b.Property<int?>("SlipNumber")
-                        .HasColumnType("int");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
