@@ -58,4 +58,3 @@ IF @@TRANCOUNT > 0
         THROW;
 END CATCH
 END;
-GO
