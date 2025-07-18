@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Payments.Api.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class Updated : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -17,10 +17,9 @@ namespace Payments.Api.Migrations
                 {
                     PaymentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    InvoiceNumber = table.Column<int>(type: "int", nullable: true),
-                    InvoiceIsPaid = table.Column<bool>(type: "bit", nullable: false),
-                    SlipNumber = table.Column<int>(type: "int", nullable: true),
-                    SlipIsPaid = table.Column<bool>(type: "bit", nullable: false),
+                    AccountNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    BankSlipNumber = table.Column<long>(type: "bigint", nullable: true),
+                    IsPaid = table.Column<bool>(type: "bit", nullable: false),
                     PaymentDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Month = table.Column<int>(type: "int", nullable: false),
                     Year = table.Column<int>(type: "int", nullable: false),

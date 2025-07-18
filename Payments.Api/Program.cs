@@ -1,6 +1,7 @@
 using System.Text;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Payments.Api.Clients;
 using Payments.Api.Data;
 using Payments.Api.Repositories.PaymentRepository;
 using Payments.Api.Services.PaymentService;
@@ -69,6 +70,8 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
+builder.Services.AddHttpClient();
+builder.Services.AddScoped<BankApiClient>();
 builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
 builder.Services.AddScoped<IPaymentService, PaymentService>();
 

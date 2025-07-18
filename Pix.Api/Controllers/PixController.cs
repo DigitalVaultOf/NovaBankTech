@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Pix.Api.DTOS;
 using Pix.Api.Services.PixService;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Pix.Api.Controllers
 {
@@ -19,7 +20,7 @@ namespace Pix.Api.Controllers
 
         [Authorize]
         [HttpPost("registrar")]
-        public async Task<IActionResult> CreateKey([FromBody]RegistroPixDto data)
+        public async Task<IActionResult> CreateKey([FromBody] RegistroPixDto data)
         {
             var response = await _pixService.RegistroPix(data);
             return Ok(response);
@@ -35,7 +36,7 @@ namespace Pix.Api.Controllers
 
         [Authorize]
         [HttpPost("get")]
-        public async Task<IActionResult> GetAccountNumber([FromBody]string number)
+        public async Task<IActionResult> GetAccountNumber([FromBody] string number)
         {
             try
             {
@@ -46,6 +47,33 @@ namespace Pix.Api.Controllers
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
+            }
+        }
+        [Authorize]
+        [HttpGet("has")]
+        public async Task<IActionResult> HasPixAsync()
+        {
+            try
+            {
+                var response = await _pixService.HasPix();
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [Authorize]
+        [HttpGet("pix")]
+        public async Task<IActionResult> GetPix()
+        {
+            try
+            {
+                var response = await _pixService.getPixKey();
+                return Ok(response);
+            }catch(Exception e)
+            {
+                return BadRequest(e.Message);
             }
         }
     }
