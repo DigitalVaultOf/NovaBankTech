@@ -113,7 +113,7 @@
                     "Port": 8080
                 }
             ],
-            "UpstreamPathTemplate": "/report/api/{everything}",
+            "UpstreamPathTemplate": "/api/report/{everything}",
             "UpstreamHttpMethod": [ "GET", "POST" ],
             "Priority": 1
         },
