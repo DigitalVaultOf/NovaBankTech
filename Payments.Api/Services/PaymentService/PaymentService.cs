@@ -3,10 +3,15 @@ using Payments.Api.Data;
 using Payments.Api.DTOS;
 using Payments.Api.Models;
 using Payments.Api.Repositories.PaymentRepository;
+using Payments.Api.Utils;
 
 namespace Payments.Api.Services.PaymentService;
 
-public class PaymentService(IPaymentRepository paymentRepository, AppDbContext context, BankApiClient bankApiClient)
+public class PaymentService(
+    IPaymentRepository paymentRepository,
+    AppDbContext context,
+    BankApiClient bankApiClient,
+    IHttpContextAccessor httpContextAccessor)
     : IPaymentService
 {
     public async Task<ResponseModel<MonthPaymentModel>> GetMonthPaymentsAsync(MonthPaymentDto dto)
@@ -53,9 +58,12 @@ public class PaymentService(IPaymentRepository paymentRepository, AppDbContext c
                 return response;
             }
 
+            var bankSlipNumber = BankSlipNumberGenerator.Generate();
+
             var newPayment = new MonthPaymentModel
             {
                 UserId = dto.UserId,
+                BankSlipNumber = bankSlipNumber,
                 AccountNumber = dto.AccountNumber,
                 Amount = dto.Amount,
                 Month = dto.Month,
@@ -81,7 +89,7 @@ public class PaymentService(IPaymentRepository paymentRepository, AppDbContext c
         return response;
     }
 
-    public async Task<ResponseModel<bool>> MarkAsPaidAsync(Guid paymentId)
+    public async Task<ResponseModel<bool>> MarkAsPaidAsync(PaySlipDto dto)
     {
         var response = new ResponseModel<bool>();
 
@@ -89,7 +97,7 @@ public class PaymentService(IPaymentRepository paymentRepository, AppDbContext c
 
         try
         {
-            var existingPayment = await paymentRepository.GetMonthPaymentsByIdAsync(paymentId);
+            var existingPayment = await paymentRepository.GetMonthPaymentsByIdAsync(dto.PaymentId);
 
             if (existingPayment is null)
             {
@@ -98,7 +106,7 @@ public class PaymentService(IPaymentRepository paymentRepository, AppDbContext c
                 return response;
             }
 
-            if (existingPayment.BankSlipIsPaid)
+            if (existingPayment.IsPaid)
             {
                 response.Message = "Este boleto já foi pago anteriormente.";
                 response.Data = false;
@@ -117,17 +125,18 @@ public class PaymentService(IPaymentRepository paymentRepository, AppDbContext c
             var debitDto = new DebitPaymentDto
             {
                 AccountNumber = existingPayment.AccountNumber,
-                Value = existingPayment.Amount
+                Value = existingPayment.Amount,
+                UserPassword = dto.UserPassword
             };
-            
+
             var debitSuccess = await bankApiClient.DebitFromAccountAsync(debitDto);
-            
+
             if (!debitSuccess)
             {
                 throw new Exception("A API de Banco recusou a operação de débito.");
             }
 
-            existingPayment.BankSlipIsPaid = true;
+            existingPayment.IsPaid = true;
             existingPayment.PaymentDate = DateTime.Now;
             existingPayment.UpdatedAt = DateTime.Now;
 
@@ -143,6 +152,91 @@ public class PaymentService(IPaymentRepository paymentRepository, AppDbContext c
             response.Message = "Ocorreu um erro ao marcar o pagamento como concluído.";
             response.Data = false;
             Console.WriteLine($"LOG ERROR: Falha em MarkAsPaidAsync: {ex}");
+        }
+
+        return response;
+    }
+
+    public async Task<ResponseModel<List<MonthPaymentModel>>> GetPaymentsHistoryAsync(Guid userId)
+    {
+        var response = new ResponseModel<List<MonthPaymentModel>>();
+
+        try
+        {
+            var paymentHistory = await paymentRepository.GetPaymentsHistoryAsync(userId);
+
+            if (paymentHistory.Count is 0)
+            {
+                response.Message = "Nenhum histórico de pagamento foi encontrado para este usuário.";
+                response.Data = []; // Retorna uma lista vazia para o frontend
+                return response;
+            }
+
+            response.Data = paymentHistory;
+            response.Message = "Histórico de pagamentos encontrado com sucesso.";
+        }
+        catch (Exception ex)
+        {
+            response.Message = "Ocorreu um erro ao buscar o histórico de pagamentos.";
+            Console.WriteLine($"LOG ERROR: Falha em GetPaymentsHistoryAsync: {ex}");
+        }
+
+        return response;
+    }
+
+    public async Task<ResponseModel<bool>> GenerateMonthlyPaymentAsync(Guid userId)
+    {
+        var response = new ResponseModel<bool>();
+        await using var transaction = await context.Database.BeginTransactionAsync();
+
+        try
+        {
+            var (month, year) = (DateTime.UtcNow.Month, DateTime.UtcNow.Year);
+
+            var existingPayment = await paymentRepository.GetMonthPaymentsAsync(userId, month, year);
+
+            if (existingPayment is not null)
+            {
+                response.Message = "Uma cobrança para este mês já foi gerada para o usuário.";
+                response.Data = false;
+                return response;
+            }
+
+            var accountNumber = httpContextAccessor.HttpContext?.User.FindFirst(c => c.Type == "AccountNumber")?.Value;
+
+            if (string.IsNullOrEmpty(accountNumber))
+            {
+                throw new Exception("Não foi possível identificar o número da conta do usuário a partir do token.");
+            }
+
+            var bankSlipNumber = BankSlipNumberGenerator.Generate();
+
+
+            var newPayment = new MonthPaymentModel
+            {
+                UserId = userId,
+                AccountNumber = accountNumber,
+                BankSlipNumber = bankSlipNumber,
+                Amount = 1500.00m,
+                Month = month,
+                Year = year,
+                DueDate = new DateTime(year, month, 10), // Exemplo: Vencimento todos os dias 10 do mês.
+                IsPaid = false // Começa como "não pago"
+            };
+
+            await paymentRepository.AddPayment(newPayment);
+            await context.SaveChangesAsync();
+            await transaction.CommitAsync();
+
+            response.Data = true;
+            response.Message = "Cobrança mensal gerada com sucesso!";
+        }
+        catch (Exception ex)
+        {
+            await transaction.RollbackAsync();
+            response.Message = "Ocorreu um erro ao gerar a cobrança mensal.";
+            response.Data = false;
+            Console.WriteLine($"LOG ERROR: Falha em GenerateMonthlyPaymentAsync: {ex}");
         }
 
         return response;

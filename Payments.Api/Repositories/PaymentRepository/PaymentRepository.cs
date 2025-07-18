@@ -22,4 +22,9 @@ public class PaymentRepository(AppDbContext context) : IPaymentRepository
         context.MonthPayments.Add(paymentModel);
         return Task.CompletedTask;
     }
+
+    public async Task<List<MonthPaymentModel>> GetPaymentsHistoryAsync(Guid userId)
+    {
+        return await context.MonthPayments.Where(p => p.UserId == userId).ToListAsync();
+    }
 }

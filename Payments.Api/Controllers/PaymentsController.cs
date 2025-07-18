@@ -24,10 +24,24 @@ public class PaymentsController(IPaymentService paymentService) : ControllerBase
         return response.Data ? Ok(response) : BadRequest(response);
     }
 
-    [HttpPost("MarkAsPaid/{paymentId:guid}")]
-    public async Task<IActionResult> MarkAsPaidAsync(Guid paymentId)
+    [HttpPost("MarkAsPaid")]
+    public async Task<IActionResult> MarkAsPaidAsync([FromBody] PaySlipDto dto)
     {
-        var response = await paymentService.MarkAsPaidAsync(paymentId);
+        var response = await paymentService.MarkAsPaidAsync(dto);
+        return response.Data ? Ok(response) : BadRequest(response);
+    }
+
+    [HttpGet("GetPaymentHistory/{userId:guid}")]
+    public async Task<IActionResult> GetPaymentHistoryAsync(Guid userId)
+    {
+        var response = await paymentService.GetPaymentsHistoryAsync(userId);
+        return Ok(response);
+    }
+
+    [HttpPost("GenerateMonthlyPayment/{userId:guid}")]
+    public async Task<IActionResult> GenerateMonthlyPaymentAsync(Guid userId)
+    {
+        var response = await paymentService.GenerateMonthlyPaymentAsync(userId);
         return response.Data ? Ok(response) : BadRequest(response);
     }
 }

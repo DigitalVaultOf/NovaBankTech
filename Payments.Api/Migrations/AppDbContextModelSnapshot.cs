@@ -35,17 +35,17 @@ namespace Payments.Api.Migrations
                     b.Property<decimal>("Amount")
                         .HasColumnType("decimal(18, 2)");
 
-                    b.Property<bool>("BankSlipIsPaid")
-                        .HasColumnType("bit");
-
-                    b.Property<int?>("BankSlipNumber")
-                        .HasColumnType("int");
+                    b.Property<long?>("BankSlipNumber")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("DueDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsPaid")
+                        .HasColumnType("bit");
 
                     b.Property<int>("Month")
                         .HasColumnType("int");

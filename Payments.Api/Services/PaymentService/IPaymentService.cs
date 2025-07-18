@@ -7,5 +7,7 @@ public interface IPaymentService
 {
     Task<ResponseModel<MonthPaymentModel>> GetMonthPaymentsAsync(MonthPaymentDto dto);
     Task<ResponseModel<bool>> AddPaymentAsync(AddPaymentDto dto);
-    Task<ResponseModel<bool>> MarkAsPaidAsync(Guid paymentId);
+    Task<ResponseModel<bool>> MarkAsPaidAsync(PaySlipDto  dto);
+    Task<ResponseModel<List<MonthPaymentModel>>> GetPaymentsHistoryAsync(Guid userId);
+    Task<ResponseModel<bool>> GenerateMonthlyPaymentAsync(Guid userId);
 }

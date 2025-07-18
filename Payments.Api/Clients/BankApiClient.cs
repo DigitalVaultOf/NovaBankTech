@@ -1,8 +1,6 @@
-﻿using Bank.Api.DTOS;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Payments.Api.Models;
-using User.Api.DTOS;
-using DebitPaymentDto = Payments.Api.DTOS.DebitPaymentDto;
+using Payments.Api.DTOS;
 
 namespace Payments.Api.Clients;
 

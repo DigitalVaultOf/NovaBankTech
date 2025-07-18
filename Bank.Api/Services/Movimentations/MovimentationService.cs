@@ -30,7 +30,7 @@ public class MovimentationService : IMovimentationService
             bool senhaCorreta = BCrypt.Net.BCrypt.Verify(data.Password, remetente.SenhaHash);
             if (!senhaCorreta)
             {
-                response.Message = "Senha incorreta.";
+                response.Message = "Senha inválida.";
                 return response;
             }
 
@@ -64,7 +64,7 @@ public class MovimentationService : IMovimentationService
             bool senhaCorreta = BCrypt.Net.BCrypt.Verify(data.Password, remetente.SenhaHash);
             if (!senhaCorreta)
             {
-                response.Message = "Senha incorreta.";
+                response.Message = "Senha inválida.";
                 return response;
             }
 
@@ -87,11 +87,30 @@ public class MovimentationService : IMovimentationService
     public async Task<ResponseModel<bool>> ProcessDebitPaymentAsync(DebitPaymentDto data)
     {
         var response = new ResponseModel<bool>();
+
         try
         {
             if (string.IsNullOrEmpty(data.AccountNumber))
             {
                 response.Message = "O número da conta é obrigatório para o débito.";
+                response.Data = false;
+                return response;
+            }
+
+            var account = await _context.Accounts.FirstOrDefaultAsync(a => a.AccountNumber == data.AccountNumber);
+
+            if (account is null)
+            {
+                response.Message = "Conta não encontrada.";
+                response.Data = false;
+                return response;
+            }
+
+            var isPasswordValid = BCrypt.Net.BCrypt.Verify(data.UserPassword, account.SenhaHash);
+
+            if (!isPasswordValid)
+            {
+                response.Message = "Senha inválida.";
                 response.Data = false;
                 return response;
             }

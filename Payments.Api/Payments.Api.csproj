@@ -25,7 +25,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Bank.Api\Bank.Api.csproj" />
+        <ProjectReference Include="..\Shared.Messages\Shared.Messages.csproj" />
     </ItemGroup>
 
 </Project>
