@@ -57,9 +57,9 @@ namespace Bank.Api.Controllers
             return Ok(response);
         }
 
-        [HttpGet("history")] // Rota específica para este endpoint, ex: /api/Movimentation/history
+        [HttpGet("history")]
         public async Task<ActionResult<PagesOfMovimentHistoryDto<MovimentHistoryDto>>> GetUserMovementHistory(
-            [FromQuery] MovimentRequestDto request) // Parâmetros da query string são mapeados para MovimentRequestDto
+            [FromQuery] MovimentRequestDto request)
         {
             var response = await _movimention.GetPagedMovimentationsAsync(request);
             return Ok(response);

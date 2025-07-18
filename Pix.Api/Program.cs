@@ -4,6 +4,7 @@ using Microsoft.IdentityModel.Tokens;
 using Pix.Api.Data;
 using Pix.Api.Data.Scripts;
 using Pix.Api.Services.PixService;
+using Pix.Api.Services.RabitMq;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +16,8 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddScoped<IPixService, PixService>();
+
+builder.Services.AddSingleton<RabbitMQProducer>();
 
 builder.Services.AddAuthentication("Bearer")
     .AddJwtBearer("Bearer", options =>

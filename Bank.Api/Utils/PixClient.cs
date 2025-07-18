@@ -1,7 +1,8 @@
 ﻿using System;
+using Azure;
 using Bank.Api.DTOS;
-using User.Api.Model;
 using Newtonsoft.Json;
+using User.Api.Model;
 
 namespace Bank.Api.Utils
 {
@@ -29,9 +30,9 @@ namespace Bank.Api.Utils
         public async Task CriarPixAsync(RegistroPixDto dto)
         {
             AddAuthorizationHeader();
+            var resposes = new ResponseModel<string>();
 
-            var response = await _httpClient.PostAsJsonAsync("http://apigateway:8080/pix/api/registrar"
-, dto);
+            var response = await _httpClient.PostAsJsonAsync("http://apigateway:8080/pix/api/registrar", dto);
             response.EnsureSuccessStatusCode();
         }
 
@@ -39,7 +40,7 @@ namespace Bank.Api.Utils
         {
             AddAuthorizationHeader();
             var resposes = new ResponseModel<string>();
-            var response = await _httpClient.PostAsJsonAsync("http://apigateway:8080/pix/api/pix/get", chave);
+            var response = await _httpClient.PostAsJsonAsync("http://apigateway:8080/pix/api/get", chave);
             if (response.IsSuccessStatusCode)
             {
                 var json = await response.Content.ReadAsStringAsync();
@@ -57,7 +58,7 @@ namespace Bank.Api.Utils
         {
             AddAuthorizationHeader();
 
-            var response = await _httpClient.PostAsJsonAsync("http://apigateway:8080/pix/api/mandar", dto);
+            var response = await _httpClient.PostAsJsonAsync("http://apigateway:8080/pix/api/transferir", dto);
             response.EnsureSuccessStatusCode();
         }
     }
