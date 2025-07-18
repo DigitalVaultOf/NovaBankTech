@@ -51,7 +51,7 @@ namespace Email.Api.Services.RegisterEmailServices
         public async Task<bool> EnviarEmailBoasVindas(string destinatario, string nomeUsuario, string contaCorrente, string contaPoupanca)
         {
             var html = EmailTemplates.GerarEmailBoasVindas(nomeUsuario, contaCorrente, contaPoupanca);
-            return await RegisterEmail(destinatario, "Bem-vindo ao banco!", html);
+            return await RegisterEmail(destinatario, "Bem-vindo a nossa familia!", html);
         }
 
     }
