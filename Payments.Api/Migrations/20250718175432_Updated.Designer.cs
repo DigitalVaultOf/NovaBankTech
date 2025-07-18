@@ -12,8 +12,8 @@ using Payments.Api.Data;
 namespace Payments.Api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250717025724_Initial")]
-    partial class Initial
+    [Migration("20250718175432_Updated")]
+    partial class Updated
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -31,8 +31,15 @@ namespace Payments.Api.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("AccountNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<decimal>("Amount")
                         .HasColumnType("decimal(18, 2)");
+
+                    b.Property<long?>("BankSlipNumber")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -40,23 +47,14 @@ namespace Payments.Api.Migrations
                     b.Property<DateTime>("DueDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("InvoiceIsPaid")
+                    b.Property<bool>("IsPaid")
                         .HasColumnType("bit");
-
-                    b.Property<int?>("InvoiceNumber")
-                        .HasColumnType("int");
 
                     b.Property<int>("Month")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("PaymentDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<bool>("SlipIsPaid")
-                        .HasColumnType("bit");
-
-                    b.Property<int?>("SlipNumber")
-                        .HasColumnType("int");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
