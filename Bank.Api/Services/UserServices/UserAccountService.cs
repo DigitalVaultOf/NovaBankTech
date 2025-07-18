@@ -1,6 +1,8 @@
 ﻿using System.Diagnostics;
 using Bank.Api.DTOS;
+using Bank.Api.Services.RabbitMQServices;
 using Microsoft.EntityFrameworkCore;
+using Shared.Messages.DTOs;
 using User.Api.CamposEnum;
 using User.Api.Data;
 using User.Api.DTOS;
@@ -17,11 +19,12 @@ namespace Bank.Api.Services.UserServices
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly HttpClient _httpClient;
         private readonly IConfiguration _configuration;
+        private readonly IRabbitMQPublisher _rabbitMQPublisher;
 
 
         public UserAccountService(AppDbContext context, IUserRepository userRepository,
             IAccountRepository accountRepository, IHttpContextAccessor httpContextAccessor, HttpClient httpClient,
-            IConfiguration configuration)
+            IConfiguration configuration, IRabbitMQPublisher rabbitMQPublisher)
         {
             _context = context;
             _userRepository = userRepository;
@@ -29,6 +32,7 @@ namespace Bank.Api.Services.UserServices
             _httpContextAccessor = httpContextAccessor;
             _httpClient = httpClient;
             _configuration = configuration;
+            _rabbitMQPublisher = rabbitMQPublisher;
         }
 
         public async Task<ResponseModel<bool>> CreateUserWithAccountAsync(CreateAccountUserDto dto)
@@ -110,35 +114,15 @@ namespace Bank.Api.Services.UserServices
                 await _context.SaveChangesAsync();
                 await transaction.CommitAsync();
 
-                var emailPayload = new SendWelcomeEmailDto
+                var emailPayload = new UserCreatedEvent
                 {
-                    nome = user.Name,
-                    email = user.Email,
-                    contaCorrente = checkingAccount.AccountNumber,
-                    contaPoupanca = savingsAccount.AccountNumber
+                    Nome = user.Name,
+                    Email = user.Email,
+                    ContaCorrente = checkingAccount.AccountNumber,
+                    ContaPoupanca = savingsAccount.AccountNumber
                 };
 
-                var responseEmail = await _httpClient.PostAsJsonAsync($"{emailApiBaseUrl}/send-welcome", emailPayload);
-                // _ =_httpClient.PostAsJsonAsync($"{emailApiBaseUrl}/send-welcome", emailPayload);
-                // _ = Task.Run(async () =>
-                // {
-                //     try
-                //     {
-                //         await _httpClient.PostAsJsonAsync($"{emailApiBaseUrl}/send-welcome", emailPayload);
-                //     }
-                //     catch (Exception ex)
-                //     {
-                //         Console.WriteLine($"Erro ao enviar e-mail assíncrono: {ex.Message}");
-                //     }
-                // });
-
-
-                if (!responseEmail.IsSuccessStatusCode)
-                {
-                    response.Data = false;
-                    response.Message = "Falha ao enviar email";
-                    return response;
-                } 
+                _rabbitMQPublisher.PublishUserCreated(emailPayload); 
                
                 response.Data = true;
                 response.Message = "Usuário e Conta foram criados com sucesso!";

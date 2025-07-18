@@ -12,7 +12,7 @@ using User.Api.Data;
 namespace Bank.Api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250715220657_Initial")]
+    [Migration("20250717025734_Initial")]
     partial class Initial
     {
         /// <inheritdoc />

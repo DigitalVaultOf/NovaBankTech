@@ -1,21 +1,112 @@
 {
     "Routes": [
-      {
-        "DownstreamPathTemplate": "/api/user/{everything}",
-        "DownstreamScheme": "http",
-        "DownstreamHostAndPorts": [
-          {
-            "Host": "user",
-            "Port": 8080
-          }
-        ],
-        "UpstreamPathTemplate": "/user/api/{everything}",
-        "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
-        "Priority": 1,
-        "QoSOptions": {
-          "ExceptionsAllowedBeforeBreaking": 3,
-          "DurationOfBreak": 10000,
-          "TimeoutValue": 5000
+        {
+            "DownstreamPathTemplate": "/api/user/{everything}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "user",
+                    "Port": 8080
+                }
+            ],
+            "UpstreamPathTemplate": "/user/api/{everything}",
+            "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+            "Priority": 1,
+            "QoSOptions": {
+                "ExceptionsAllowedBeforeBreaking": 3,
+                "DurationOfBreak": 10000,
+                "TimeoutValue": 5000
+            }
+        },
+        {
+            "DownstreamPathTemplate": "/api/auth/{everything}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "auth",
+                    "Port": 8080
+                }
+            ],
+            "UpstreamPathTemplate": "/auth/api/{everything}",
+            "UpstreamHttpMethod": [ "GET", "POST" ],
+            "Priority": 1
+        },
+        {
+            "DownstreamPathTemplate": "/api/email/{everything}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "email",
+                    "Port": 8080
+                }
+            ],
+            "UpstreamPathTemplate": "/email/api/{everything}",
+            "UpstreamHttpMethod": [ "POST", "GET" ],
+            "Priority": 1
+        },
+        {
+            "DownstreamPathTemplate": "/api/pix/{everything}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "pix",
+                    "Port": 8080
+                }
+            ],
+            "UpstreamPathTemplate": "/pix/api/{everything}",
+            "UpstreamHttpMethod": [ "POST", "GET" ],
+            "Priority": 1
+        },
+        {
+            "DownstreamPathTemplate": "/api/movimentation/{everything}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "user",
+                    "Port": 8080
+                }
+            ],
+            "UpstreamPathTemplate": "/movimentation/api/{everything}",
+            "UpstreamHttpMethod": [ "POST", "GET" ],
+            "Priority": 1
+        },
+        {
+            "DownstreamPathTemplate": "/api/transfer/{everything}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "user",
+                    "Port": 8080
+                }
+            ],
+            "UpstreamPathTemplate": "/transfer/api/{everything}",
+            "UpstreamHttpMethod": [ "POST" ],
+            "Priority": 1
+        },
+        {
+            "DownstreamPathTemplate": "/api/{everything}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "payments",
+                    "Port": 8080
+                }
+            ],
+            "UpstreamPathTemplate": "/payments/api/{everything}",
+            "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+            "Priority": 1
+        },
+        {
+            "DownstreamPathTemplate": "/health",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "user",
+                    "Port": 8080
+                }
+            ],
+            "UpstreamPathTemplate": "/user/health",
+            "UpstreamHttpMethod": [ "GET" ]
         }
       },
       {
@@ -84,26 +175,39 @@
       }
     ],
     "SwaggerEndPoints": [
-      {
-        "Key": "User API",
-        "Config": "/user/swagger/v1/swagger.json"
-      },
-      {
-        "Key": "Auth API",
-        "Config": "/auth/swagger/v1/swagger.json"
-      },
-      {
-        "Key": "Email API",
-        "Config": "/email/swagger/v1/swagger.json"
-      },
-      {
-        "Key": "Pix API",
-        "Config": "/pix/swagger/v1/swagger.json"
-      },
+
       {
         "Key": "Report API",
         "Config": "/report/swagger/v1/swagger.json"
       }
+        {
+            "Key": "User API",
+            "Config": "/user/swagger/v1/swagger.json"
+        },
+        {
+            "Key": "Auth API",
+            "Config": "/auth/swagger/v1/swagger.json"
+        },
+        {
+            "Key": "Email API",
+            "Config": "/email/swagger/v1/swagger.json"
+        },
+        {
+            "Key": "Pix API",
+            "Config": "/pix/swagger/v1/swagger.json"
+        },
+        {
+            "Key": "Movimentation API",
+            "Config": "/movimentation/swagger/v1/swagger.json"
+        },
+        {
+            "Key": "Transfer API",
+            "Config": "/transfer/swagger/v1/swagger.json"
+        },
+        {
+            "Key": "Payments API",
+            "Config": "/payments/swagger/v1/swagger.json"
+        }
     ],
     "GlobalConfiguration": {
       "BaseUrl": "http://apigateway:8080",
@@ -120,4 +224,4 @@
         "TimeoutValue": 5000
       }
     }
-  }
+}
