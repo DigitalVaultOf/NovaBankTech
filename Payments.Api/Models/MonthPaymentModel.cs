@@ -10,8 +10,7 @@ namespace Payments.Api.Models;
 [Index(nameof(BankSlipNumber))] // ← Índice simples, sem unique
 public class MonthPaymentModel
 {
-    [Key] 
-    public Guid PaymentId { get; init; } = Guid.NewGuid();
+    [Key] public Guid PaymentId { get; init; } = Guid.NewGuid();
 
     [Required(ErrorMessage = "ID do usuário é obrigatório.")]
     public Guid UserId { get; init; }
@@ -39,20 +38,19 @@ public class MonthPaymentModel
 
     public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
 
+    [Column(TypeName = "decimal(18,2)")] public decimal? AmountBeforePay { get; set; }
+
     [Required(ErrorMessage = "Valor é obrigatório.")]
     [Range(0.01, double.MaxValue, ErrorMessage = "Valor deve ser maior que zero.")]
     [Column(TypeName = "decimal(18,2)")]
     public decimal Amount { get; set; }
 
     // ← NOVO CAMPO
-    [StringLength(500)]
-    public string? Description { get; init; }
+    [StringLength(500)] public string? Description { get; init; }
 
     // ← NOVA PROPRIEDADE COMPUTADA
-    [NotMapped]
-    public bool IsOverdue => !IsPaid && DateTime.UtcNow > DueDate;
+    [NotMapped] public bool IsOverdue => !IsPaid && DateTime.UtcNow > DueDate;
 
     // ← NOVA PROPRIEDADE COMPUTADA
-    [NotMapped]
-    public int DaysUntilDue => (DueDate - DateTime.UtcNow).Days;
+    [NotMapped] public int DaysUntilDue => (DueDate - DateTime.UtcNow).Days;
 }

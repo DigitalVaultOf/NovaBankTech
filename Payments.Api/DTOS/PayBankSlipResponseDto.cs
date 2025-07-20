@@ -12,5 +12,6 @@ public class PayBankSlipResponseDto
     public string Description { get; set; } = string.Empty;
     public string Customer { get; set; } = string.Empty;
     public bool IsSuccess { get; set; }
-    public string? Message { get; set; } = string.Empty;
+    public string? ErrorType { get; set; } = string.Empty;
+
 }

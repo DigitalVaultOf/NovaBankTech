@@ -55,7 +55,9 @@ public static class BankSlipNumberManager
     /// </summary>
     public static long? ConvertToLong(string bankSlipNumber)
     {
-        Console.WriteLine($"DEBUG BankSlipNumberManager: Converting BankSlipNumber: {bankSlipNumber}");
+        Console.WriteLine($"DEBUG BankSlipNumberManager: Converting BankSlipNumber: '{bankSlipNumber}'");
+        Console.WriteLine($"DEBUG BankSlipNumberManager: Length: {bankSlipNumber?.Length}");
+        Console.WriteLine($"DEBUG BankSlipNumberManager: IsNullOrWhiteSpace: {string.IsNullOrWhiteSpace(bankSlipNumber)}");
 
         if (string.IsNullOrWhiteSpace(bankSlipNumber))
         {
@@ -69,6 +71,8 @@ public static class BankSlipNumberManager
             Console.WriteLine($"DEBUG BankSlipNumberManager: Failed to parse BankSlipNumber to long");
             return null;
         }
+
+        Console.WriteLine($"DEBUG BankSlipNumberManager: Parsed to long: {bankSlipNumberLong}");
 
         // ✅ VALIDAR FORMATO BRASILEIRO (18 DÍGITOS)
         if (!IsValidFormat(bankSlipNumberLong))

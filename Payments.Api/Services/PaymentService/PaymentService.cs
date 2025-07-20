@@ -278,6 +278,7 @@ public class PaymentService(
                 AccountNumber = accountNumber,
                 BankSlipNumber = bankSlipNumber,
                 Amount = dto.Amount,
+                AmountBeforePay = dto.Amount,
                 Description = dto.Description,
                 Month = DateTime.UtcNow.Month,
                 Year = DateTime.UtcNow.Year,
@@ -335,16 +336,18 @@ public class PaymentService(
             {
                 BankSlipNumber = BankSlipNumberManager.ConvertToString(boleto.BankSlipNumber!.Value),
                 Amount = boleto.Amount,
-                AccountNumber = boleto.AccountNumber,
                 CreatedAt = boleto.CreatedAt,
                 DueDate = boleto.DueDate,
-                IsPaid = boleto.IsPaid,
+                IsFullyPaid = boleto.IsPaid,
                 PaymentDate = boleto.PaymentDate,
                 Description = boleto.Description,
+                AccountNumber = boleto.AccountNumber,
                 Customer = await getUserData.GetUserNameForBoletoAsync(boleto.AccountNumber)
             };
 
-            response.Message = boleto.IsPaid ? "Boleto já foi pago." : "Boleto válido e pronto para ser pago.";
+            response.Message = boleto.IsPaid
+                ? "Este boleto já foi pago anteriormente!"
+                : "Este boleto é válido e está pronto para ser pago!";
         }
         catch (Exception ex)
         {
@@ -381,6 +384,7 @@ public class PaymentService(
                     IsPaid = boleto.IsPaid,
                     PaymentDate = boleto.PaymentDate,
                     Description = boleto.Description,
+                    AccountNumber = boleto.AccountNumber,
                     Customer = userName
                 });
             }
@@ -418,7 +422,8 @@ public class PaymentService(
                 {
                     PaymentId = boleto.PaymentId,
                     BankSlipNumber = BankSlipNumberManager.ConvertToString(boleto.BankSlipNumber!.Value),
-                    Amount = boleto.Amount,
+                    AmountBeforePay = boleto.AmountBeforePay,
+                    AmountAfterPay = boleto.Amount,
                     CreatedAt = boleto.CreatedAt,
                     DueDate = boleto.DueDate,
                     IsPaid = boleto.IsPaid,
@@ -458,24 +463,86 @@ public class PaymentService(
         var coreResult = await PayBankSlipCoreAsync(partialDto);
 
         response.Data = coreResult.IsSuccess;
-        response.Message = coreResult.Message;
+
+        // ✅ CRIAR MENSAGEM BASEADA NO RESULTADO:
+        if (coreResult.IsSuccess)
+        {
+            response.Message = coreResult.IsFullyPaid
+                ? "Boleto pago integralmente com sucesso!"
+                : $"Pagamento parcial realizado. Restam R$ {coreResult.RemainingAmount:F2} para quitar o boleto.";
+        }
+        else
+        {
+            // ✅ MAPEAR ERROS BASEADO NO CONTEXTO:
+            response.Message = GetErrorMessageFromResult(coreResult);
+        }
 
         Console.WriteLine($"DEBUG PAY V1: Legacy payment completed - Success: {coreResult.IsSuccess}");
 
         return response;
     }
 
+    private string GetErrorMessageFromResult(PayBankSlipResponseDto result)
+    {
+        // ✅ USAR ErrorType QUANDO DISPONÍVEL:
+        if (!string.IsNullOrEmpty(result.ErrorType))
+        {
+            return result.ErrorType;
+        }
+
+        // ✅ FALLBACK PARA CASOS ANTIGOS:
+        if (string.IsNullOrEmpty(result.BankSlipNumber))
+            return "Número de boleto inválido.";
+
+        if (string.IsNullOrEmpty(result.AccountNumber))
+            return "Nenhum boleto pendente foi encontrado.";
+
+        if (result.IsFullyPaid)
+            return "Este boleto já foi pago anteriormente.";
+
+        return "Ocorreu um erro ao processar o pagamento do boleto.";
+    }
+
+
     public async Task<ResponseModel<PayBankSlipResponseDto>> PayPartialBankSlipAsync(PayPartialBankSlipDto dto)
     {
         var response = new ResponseModel<PayBankSlipResponseDto>();
         var coreResult = await PayBankSlipCoreAsync(dto);
 
-        response.Data = coreResult.IsSuccess ? coreResult : null;
-
-        // ✅ MENSAGEM SIMPLES E GENÉRICA:
-        response.Message = coreResult.IsSuccess ? "Operação realizada com sucesso." : "Falha na operação.";
+        if (coreResult.IsSuccess)
+        {
+            response.Data = coreResult;
+            response.Message = coreResult.IsFullyPaid
+                ? "Boleto pago integralmente com sucesso!"
+                : $"Pagamento parcial realizado. Restam R$ {coreResult.RemainingAmount:F2} para quitar o boleto.";
+        }
+        else
+        {
+            response.Data = null;
+            // ✅ Usar as mensagens específicas que estavam em result.Message:
+            response.Message = GetErrorMessage(coreResult); // Função helper
+        }
 
         return response;
+    }
+
+// ✅ Função helper para mapear erros:
+    private static string GetErrorMessage(PayBankSlipResponseDto result)
+    {
+        // ✅ PRIORIDADE: Usar ErrorType (mensagem específica da Bank.Api)
+        if (!string.IsNullOrEmpty(result.ErrorType))
+        {
+            return result.ErrorType;
+        }
+
+        // ✅ FALLBACK: Mapear baseado no contexto
+        if (string.IsNullOrEmpty(result.BankSlipNumber))
+            return "Número de boleto inválido.";
+
+        if (string.IsNullOrEmpty(result.AccountNumber))
+            return "Nenhum boleto pendente foi encontrado.";
+
+        return result.IsFullyPaid ? "Este boleto já foi pago anteriormente." : "Erro ao processar pagamento.";
     }
 
     private async Task<PayBankSlipResponseDto> PayBankSlipCoreAsync(PayPartialBankSlipDto dto)
@@ -485,16 +552,22 @@ public class PaymentService(
 
         try
         {
-            Console.WriteLine($"DEBUG PAY CORE: Starting payment for BankSlipNumber = {dto.BankSlipNumber}");
-            Console.WriteLine(
-                $"DEBUG PAY CORE: Requested amount to pay = {dto.AmountToPay?.ToString("C") ?? "FULL AMOUNT"}");
+            Console.WriteLine($"DEBUG PAY CORE: Starting payment for BankSlipNumber = '{dto.BankSlipNumber}'");
+            Console.WriteLine($"DEBUG PAY CORE: BankSlipNumber Length = {dto.BankSlipNumber?.Length}");
+            Console.WriteLine($"DEBUG PAY CORE: BankSlipNumber Type = {dto.BankSlipNumber?.GetType()}");
+
+            Console.WriteLine($"DEBUG PAY CORE: Raw BankSlipNumber = [{dto.BankSlipNumber}]");
+            Console.WriteLine($"DEBUG PAY CORE: Trimmed = [{dto.BankSlipNumber?.Trim()}]");
+
 
             // 1. ✅ CONVERTER E VALIDAR BANKSLIPNUMBER
             var bankSlipNumberLong = BankSlipNumberManager.ConvertToLong(dto.BankSlipNumber);
+            Console.WriteLine($"DEBUG PAY CORE: ConvertToLong result = {bankSlipNumberLong}");
+
             if (bankSlipNumberLong is null)
             {
+                Console.WriteLine($"DEBUG PAY CORE: VALIDATION FAILED - BankSlipNumber conversion returned null");
                 result.IsSuccess = false;
-                result.Message = "Número de boleto inválido.";
                 return result;
             }
 
@@ -502,8 +575,9 @@ public class PaymentService(
             var existingPayment = await paymentRepository.GetBankSlipByNumberAsync(bankSlipNumberLong.Value);
             if (existingPayment is null)
             {
+                Console.WriteLine($"DEBUG PAY CORE: BOLETO NOT FOUND");
                 result.IsSuccess = false;
-                result.Message = "Nenhum boleto pendente foi encontrado.";
+                result.BankSlipNumber = dto.BankSlipNumber; // ✅ Tem número, mas não encontrado
                 return result;
             }
 
@@ -512,8 +586,11 @@ public class PaymentService(
 
             if (existingPayment.IsPaid)
             {
+                Console.WriteLine($"DEBUG PAY CORE: BOLETO ALREADY PAID");
                 result.IsSuccess = false;
-                result.Message = "Este boleto já foi pago anteriormente.";
+                result.IsFullyPaid = true; // ✅ CHAVE para identificar "já pago"
+                result.BankSlipNumber = dto.BankSlipNumber;
+                result.AccountNumber = existingPayment.AccountNumber;
                 return result;
             }
 
@@ -528,15 +605,12 @@ public class PaymentService(
             if (valueToPayment <= 0)
             {
                 result.IsSuccess = false;
-                result.Message = "O valor a pagar deve ser maior que zero.";
                 return result;
             }
 
             if (valueToPayment > originalAmount)
             {
                 result.IsSuccess = false;
-                result.Message =
-                    $"O valor a pagar (R$ {valueToPayment:F2}) não pode ser maior que o valor do boleto (R$ {originalAmount:F2}).";
                 return result;
             }
 
@@ -557,7 +631,15 @@ public class PaymentService(
             {
                 Console.WriteLine($"DEBUG PAY CORE: Bank procedure failed: {bankResult.Message}");
                 result.IsSuccess = false;
-                result.Message = bankResult.Data?.ErrorMessage ?? bankResult.Message;
+
+                // ✅ POPULAR CAMPOS PARA IDENTIFICAR O ERRO:
+                result.BankSlipNumber = dto.BankSlipNumber;
+                result.AccountNumber = existingPayment.AccountNumber;
+                result.OriginalAmount = originalAmount;
+                result.AmountPaid = 0;
+                result.RemainingAmount = originalAmount;
+                result.ErrorType = bankResult.Data?.ErrorMessage ?? bankResult.Message; // ✅ USAR ErrorType
+
                 return result;
             }
 
@@ -583,9 +665,6 @@ public class PaymentService(
 
             // 8. ✅ MONTAR RESULTADO COMPLETO
             result.IsSuccess = true;
-            result.Message = isFullyPaid
-                ? "Boleto pago integralmente com sucesso!"
-                : $"Pagamento parcial realizado. Restam R$ {newAmount:F2} para quitar o boleto.";
             result.BankSlipNumber = dto.BankSlipNumber; // ✅ USAR DTO DIRETAMENTE
             result.AccountNumber = existingPayment.AccountNumber;
             result.Customer = userName;
@@ -603,7 +682,6 @@ public class PaymentService(
         {
             await transaction.RollbackAsync();
             result.IsSuccess = false;
-            result.Message = "Ocorreu um erro ao processar o pagamento do boleto.";
             Console.WriteLine($"DEBUG PAY CORE ERROR: {ex.Message}");
         }
 

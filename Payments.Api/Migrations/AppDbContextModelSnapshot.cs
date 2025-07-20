@@ -36,6 +36,9 @@ namespace Payments.Api.Migrations
                     b.Property<decimal>("Amount")
                         .HasColumnType("decimal(18, 2)");
 
+                    b.Property<decimal?>("AmountBeforePay")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<long?>("BankSlipNumber")
                         .HasColumnType("bigint");
 

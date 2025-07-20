@@ -4,7 +4,9 @@ public class BoletoListItemDto
 {
     public Guid PaymentId { get; set; }
     public string BankSlipNumber { get; set; } = string.Empty;
+    public decimal? AmountBeforePay { get; set; }
     public decimal Amount { get; set; }
+    public decimal AmountAfterPay { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime DueDate { get; set; }
     public bool IsPaid { get; set; }

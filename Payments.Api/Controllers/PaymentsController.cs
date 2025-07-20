@@ -84,7 +84,7 @@ public class PaymentsController(IPaymentService paymentService, AppDbContext con
 
     #endregion
 
-    #region debug_endpoints
+   /* #region debug_endpoints
 
     /// <summary>
     /// [DEBUG] Testa se o JWT está sendo processado corretamente
@@ -163,9 +163,9 @@ public class PaymentsController(IPaymentService paymentService, AppDbContext con
         }
     }
 
-    #endregion
+    #endregion */
 
-    #region v1_endpoints
+   /* #region v1_endpoints
 
     [HttpGet("GetMonthPayment")]
     public async Task<IActionResult> GetMonthPaymentAsync([FromQuery] MonthPaymentDto dto)
@@ -202,5 +202,5 @@ public class PaymentsController(IPaymentService paymentService, AppDbContext con
         return response.Data ? Ok(response) : BadRequest(response);
     }
 
-    #endregion
+    #endregion */
 }

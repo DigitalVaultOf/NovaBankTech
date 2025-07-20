@@ -12,7 +12,7 @@ using Payments.Api.Data;
 namespace Payments.Api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250719211349_Updated")]
+    [Migration("20250720185847_Updated")]
     partial class Updated
     {
         /// <inheritdoc />
@@ -38,6 +38,9 @@ namespace Payments.Api.Migrations
 
                     b.Property<decimal>("Amount")
                         .HasColumnType("decimal(18, 2)");
+
+                    b.Property<decimal?>("AmountBeforePay")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<long?>("BankSlipNumber")
                         .HasColumnType("bigint");
