@@ -7,6 +7,7 @@ namespace Bank.Api.Services.Movimentations
     {
         Task<ResponseModel<string>> MovimentationDepositAsync(MovimentationDto data);
         Task<ResponseModel<string>> MovimentationWithdrawAsync(MovimentationDto data);
-        Task<ResponseModel<bool>> ProcessDebitPaymentAsync(DebitPaymentDto data);
+        Task<ResponseModel<PaymentResultDto>> ProcessPaymentAsync(PaymentDto data);
+        Task<ResponseModel<bool>> ProcessBankSlipPaymentAsync(PaymentDto data);
     }
 }

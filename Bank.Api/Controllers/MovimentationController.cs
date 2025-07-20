@@ -1,10 +1,11 @@
-﻿using System.Security.Claims;
+﻿// MovimentationController.cs - VERSÃO FINAL
+
+using System.Security.Claims;
 using Bank.Api.DTOS;
 using Bank.Api.Services.HistoryMovementationService;
 using Bank.Api.Services.Movimentations;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-
 
 namespace Bank.Api.Controllers
 {
@@ -57,19 +58,28 @@ namespace Bank.Api.Controllers
             return Ok(response);
         }
 
-        [HttpGet("history")] // Rota específica para este endpoint, ex: /api/Movimentation/history
+        [HttpGet("history")]
         public async Task<ActionResult<PagesOfMovimentHistoryDto<MovimentHistoryDto>>> GetUserMovementHistory(
-            [FromQuery] MovimentRequestDto request) // Parâmetros da query string são mapeados para MovimentRequestDto
+            [FromQuery] MovimentRequestDto request)
         {
             var response = await _movimention.GetPagedMovimentationsAsync(request);
             return Ok(response);
         }
 
+        // ✅ MÉTODO ANTIGO (COMPATIBILIDADE)
         [HttpPost("MakeDebitPayment")]
-        public async Task<IActionResult> MakeDebitPayment([FromBody] DebitPaymentDto data)
+        public async Task<IActionResult> MakeDebitPayment([FromBody] PaymentDto data)
         {
-            var response = await _movimentationService.ProcessDebitPaymentAsync(data);
+            var response = await _movimentationService.ProcessBankSlipPaymentAsync(data);
             return response.Data ? Ok(response) : BadRequest(response);
+        }
+
+        // ✅ MÉTODO NOVO (NOSSA PROCEDURE)
+        [HttpPost("ProcessPayment")]
+        public async Task<IActionResult> ProcessPayment([FromBody] PaymentDto data)
+        {
+            var response = await _movimentationService.ProcessPaymentAsync(data);
+            return response.Data?.IsSuccess == true ? Ok(response) : BadRequest(response);
         }
     }
 }

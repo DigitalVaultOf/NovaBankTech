@@ -1,6 +1,6 @@
-﻿namespace Bank.Api.DTOS;
+﻿namespace Payments.Api.DTOS;
 
-public class DebitPaymentDto
+public class PaymentDto
 {
     public string? AccountNumber { get; set; }
     public decimal Value { get; set; }
