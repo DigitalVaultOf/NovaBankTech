@@ -1,4 +1,6 @@
-﻿using Bank.Api.DTOS;
+﻿using System.Data;
+using Bank.Api.DTOS;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using User.Api.Data;
 using User.Api.Model;
@@ -84,25 +86,27 @@ public class MovimentationService : IMovimentationService
         }
     }
 
-    public async Task<ResponseModel<bool>> ProcessDebitPaymentAsync(DebitPaymentDto data)
+    public async Task<ResponseModel<PaymentResultDto>> ProcessPaymentAsync(PaymentDto data)
     {
-        var response = new ResponseModel<bool>();
+        var response = new ResponseModel<PaymentResultDto>();
 
         try
         {
+            // 1. Validações básicas
             if (string.IsNullOrEmpty(data.AccountNumber))
             {
-                response.Message = "O número da conta é obrigatório para o débito.";
-                response.Data = false;
+                response.Message = "O número da conta é obrigatório.";
+                response.Data = new PaymentResultDto { IsSuccess = false, ErrorMessage = response.Message };
                 return response;
             }
 
+            // 2. ✅ VALIDAR SENHA NO C# (como sempre fizemos)
             var account = await _context.Accounts.FirstOrDefaultAsync(a => a.AccountNumber == data.AccountNumber);
 
             if (account is null)
             {
                 response.Message = "Conta não encontrada.";
-                response.Data = false;
+                response.Data = new PaymentResultDto { IsSuccess = false, ErrorMessage = response.Message };
                 return response;
             }
 
@@ -111,23 +115,63 @@ public class MovimentationService : IMovimentationService
             if (!isPasswordValid)
             {
                 response.Message = "Senha inválida.";
-                response.Data = false;
+                response.Data = new PaymentResultDto { IsSuccess = false, ErrorMessage = response.Message };
                 return response;
             }
 
-            const string sql = "EXEC ProcessPaymentProcedure @p0, @p1";
-            await _context.Database.ExecuteSqlRawAsync(sql, data.AccountNumber, data.Value);
+            Console.WriteLine($"DEBUG BANK: Processing payment - Account: {data.AccountNumber}, Value: {data.Value:C}");
 
-            response.Data = true;
-            response.Message = "Débito processado com sucesso.";
+            // 3. ✅ EXECUTAR PROCEDURE SIMPLES (SÓ 2 PARÂMETROS)
+            var accountNumberParam = new SqlParameter("@AccountNumber", data.AccountNumber);
+            var valueParam = new SqlParameter("@Value", data.Value);
+
+            await _context.Database.ExecuteSqlRawAsync(
+                "EXEC ProcessPaymentProcedure @AccountNumber, @Value",
+                accountNumberParam,
+                valueParam
+            );
+
+            // 4. ✅ SE CHEGOU AQUI = SUCESSO (não lançou exception)
+            Console.WriteLine($"DEBUG BANK: Procedure executed successfully!");
+
+            response.Data = new PaymentResultDto
+            {
+                IsSuccess = true,
+                ErrorMessage = ""
+            };
+
+            response.Message = "Pagamento processado com sucesso.";
+
+            Console.WriteLine($"DEBUG BANK: Payment completed successfully");
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"LOG ERROR: Falha em ProcessDebitPaymentAsync: {ex}");
-            response.Message = $"Erro ao processar débito: {ex.Message}";
-            response.Data = false;
+            Console.WriteLine($"LOG ERROR: Falha em ProcessPaymentAsync: {ex}");
+
+            // ✅ CAPTURAR MENSAGEM ESPECÍFICA DO THROW
+            var errorMessage = ex.InnerException?.Message ?? ex.Message;
+
+            Console.WriteLine($"DEBUG BANK: Procedure failed with error: {errorMessage}");
+
+            response.Message = $"Erro ao processar pagamento: {errorMessage}";
+            response.Data = new PaymentResultDto
+            {
+                IsSuccess = false,
+                ErrorMessage = errorMessage
+            };
         }
 
         return response;
+    }
+
+    public async Task<ResponseModel<bool>> ProcessBankSlipPaymentAsync(PaymentDto data)
+    {
+        var result = await ProcessPaymentAsync(data);
+
+        return new ResponseModel<bool>
+        {
+            Data = result.Data?.IsSuccess ?? false,
+            Message = result.Message
+        };
     }
 }

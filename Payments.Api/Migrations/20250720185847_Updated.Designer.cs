@@ -12,7 +12,7 @@ using Payments.Api.Data;
 namespace Payments.Api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250718175432_Updated")]
+    [Migration("20250720185847_Updated")]
     partial class Updated
     {
         /// <inheritdoc />
@@ -33,16 +33,24 @@ namespace Payments.Api.Migrations
 
                     b.Property<string>("AccountNumber")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<decimal>("Amount")
                         .HasColumnType("decimal(18, 2)");
+
+                    b.Property<decimal?>("AmountBeforePay")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<long?>("BankSlipNumber")
                         .HasColumnType("bigint");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<DateTime>("DueDate")
                         .HasColumnType("datetime2");
@@ -66,6 +74,12 @@ namespace Payments.Api.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("PaymentId");
+
+                    b.HasIndex("BankSlipNumber");
+
+                    b.HasIndex("IsPaid");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("MonthPayments");
                 });

@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Payments.Api.Data;
+using Payments.Api.DTOS;
 using Payments.Api.Models;
 
 namespace Payments.Api.Repositories.PaymentRepository;
@@ -26,5 +27,27 @@ public class PaymentRepository(AppDbContext context) : IPaymentRepository
     public async Task<List<MonthPaymentModel>> GetPaymentsHistoryAsync(Guid userId)
     {
         return await context.MonthPayments.Where(p => p.UserId == userId).ToListAsync();
+    }
+
+    public async Task<MonthPaymentModel?> GetBankSlipByNumberAsync(long bankSlipNumber)
+    {
+        return await context.MonthPayments
+            .FirstOrDefaultAsync(p => p.BankSlipNumber == bankSlipNumber);
+    }
+
+    public async Task<List<MonthPaymentModel>> GetPendingBankSlipsAsync(Guid userId)
+    {
+        return await context.MonthPayments
+            .Where(p => p.UserId == userId && !p.IsPaid)
+            .OrderByDescending(p => p.CreatedAt)
+            .ToListAsync();
+    }
+
+    public async Task<List<MonthPaymentModel>> GetPaidBankSlipsAsync(Guid userId)
+    {
+        return await context.MonthPayments
+            .Where(p => p.UserId == userId && p.IsPaid)
+            .OrderByDescending(p => p.PaymentDate)
+            .ToListAsync();
     }
 }

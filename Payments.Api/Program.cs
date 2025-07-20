@@ -5,6 +5,7 @@ using Payments.Api.Clients;
 using Payments.Api.Data;
 using Payments.Api.Repositories.PaymentRepository;
 using Payments.Api.Services.PaymentService;
+using Payments.Api.Utils;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +14,7 @@ builder.Services.AddOpenApi();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddAuthorization();
+
 builder.Services.AddAuthentication("Bearer")
     .AddJwtBearer("Bearer", options =>
     {
@@ -74,6 +76,7 @@ builder.Services.AddHttpClient();
 builder.Services.AddScoped<BankApiClient>();
 builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
 builder.Services.AddScoped<IPaymentService, PaymentService>();
+builder.Services.AddScoped<GetUserData>();
 
 var app = builder.Build();
 
