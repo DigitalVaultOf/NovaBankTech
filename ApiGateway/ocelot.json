@@ -118,6 +118,19 @@
             "Priority": 1
         },
         {
+            "DownstreamPathTemplate": "/api/ai/{everything}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "ai",
+                    "Port": 8080
+                }
+            ],
+            "UpstreamPathTemplate": "/api/ai/{everything}",
+            "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+            "Priority": 1
+        },
+        {
             "DownstreamPathTemplate": "/health",
             "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
@@ -162,6 +175,9 @@
         {
             "Key": "Payments API",
             "Config": "/payments/swagger/v1/swagger.json"
+        },{
+            "Key": "Ai API",
+            "Config": "/Ai/swagger/v1/swagger.json"
         }
     ],
     "GlobalConfiguration": {

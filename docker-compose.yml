@@ -102,7 +102,12 @@ services:
         condition: service_healthy
     environment:
       - ConnectionStrings__DefaultConnection=Server=sqlserver,1433;Database=PaymentsBank;User Id=sa;Password=Senha123!;TrustServerCertificate=True
-
+  ai:
+    build: ./Ai.Api
+    ports:
+      - "${AI_PORT:-5008}:8080"
+    networks:
+      - appnet
   sqlserver:
     image: mcr.microsoft.com/mssql/server:2022-latest
     container_name: sqlserver
