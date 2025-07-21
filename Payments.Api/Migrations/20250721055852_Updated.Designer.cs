@@ -12,7 +12,7 @@ using Payments.Api.Data;
 namespace Payments.Api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250720185847_Updated")]
+    [Migration("20250721055852_Updated")]
     partial class Updated
     {
         /// <inheritdoc />
@@ -40,20 +40,24 @@ namespace Payments.Api.Migrations
                         .HasColumnType("decimal(18, 2)");
 
                     b.Property<decimal?>("AmountBeforePay")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18, 2)");
 
                     b.Property<long?>("BankSlipNumber")
                         .HasColumnType("bigint");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETUTCDATE()");
 
                     b.Property<string>("Description")
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
                     b.Property<DateTime>("DueDate")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETUTCDATE()");
 
                     b.Property<bool>("IsPaid")
                         .HasColumnType("bit");
@@ -62,10 +66,14 @@ namespace Payments.Api.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("PaymentDate")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETUTCDATE()");
 
                     b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETUTCDATE()");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
