@@ -452,12 +452,11 @@ public class PaymentService(
 
         Console.WriteLine($"DEBUG PAY V1: Starting legacy payment for BankSlipNumber = {dto.BankSlipNumber}");
 
-        // ✅ CONVERTER PARA PayPartialBankSlipDto
         var partialDto = new PayPartialBankSlipDto
         {
             BankSlipNumber = dto.BankSlipNumber,
             UserPassword = dto.UserPassword,
-            AmountToPay = null // null = pagamento integral
+            AmountToPay = dto.AmountToPay
         };
 
         var coreResult = await PayBankSlipCoreAsync(partialDto);
