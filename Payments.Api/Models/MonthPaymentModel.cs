@@ -23,7 +23,7 @@ public class MonthPaymentModel
 
     public bool IsPaid { get; set; } = false; // ← MELHORIA: Default false
 
-    public DateTime? PaymentDate { get; set; }
+    public DateTime? PaymentDate { get; set; } = DateTime.UtcNow;
 
     [Range(1, 12, ErrorMessage = "Mês deve estar entre 1 e 12.")]
     public int Month { get; init; }
@@ -32,7 +32,7 @@ public class MonthPaymentModel
     public int Year { get; init; }
 
     [Required(ErrorMessage = "Data de vencimento é obrigatória.")]
-    public DateTime DueDate { get; init; }
+    public DateTime DueDate { get; init; } = DateTime.UtcNow;
 
     public DateTime CreatedAt { get; init; } = DateTime.UtcNow;
 
