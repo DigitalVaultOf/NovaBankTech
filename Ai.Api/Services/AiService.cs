@@ -1,86 +1,146 @@
 ﻿using Ai.Api.DTOS;
-using Google.Api.Gax.Grpc; // Para o CallSettings
-using Google.Cloud.AIPlatform.V1;
-// Usamos um alias para resolver a ambiguidade
-using ProtoValue = Google.Protobuf.WellKnownTypes.Value;
-using ProtoStruct = Google.Protobuf.WellKnownTypes.Struct;
+using System.Text;
+using System.Text.Json;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace Ai.Api.Services;
 
-public class AiService(IConfiguration configuration) : IAiService
+public class AiService(IConfiguration configuration, HttpClient httpClient, IMemoryCache cache) : IAiService
 {
     public async Task<ChatbotResponseDto> AskQuestionAsync(AskQuestionDto questionDto)
     {
-        // 1. Pega a chave da API do appsettings.json
+        var cacheKey = $"gemini_response_{questionDto.Question.GetHashCode()}";
+        if (cache.TryGetValue(cacheKey, out ChatbotResponseDto? cachedResponse) && cachedResponse is not null)
+        {
+            return cachedResponse;
+        }
+
         var apiKey = configuration["Gemini:ApiKey"];
         if (string.IsNullOrEmpty(apiKey))
         {
             throw new Exception("Chave da API do Gemini não configurada.");
         }
 
-        // 2. Define o endpoint da API para a sua região
-        const string endpoint = "us-central1-aiplatform.googleapis.com";
-
-        // 3. Usa o Builder para criar o cliente (sem a chave aqui)
-        var client = await new PredictionServiceClientBuilder
-        {
-            Endpoint = endpoint
-        }.BuildAsync();
-
-        // 4. Monta o prompt com o contexto do seu banco
         var prompt = $"""
+                      Você é a assistente virtual oficial da NovaBankTech, nosso banco digital.
 
-                                  Você é um assistente virtual para o banco 'NovaBankTech'.
-                                  Sua personalidade é prestativa e direta.
-                                  Responda APENAS com base nas funcionalidades do banco descritas abaixo.
-                                  Se a pergunta não estiver relacionada a estas funcionalidades, responda educadamente que você só pode ajudar com questões sobre o NovaBankTech.
+                      REGRAS IMPORTANTES:
+                      - Responda APENAS sobre as funcionalidades listadas abaixo
+                      - Se a pergunta for sobre outros assuntos (clima, política, receitas, etc.), responda: "Sou especializada apenas em assuntos da NovaBankTech. Como posso ajudá-la com nossos serviços bancários?"
+                      - Se perguntarem sobre outros bancos, responda: "Posso ajudar apenas com serviços da NovaBankTech. Que funcionalidade gostaria de conhecer?"
+                      - Mantenha respostas objetivas e profissionais
+                      - Use sempre "nossa plataforma", "A NovaBankTech" ou "nossos serviços" ao se referir à empresa
 
-                                  Funcionalidades do NovaBankTech:
-                                  - Pagamento de Boletos: O usuário pode pagar boletos na tela de pagamentos. Ele precisa do número do boleto e da senha da conta para confirmar. O sistema verifica o saldo antes de debitar.
-                                  - Histórico de Pagamentos: Na tela de pagamentos, o usuário pode listar os boletos pagos e os pendentes.
-                                  - Transferências: O usuário pode transferir dinheiro para outras contas do NovaBankTech.
-                                  - Saques e Depósitos: Funções disponíveis na tela inicial.
-                                  - PIX: O sistema possui funcionalidade de PIX.
-                                  - Gestão de Conta: O usuário pode editar seus dados (nome, email) e alterar sua senha na área de 'Configurações'.
-                                  - Desativar Conta: O usuário pode desativar sua conta, uma ação que é irreversível.
-                                  - Saldo: O saldo atual é sempre exibido no topo da página inicial.
-                                  - Exportar Histórico: O usuário pode exportar seu histórico de movimentações.
+                      FUNCIONALIDADES DA NOVABANKTECH:
+                      1. 💳 Pagamento de Boletos: Digite o número do boleto e sua senha para pagar
+                      2. 📋 Histórico de Pagamentos: Consulte boletos pagos e pendentes
+                      3. 💸 Transferências: Envie dinheiro para outras contas da NovaBankTech
+                      4. 💰 Saques e Depósitos: Disponíveis na tela inicial
+                      5. ⚡ PIX: Transferências instantâneas 24h
+                      6. ⚙️ Gestão de Conta: Edite dados pessoais e altere senha em Configurações
+                      7. ❌ Desativar Conta: Ação irreversível disponível nas configurações
+                      8. 📊 Consulta de Saldo: Sempre visível no topo da página inicial
+                      9. 📄 Exportar Histórico: Baixe suas movimentações bancárias no formato .pdf ou .xlsx (Excel)
 
-                                  Com base nisso, responda à seguinte pergunta do usuário: '{questionDto.Question}'
-                              
+                      PERGUNTA DO CLIENTE: "{questionDto.Question}"
+
+                      Responda em até 80 palavras, sendo útil e direta.
                       """;
 
-        // 5. Monta a requisição para o Gemini (usando os aliases para resolver a ambiguidade)
-        var request = new PredictRequest
+        var requestBody = new
         {
-            Endpoint =
-                "projects/gothic-surf-430919-g8/locations/us-central1/publishers/google/models/gemini-1.5-pro-preview-0409",
-            Instances =
+            contents = new[]
             {
-                ProtoValue.ForStruct(new ProtoStruct
+                new
                 {
-                    Fields = { { "content", ProtoValue.ForString(prompt) } }
-                })
+                    parts = new[]
+                    {
+                        new { text = prompt }
+                    }
+                }
             }
         };
 
-        // 6. Cria as opções de chamada, adicionando a chave da API no cabeçalho
-        var callSettings = CallSettings.FromHeader("X-Goog-Api-Key", apiKey);
+        var json = JsonSerializer.Serialize(requestBody);
+        var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-        // 7. Envia a requisição e recebe a resposta (passando as opções de chamada)
-        var response = await client.PredictAsync(request, callSettings);
-        var predictionResult = response.Predictions.FirstOrDefault();
+        var url =
+            $"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={apiKey}";
 
-        // 8. VERIFICAÇÃO DE NULO (corrige o alerta do Rider)
-        if (predictionResult == null)
+        const int maxRetries = 3;
+        for (var attempt = 1; attempt <= maxRetries; attempt++)
         {
-            throw new Exception("A API do Gemini não retornou uma previsão válida.");
+            try
+            {
+                var response = await httpClient.PostAsync(url, content);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var responseContent = await response.Content.ReadAsStringAsync();
+                    var result = ParseGeminiResponse(responseContent);
+                    cache.Set(cacheKey, result, TimeSpan.FromMinutes(5));
+                    return result;
+                }
+
+                if (response.StatusCode == System.Net.HttpStatusCode.TooManyRequests)
+                {
+                    if (attempt >= maxRetries)
+                        return new ChatbotResponseDto(
+                            "Desculpe, estou temporariamente sobrecarregado. " +
+                            "Por favor, tente novamente em alguns minutos. " +
+                            "Posso ajudá-lo com questões sobre pagamentos, transferências, PIX e outras funcionalidades do NovaBankTech."
+                        );
+                    var delay = TimeSpan.FromSeconds(Math.Pow(2, attempt) * 5); // 5s, 10s, 20s
+                    await Task.Delay(delay);
+                    continue;
+                }
+
+                var errorContent = await response.Content.ReadAsStringAsync();
+                throw new Exception($"Erro na API do Gemini: {response.StatusCode} - {errorContent}");
+            }
+            catch (HttpRequestException) when (attempt < maxRetries)
+            {
+                await Task.Delay(TimeSpan.FromSeconds(2 * attempt));
+            }
+            catch (HttpRequestException)
+            {
+                return new ChatbotResponseDto(
+                    "Desculpe, estou com problemas de conectividade. " +
+                    "Tente novamente em alguns minutos ou entre em contato com o suporte."
+                );
+            }
         }
 
-        // 9. Extrai a resposta de texto da estrutura complexa do Gemini
-        var answer = predictionResult.StructValue.Fields["candidates"].ListValue.Values[0].StructValue.Fields["content"]
-            .StructValue.Fields["parts"].ListValue.Values[0].StructValue.Fields["text"].StringValue;
+        return new ChatbotResponseDto(
+            "Olá! Sou o assistente do NovaBankTech. " +
+            "Posso ajudá-lo com pagamentos de boletos, transferências, PIX, consulta de saldo e outras funcionalidades do banco. " +
+            "Como posso ajudá-lo hoje?"
+        );
+    }
 
-        return new ChatbotResponseDto(answer);
+    private static ChatbotResponseDto ParseGeminiResponse(string responseContent)
+    {
+        try
+        {
+            using var document = JsonDocument.Parse(responseContent);
+            var root = document.RootElement;
+
+            if (!root.TryGetProperty("candidates", out var candidates) ||
+                candidates.GetArrayLength() <= 0)
+                return new ChatbotResponseDto("Não foi possível processar sua pergunta. Tente reformulá-la.");
+            var firstCandidate = candidates[0];
+            if (!firstCandidate.TryGetProperty("content", out var contentProp) ||
+                !contentProp.TryGetProperty("parts", out var parts) ||
+                parts.GetArrayLength() <= 0)
+                return new ChatbotResponseDto("Não foi possível processar sua pergunta. Tente reformulá-la.");
+            var firstPart = parts[0];
+            return firstPart.TryGetProperty("text", out var text)
+                ? new ChatbotResponseDto(text.GetString() ?? "Resposta vazia")
+                : new ChatbotResponseDto("Não foi possível processar sua pergunta. Tente reformulá-la.");
+        }
+        catch (JsonException)
+        {
+            return new ChatbotResponseDto("Erro ao processar resposta. Tente novamente.");
+        }
     }
 }
