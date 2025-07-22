@@ -118,18 +118,16 @@
             "Priority": 1
         },
         {
-            "DownstreamPathTemplate": "/api/ai/{everything}",
+            "DownstreamPathTemplate": "/api/{everything}",
             "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
-                {
-                    "Host": "ai",
-                    "Port": 8080
-                }
+                { "Host": "ai", "Port": 8080 }
             ],
-            "UpstreamPathTemplate": "/api/ai/{everything}",
-            "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+            "UpstreamPathTemplate": "/ai/api/{everything}",
+            "UpstreamHttpMethod": [ "GET", "POST" ],
             "Priority": 1
         },
+
         {
             "DownstreamPathTemplate": "/health",
             "DownstreamScheme": "http",
