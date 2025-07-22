@@ -160,7 +160,7 @@ public class AuthService(IConfiguration configuration, IHttpClientFactory httpCl
                 issuer: configuration["Jwt:Issuer"],
                 audience: configuration["Jwt:Audience"],
                 claims: claims,
-                expires: DateTime.Now.AddSeconds(5),
+                expires: DateTime.Now.AddMinutes(30),
                 signingCredentials: credentials
             );
 
