@@ -127,7 +127,6 @@
             "UpstreamHttpMethod": [ "GET", "POST" ],
             "Priority": 1
         },
-
         {
             "DownstreamPathTemplate": "/health",
             "DownstreamScheme": "http",
@@ -173,9 +172,10 @@
         {
             "Key": "Payments API",
             "Config": "/payments/swagger/v1/swagger.json"
-        },{
-            "Key": "Ai API",
-            "Config": "/Ai/swagger/v1/swagger.json"
+        },
+        {
+            "Key": "AI API",
+            "Config": "/ai/swagger/v1/swagger.json"
         }
     ],
     "GlobalConfiguration": {
