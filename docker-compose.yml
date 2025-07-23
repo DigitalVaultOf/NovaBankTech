@@ -70,8 +70,43 @@ services:
 
   report:
     build: ./ReportApi
-    ports: [ "5006:8080" ]
-    networks: [ appnet ]
+    ports:
+      - "5006:8080"
+    networks:
+      - appnet
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:8080
+
+  payments:
+    build: ./Payments.Api
+    ports:
+      - "${PAYMENTS_PORT:-5007}:8080"
+    networks:
+      - appnet
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:8080
+      - ConnectionStrings__DefaultConnection=Server=sqlserver,1433;Database=PaymentsBank;User Id=sa;Password=Senha123!;TrustServerCertificate=True
+
+  ai:
+    build: ./Ai.Api
+    ports:
+      - "${AI_PORT:-5008}:8080"
+    networks:
+      - appnet
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:8080
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
 
   apigateway:
     build:
@@ -90,24 +125,9 @@ services:
       - email
       - pix
       - report
+      - payments
+      - ai
 
-  payments:
-    build: ./Payments.Api
-    ports:
-      - "${PAYMENTS_PORT:-5007}:8080"
-    networks:
-      - appnet
-    depends_on:
-      sqlserver:
-        condition: service_healthy
-    environment:
-      - ConnectionStrings__DefaultConnection=Server=sqlserver,1433;Database=PaymentsBank;User Id=sa;Password=Senha123!;TrustServerCertificate=True
-  ai:
-    build: ./Ai.Api
-    ports:
-      - "${AI_PORT:-5008}:8080"
-    networks:
-      - appnet
   sqlserver:
     image: mcr.microsoft.com/mssql/server:2022-latest
     container_name: sqlserver
