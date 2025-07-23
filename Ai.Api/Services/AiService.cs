@@ -14,6 +14,7 @@ public class AiService(
     private const int MaxRetries = 3;
     private const int CacheTimeoutMinutes = 10;
     private const string GeminiModel = "gemini-1.5-flash-latest";
+    private const string GroqModel = "llama3-8b-8192";
 
     public async Task<ChatbotResponseDto> AskQuestionAsync(AskQuestionDto questionDto)
     {
@@ -25,7 +26,7 @@ public class AiService(
 
         // Normaliza a pergunta para melhor cache
         var normalizedQuestion = questionDto.Question.Trim().ToLowerInvariant();
-        var cacheKey = $"gemini_response_{normalizedQuestion.GetHashCode()}";
+        var cacheKey = $"ai_response_{normalizedQuestion.GetHashCode()}";
 
         if (cache.TryGetValue(cacheKey, out ChatbotResponseDto? cachedResponse) && cachedResponse is not null)
         {
@@ -33,32 +34,91 @@ public class AiService(
             return cachedResponse;
         }
 
-        var apiKey = configuration["Gemini:ApiKey"];
-        if (string.IsNullOrEmpty(apiKey))
+        // Primeiro tenta Gemini
+        var geminiResponse = await TryGeminiAsync(questionDto.Question, cacheKey);
+        if (geminiResponse != null)
         {
-            logger.LogError("Chave da API do Gemini não configurada");
-            throw new InvalidOperationException("Chave da API do Gemini não configurada.");
+            return geminiResponse;
         }
 
-        var prompt = BuildPrompt(questionDto.Question);
-        var requestBody = CreateRequestBody(prompt);
-        var json = JsonSerializer.Serialize(requestBody,
-            new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
-        var content = new StringContent(json, Encoding.UTF8, "application/json");
-        var url = $"https://generativelanguage.googleapis.com/v1beta/models/{GeminiModel}:generateContent?key={apiKey}";
+        logger.LogWarning("Gemini falhou, tentando Groq como fallback para: {Question}", questionDto.Question);
 
-        return await ExecuteWithRetry(url, content, questionDto.Question, cacheKey);
+        // Se Gemini falhar, tenta Groq
+        var groqResponse = await TryGroqAsync(questionDto.Question, cacheKey);
+        if (groqResponse != null)
+        {
+            return groqResponse;
+        }
+
+        logger.LogError("Ambos os provedores (Gemini e Groq) falharam para: {Question}", questionDto.Question);
+        return CreateFallbackResponse("all_providers_failed");
     }
 
-    private async Task<ChatbotResponseDto> ExecuteWithRetry(string url, StringContent content, string question,
-        string cacheKey)
+    private async Task<ChatbotResponseDto?> TryGeminiAsync(string question, string cacheKey)
+    {
+        try
+        {
+            var apiKey = configuration["Gemini:ApiKey"];
+            if (string.IsNullOrEmpty(apiKey))
+            {
+                logger.LogWarning("Chave da API do Gemini não configurada, pulando para Groq");
+                return null;
+            }
+
+            var prompt = BuildPrompt(question);
+            var requestBody = CreateGeminiRequestBody(prompt);
+            var json = JsonSerializer.Serialize(requestBody,
+                new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var url = $"https://generativelanguage.googleapis.com/v1beta/models/{GeminiModel}:generateContent?key={apiKey}";
+
+            return await ExecuteGeminiWithRetry(url, content, question, cacheKey);
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "Erro ao tentar Gemini, fallback para Groq: {Message}", ex.Message);
+            return null;
+        }
+    }
+
+    private async Task<ChatbotResponseDto?> TryGroqAsync(string question, string cacheKey)
+    {
+        try
+        {
+            var apiKey = configuration["Groq:ApiKey"];
+            if (string.IsNullOrEmpty(apiKey))
+            {
+                logger.LogError("Chave da API do Groq não configurada");
+                return null;
+            }
+
+            var prompt = BuildPrompt(question);
+            var requestBody = CreateGroqRequestBody(prompt);
+            var json = JsonSerializer.Serialize(requestBody,
+                new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            httpClient.DefaultRequestHeaders.Clear();
+            httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {apiKey}");
+
+            var url = "https://api.groq.com/openai/v1/chat/completions";
+
+            return await ExecuteGroqWithRetry(url, content, question, cacheKey);
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "Erro ao tentar Groq: {Message}", ex.Message);
+            return null;
+        }
+    }
+
+    private async Task<ChatbotResponseDto?> ExecuteGeminiWithRetry(string url, StringContent content, string question, string cacheKey)
     {
         for (var attempt = 1; attempt <= MaxRetries; attempt++)
         {
             try
             {
-                logger.LogInformation("Enviando requisição para Gemini (tentativa {Attempt}): {Question}", attempt,
-                    question);
+                logger.LogInformation("Enviando requisição para Gemini (tentativa {Attempt}): {Question}", attempt, question);
 
                 var response = await httpClient.PostAsync(url, content);
 
@@ -67,20 +127,22 @@ public class AiService(
                     var responseContent = await response.Content.ReadAsStringAsync();
                     var result = ParseGeminiResponse(responseContent);
 
-                    // Cache com tempo maior para respostas válidas
-                    cache.Set(cacheKey, result, TimeSpan.FromMinutes(CacheTimeoutMinutes));
-
-                    logger.LogInformation("Resposta bem-sucedida do Gemini para: {Question}", question);
-                    return result;
+                    if (result != null)
+                    {
+                        // Cache com tempo maior para respostas válidas
+                        cache.Set(cacheKey, result, TimeSpan.FromMinutes(CacheTimeoutMinutes));
+                        logger.LogInformation("Resposta bem-sucedida do Gemini para: {Question}", question);
+                        return result;
+                    }
                 }
 
                 if (response.StatusCode == System.Net.HttpStatusCode.TooManyRequests)
                 {
-                    logger.LogWarning("Rate limit atingido na tentativa {Attempt}", attempt);
+                    logger.LogWarning("Rate limit atingido no Gemini na tentativa {Attempt}", attempt);
 
                     if (attempt >= MaxRetries)
                     {
-                        return CreateFallbackResponse("rate_limit");
+                        return null; // Vai tentar Groq
                     }
 
                     var delay = TimeSpan.FromSeconds(Math.Pow(2, attempt) * 5);
@@ -93,30 +155,86 @@ public class AiService(
 
                 if (attempt >= MaxRetries)
                 {
-                    return CreateFallbackResponse("api_error");
+                    return null; // Vai tentar Groq
                 }
             }
             catch (HttpRequestException ex) when (attempt < MaxRetries)
             {
-                logger.LogWarning(ex, "Erro de conexão na tentativa {Attempt}, tentando novamente...", attempt);
+                logger.LogWarning(ex, "Erro de conexão no Gemini na tentativa {Attempt}, tentando novamente...", attempt);
                 await Task.Delay(TimeSpan.FromSeconds(2 * attempt));
-            }
-            catch (HttpRequestException ex)
-            {
-                logger.LogError(ex, "Falha final de conexão após {MaxRetries} tentativas", MaxRetries);
-                return CreateFallbackResponse("connection_error");
             }
             catch (Exception ex)
             {
                 logger.LogError(ex, "Erro inesperado ao chamar Gemini: {Message}", ex.Message);
-                return CreateFallbackResponse("unexpected_error");
+                return null; // Vai tentar Groq
             }
         }
 
-        return CreateFallbackResponse("general_failure");
+        return null; // Falhou no Gemini, vai tentar Groq
     }
 
-    private static object CreateRequestBody(string prompt)
+    private async Task<ChatbotResponseDto?> ExecuteGroqWithRetry(string url, StringContent content, string question, string cacheKey)
+    {
+        for (var attempt = 1; attempt <= MaxRetries; attempt++)
+        {
+            try
+            {
+                logger.LogInformation("Enviando requisição para Groq (tentativa {Attempt}): {Question}", attempt, question);
+
+                var response = await httpClient.PostAsync(url, content);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var responseContent = await response.Content.ReadAsStringAsync();
+                    var result = ParseGroqResponse(responseContent);
+
+                    if (result != null)
+                    {
+                        // Cache com tempo maior para respostas válidas
+                        cache.Set(cacheKey, result, TimeSpan.FromMinutes(CacheTimeoutMinutes));
+                        logger.LogInformation("Resposta bem-sucedida do Groq para: {Question}", question);
+                        return result;
+                    }
+                }
+
+                if (response.StatusCode == System.Net.HttpStatusCode.TooManyRequests)
+                {
+                    logger.LogWarning("Rate limit atingido no Groq na tentativa {Attempt}", attempt);
+
+                    if (attempt >= MaxRetries)
+                    {
+                        return null;
+                    }
+
+                    var delay = TimeSpan.FromSeconds(Math.Pow(2, attempt) * 3);
+                    await Task.Delay(delay);
+                    continue;
+                }
+
+                var errorContent = await response.Content.ReadAsStringAsync();
+                logger.LogError("Erro na API do Groq: {StatusCode} - {Error}", response.StatusCode, errorContent);
+
+                if (attempt >= MaxRetries)
+                {
+                    return null;
+                }
+            }
+            catch (HttpRequestException ex) when (attempt < MaxRetries)
+            {
+                logger.LogWarning(ex, "Erro de conexão no Groq na tentativa {Attempt}, tentando novamente...", attempt);
+                await Task.Delay(TimeSpan.FromSeconds(2 * attempt));
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "Erro inesperado ao chamar Groq: {Message}", ex.Message);
+                return null;
+            }
+        }
+
+        return null;
+    }
+
+    private static object CreateGeminiRequestBody(string prompt)
     {
         return new
         {
@@ -144,6 +262,26 @@ public class AiService(
                 new { category = "HARM_CATEGORY_SEXUALLY_EXPLICIT", threshold = "BLOCK_MEDIUM_AND_ABOVE" },
                 new { category = "HARM_CATEGORY_DANGEROUS_CONTENT", threshold = "BLOCK_MEDIUM_AND_ABOVE" }
             }
+        };
+    }
+
+    private static object CreateGroqRequestBody(string prompt)
+    {
+        return new
+        {
+            model = GroqModel,
+            messages = new[]
+            {
+                new
+                {
+                    role = "user",
+                    content = prompt
+                }
+            },
+            temperature = 0.3,
+            max_tokens = 150,
+            top_p = 0.8,
+            stream = false
         };
     }
 
@@ -197,21 +335,25 @@ public class AiService(
     {
         return errorType switch
         {
+            "all_providers_failed" => new ChatbotResponseDto(
+                "Estou temporariamente indisponível. Por favor, tente novamente em alguns minutos ou " +
+                "entre em contato com nosso suporte: projetodigitalvault@gmail.com 🔧"
+            ),
             "rate_limit" => new ChatbotResponseDto(
                 "Desculpe, estou temporariamente sobrecarregada. Tente novamente em alguns minutos. " +
                 "Posso ajudá-la com pagamentos, transferências, PIX e outras funcionalidades da NovaBankTech! 💳"
             ),
             "connection_error" => new ChatbotResponseDto(
                 "Estou com problemas de conectividade. Tente novamente em alguns minutos ou " +
-                "entre em contato com nosso suporte: support@digitalvault.com 📞"
+                "entre em contato com nosso suporte: projetodigitalvault@gmail.com 📞"
             ),
             "api_error" => new ChatbotResponseDto(
                 "Temporariamente indisponível. Tente novamente em alguns minutos ou " +
-                "contate nosso suporte: support@digitalvault.com 🔧"
+                "contate nosso suporte: projetodigitalvault@gmail.com 🔧"
             ),
             "unexpected_error" => new ChatbotResponseDto(
                 "Ocorreu um erro inesperado. Por favor, reformule sua pergunta ou " +
-                "contate nosso suporte: support@digitalvault.com ⚠️"
+                "contate nosso suporte: projetodigitalvault@gmail.com ⚠️"
             ),
             _ => new ChatbotResponseDto(
                 "Olá! Sou a Nova, assistente da NovaBankTech. " +
@@ -221,7 +363,7 @@ public class AiService(
         };
     }
 
-    private ChatbotResponseDto ParseGeminiResponse(string responseContent)
+    private ChatbotResponseDto? ParseGeminiResponse(string responseContent)
     {
         try
         {
@@ -232,7 +374,7 @@ public class AiService(
                 candidates.GetArrayLength() <= 0)
             {
                 logger.LogWarning("Resposta do Gemini não contém candidates válidos");
-                return new ChatbotResponseDto("Não consegui processar sua pergunta. Pode reformulá-la? 🤔");
+                return null;
             }
 
             var firstCandidate = candidates[0];
@@ -241,7 +383,7 @@ public class AiService(
             if (firstCandidate.TryGetProperty("finishReason", out var finishReason) &&
                 finishReason.GetString() == "SAFETY")
             {
-                logger.LogWarning("Resposta bloqueada por safety settings");
+                logger.LogWarning("Resposta bloqueada por safety settings no Gemini");
                 return new ChatbotResponseDto(
                     "Não posso responder essa pergunta. Como posso ajudá-la com nossos serviços bancários? 🏦");
             }
@@ -251,21 +393,21 @@ public class AiService(
                 parts.GetArrayLength() <= 0)
             {
                 logger.LogWarning("Estrutura de resposta do Gemini inválida");
-                return new ChatbotResponseDto("Não consegui processar sua pergunta. Pode tentar novamente? 🔄");
+                return null;
             }
 
             var firstPart = parts[0];
             if (!firstPart.TryGetProperty("text", out var text))
             {
                 logger.LogWarning("Texto não encontrado na resposta do Gemini");
-                return new ChatbotResponseDto("Resposta incompleta. Tente reformular sua pergunta. ✍️");
+                return null;
             }
 
             var responseText = text.GetString()?.Trim();
             if (string.IsNullOrEmpty(responseText))
             {
                 logger.LogWarning("Resposta do Gemini estava vazia");
-                return new ChatbotResponseDto("Resposta vazia. Como posso ajudá-la melhor? 💬");
+                return null;
             }
 
             return new ChatbotResponseDto(responseText);
@@ -273,7 +415,46 @@ public class AiService(
         catch (JsonException ex)
         {
             logger.LogError(ex, "Erro ao fazer parse da resposta do Gemini");
-            return new ChatbotResponseDto("Erro ao processar resposta. Tente novamente. 🔧");
+            return null;
+        }
+    }
+
+    private ChatbotResponseDto? ParseGroqResponse(string responseContent)
+    {
+        try
+        {
+            using var document = JsonDocument.Parse(responseContent);
+            var root = document.RootElement;
+
+            if (!root.TryGetProperty("choices", out var choices) ||
+                choices.GetArrayLength() <= 0)
+            {
+                logger.LogWarning("Resposta do Groq não contém choices válidos");
+                return null;
+            }
+
+            var firstChoice = choices[0];
+
+            if (!firstChoice.TryGetProperty("message", out var message) ||
+                !message.TryGetProperty("content", out var content))
+            {
+                logger.LogWarning("Estrutura de resposta do Groq inválida");
+                return null;
+            }
+
+            var responseText = content.GetString()?.Trim();
+            if (string.IsNullOrEmpty(responseText))
+            {
+                logger.LogWarning("Resposta do Groq estava vazia");
+                return null;
+            }
+
+            return new ChatbotResponseDto(responseText);
+        }
+        catch (JsonException ex)
+        {
+            logger.LogError(ex, "Erro ao fazer parse da resposta do Groq");
+            return null;
         }
     }
 }
