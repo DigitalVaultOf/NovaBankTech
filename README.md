@@ -532,7 +532,8 @@ Este projeto foi desenvolvido para fins educacionais como projeto final do curso
 
 - **Email**: projetodigitalvault@gmail.com
 - **GitHub**: [DigitalVaultOf](https://github.com/DigitalVaultOf)
-- **LinkedIn**: [Publicação do projeto](https://www.linkedin.com/posts/marcosh0wzy_novabanktech-digitalvault-dotnet-activity-7354871854899126273-SpSN?utm_source=share&utm_medium=member_desktop&rcm=ACoAAEaCRhsBbzfa6nk3JyKJnzsHepOj5V6qRmY)
+- **LinkedIn**: [Publicação (parte 1) do projeto](https://www.linkedin.com/posts/marcosh0wzy_novabanktech-digitalvault-dotnet-activity-7354871854899126273-SpSN?utm_source=share&utm_medium=member_desktop&rcm=ACoAAEaCRhsBbzfa6nk3JyKJnzsHepOj5V6qRmY)
+- **LinkedIn**: [Publicação (parte 2) do projeto](https://www.linkedin.com/posts/marcosh0wzy_novabanktech-digitalvault-dotnet-activity-7354872551241662464-hDDA/?utm_source=share&utm_medium=member_desktop&rcm=ACoAAEaCRhsBbzfa6nk3JyKJnzsHepOj5V6qRmY)
 
 Para dúvidas técnicas, abra uma issue no GitHub ou entre em contato via email.
 
